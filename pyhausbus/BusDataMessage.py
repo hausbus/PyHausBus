@@ -1,4 +1,4 @@
-import HausBusUtils
+import pyhausbus.HausBusUtils as HausBusUtils
 
 
 class BusDataMessage:

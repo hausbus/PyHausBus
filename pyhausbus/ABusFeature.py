@@ -1,5 +1,5 @@
 import logging
-from ObjectId import ObjectId
+from pyhausbus.ObjectId import ObjectId
 
 class ABusFeature:
 

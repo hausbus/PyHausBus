@@ -1,5 +1,5 @@
-import HausBusUtils
-import WeekTime
+import pyhausbus.HausBusUtils as HausBusUtils
+import pyhausbus.WeekTime as WeekTime
 
 class WeekTime:
 

@@ -1,14 +1,14 @@
 import logging
 import threading
-from de.hausbus.homeassistant.proxy import ProxyFactory
-from HausBusUtils import *
-from BusDataMessage import BusDataMessage
-from IBusDataListener import IBusDataListener
+from pyhausbus.de.hausbus.homeassistant.proxy import ProxyFactory
+from pyhausbus.HausBusUtils import *
+from pyhausbus.BusDataMessage import BusDataMessage
+from pyhausbus.IBusDataListener import IBusDataListener
 import time
 import importlib
-from UdpReceiveWorker import UdpReceiveWorker
+from pyhausbus.UdpReceiveWorker import UdpReceiveWorker
 import socket
-import HausBusUtils
+import pyhausbus.HausBusUtils as HausBusUtils
 import traceback
 
 RS485_GATEWAY = "#RS485#"

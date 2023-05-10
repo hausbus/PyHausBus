@@ -1,13 +1,13 @@
-from HomeServer import HomeServer
-from de.hausbus.homeassistant.proxy.Controller import Controller
-from HausBusCommand import HausBusCommand
-from IBusDataListener import IBusDataListener
-from ObjectId import ObjectId
-from de.hausbus.homeassistant.proxy.Schalter import Schalter
-from de.hausbus.homeassistant.proxy.Dimmer import Dimmer
-import HausBusUtils
-from de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
-from de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import RemoteObjects
+from pyhausbus.HomeServer import HomeServer
+from pyhausbus.de.hausbus.homeassistant.proxy.Controller import Controller
+from pyhausbus.HausBusCommand import HausBusCommand
+from pyhausbus.IBusDataListener import IBusDataListener
+from pyhausbus.ObjectId import ObjectId
+from pyhausbus.de.hausbus.homeassistant.proxy.Schalter import Schalter
+from pyhausbus.de.hausbus.homeassistant.proxy.Dimmer import Dimmer
+import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import RemoteObjects
 
 class Main(IBusDataListener):
   

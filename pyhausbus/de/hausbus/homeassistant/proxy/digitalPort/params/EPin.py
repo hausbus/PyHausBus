@@ -1,4 +1,4 @@
-import pyhausbus.HausBusUtils
+import pyhausbus.HausBusUtils as HausBusUtils
 from enum import Enum
 
 class EPin(Enum):

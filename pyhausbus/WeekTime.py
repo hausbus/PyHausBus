@@ -1,21 +1,21 @@
 import pyhausbus.HausBusUtils as HausBusUtils
-import pyhausbus.WeekTime as WeekTime
 
 class WeekTime:
 
-  def _init_(self, day:int, hour:int, minute:int):
+  def __init__(self, day:int, hour:int, minute:int):
     self.day = day
     self.hour = hour
     self.minute = minute
 
   @staticmethod
-  def _fromBytes(data:bytearray, offset) -> WeekTime:
+  def fromBytes(data: bytearray, offset: int) -> 'WeekTime':
     value = HausBusUtils.bytesToWord(data, offset)
 
-    self.minute = value & 0xff
-    self.value = value >> 8
-    self.hour = value & 0x1F
-    self.day = value >> 5
+    minute = value & 0xff
+    value = value >> 8
+    hour = value & 0x1F
+    day = value >> 5
+    return WeekTime(day, hour, minute)
 
   def getValue(self) -> int:
     value = self.day << 5

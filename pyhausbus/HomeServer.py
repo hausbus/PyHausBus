@@ -1,11 +1,11 @@
 import logging
-from BusHandler import BusHandler
-from IBusDataListener import IBusDataListener
-from de.hausbus.homeassistant.proxy.Controller import Controller
-from de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
-from de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import RemoteObjects
-import de.hausbus.homeassistant.proxy.ProxyFactory
-import HausBusUtils
+from pyhausbus.BusHandler import BusHandler
+from pyhausbus.IBusDataListener import IBusDataListener
+from pyhausbus.de.hausbus.homeassistant.proxy.Controller import Controller
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import RemoteObjects
+import pyhausbus.de.hausbus.homeassistant.proxy.ProxyFactory as ProxyFactory
+import pyhausbus.HausBusUtils as HausBusUtils
 import importlib
 import traceback
 
@@ -35,7 +35,7 @@ class HomeServer:
     for i in range (0, len(objectList),2):
       instanceId = objectList[i]
       classId = objectList[i+1];
-      className = de.hausbus.homeassistant.proxy.ProxyFactory.getBusClassNameForClass(classId);
+      className = ProxyFactory.getBusClassNameForClass(classId);
       objectId = HausBusUtils.getObjectId(deviceId, classId, instanceId)
         
       try:

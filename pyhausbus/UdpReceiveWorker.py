@@ -2,8 +2,8 @@ import logging
 import socket
 import threading
 import traceback
-from HausBusUtils import *
-from de.hausbus.homeassistant.proxy import *
+from pyhausbus.HausBusUtils import *
+from pyhausbus.de.hausbus.homeassistant.proxy import *
 import time
 
 DEFAULT_UDP_PORT = 9

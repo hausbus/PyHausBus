@@ -1,7 +1,7 @@
-from BusHandler import BusHandler
-import HausBusUtils
+from pyhausbus.BusHandler import BusHandler
+import pyhausbus.HausBusUtils as HausBusUtils
 import logging
-from ObjectId import ObjectId 
+from pyhausbus.ObjectId import ObjectId 
 
 class HausBusCommand:
 

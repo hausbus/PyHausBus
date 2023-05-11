@@ -6,7 +6,7 @@ from pyhausbus.HausBusUtils import *
 from pyhausbus.de.hausbus.homeassistant.proxy import *
 import time
 
-DEFAULT_UDP_PORT = 9
+DEFAULT_UDP_PORT = 5855
 BROADCAST_SEND_IP = "192.255.255.255"
 BROADCAST_RECEIVE_IP = "0.0.0.0"
 BUFFER_SIZE  = 10000

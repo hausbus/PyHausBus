@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.gateway.params.EErrorCode import EErrorCode
 from pyhausbus.de.hausbus.homeassistant.proxy.gateway.params.MOptions import MOptions
 
@@ -9,6 +10,10 @@ class Gateway(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Gateway(HausBusUtils.getObjectId(deviceId, 176, instanceId))
 
   """
   @param errorCode .

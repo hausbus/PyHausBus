@@ -90,7 +90,7 @@ class MOptions:
       self.setReserved4(setValue)
 
   def __str__(self):
-    return f"MOptions(HomeautomationOnlyMode = "+self.isHomeautomationOnlyMode()+", ModBusTcp = "+self.isModBusTcp()+", DHCP = "+self.isDHCP()+", SNMP = "+self.isSNMP()+", Reserved1 = "+self.isReserved1()+", Reserved2 = "+self.isReserved2()+", Reserved3 = "+self.isReserved3()+", Reserved4 = "+self.isReserved4()+")"
+    return f"MOptions(HomeautomationOnlyMode = {self.isHomeautomationOnlyMode()}, ModBusTcp = {self.isModBusTcp()}, DHCP = {self.isDHCP()}, SNMP = {self.isSNMP()}, Reserved1 = {self.isReserved1()}, Reserved2 = {self.isReserved2()}, Reserved3 = {self.isReserved3()}, Reserved4 = {self.isReserved4()})"
 
 
 

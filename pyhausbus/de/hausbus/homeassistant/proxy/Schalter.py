@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.schalter.params.EState import EState
 from pyhausbus.de.hausbus.homeassistant.proxy.schalter.params.EErrorCode import EErrorCode
 from pyhausbus.de.hausbus.homeassistant.proxy.schalter.params.MOptions import MOptions
@@ -10,6 +11,10 @@ class Schalter(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Schalter(HausBusUtils.getObjectId(deviceId, 19, instanceId))
 
   """
   @param offTime Ausschaltdauer: \r\nWert * Zeitbasis [ms].

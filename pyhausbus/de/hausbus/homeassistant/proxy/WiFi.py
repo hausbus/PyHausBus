@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.wiFi.params.EErrorCode import EErrorCode
 
 class WiFi(ABusFeature):
@@ -8,6 +9,10 @@ class WiFi(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return WiFi(HausBusUtils.getObjectId(deviceId, 164, instanceId))
 
   """
   @param errorCode .

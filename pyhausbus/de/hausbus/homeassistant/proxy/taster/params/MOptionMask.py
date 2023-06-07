@@ -90,7 +90,7 @@ class MOptionMask:
       self.setReserved6(setValue)
 
   def __str__(self):
-    return f"MOptionMask(Inverted = "+self.isInverted()+", Pulldown = "+self.isPulldown()+", Reserved1 = "+self.isReserved1()+", Reserved2 = "+self.isReserved2()+", Reserved3 = "+self.isReserved3()+", Reserved4 = "+self.isReserved4()+", Reserved5 = "+self.isReserved5()+", Reserved6 = "+self.isReserved6()+")"
+    return f"MOptionMask(Inverted = {self.isInverted()}, Pulldown = {self.isPulldown()}, Reserved1 = {self.isReserved1()}, Reserved2 = {self.isReserved2()}, Reserved3 = {self.isReserved3()}, Reserved4 = {self.isReserved4()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()})"
 
 
 

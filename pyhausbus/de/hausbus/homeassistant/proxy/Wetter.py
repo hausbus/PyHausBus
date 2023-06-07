@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.WeekTime import WeekTime
 
 class Wetter(ABusFeature):
@@ -8,6 +9,10 @@ class Wetter(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Wetter(HausBusUtils.getObjectId(deviceId, 2, instanceId))
 
   """
   """

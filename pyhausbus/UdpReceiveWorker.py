@@ -6,7 +6,6 @@ from pyhausbus.HausBusUtils import *
 from pyhausbus.de.hausbus.homeassistant.proxy import *
 import time
 
-DEFAULT_UDP_PORT = 5855
 BROADCAST_SEND_IP = "192.255.255.255"
 BROADCAST_RECEIVE_IP = "0.0.0.0"
 BUFFER_SIZE  = 10000
@@ -29,7 +28,7 @@ class UdpReceiveWorker:
         UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
         UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        UDPServerSocket.bind((BROADCAST_RECEIVE_IP, DEFAULT_UDP_PORT))
+        UDPServerSocket.bind((BROADCAST_RECEIVE_IP, UDP_PORT))
         logging.info("UDP server up and listening")
 
         while(True):

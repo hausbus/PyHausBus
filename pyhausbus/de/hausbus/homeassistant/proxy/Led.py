@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.led.params.MOptions import MOptions
 
 class Led(ABusFeature):
@@ -8,6 +9,10 @@ class Led(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Led(HausBusUtils.getObjectId(deviceId, 21, instanceId))
 
   """
   """

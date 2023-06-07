@@ -90,7 +90,7 @@ class MOptions:
       self.setReserved7(setValue)
 
   def __str__(self):
-    return f"MOptions(Enabled = "+self.isEnabled()+", PreferLoxone = "+self.isPreferLoxone()+", EnableConsole = "+self.isEnableConsole()+", Reserved3 = "+self.isReserved3()+", Reserved4 = "+self.isReserved4()+", Reserved5 = "+self.isReserved5()+", Reserved6 = "+self.isReserved6()+", Reserved7 = "+self.isReserved7()+")"
+    return f"MOptions(Enabled = {self.isEnabled()}, PreferLoxone = {self.isPreferLoxone()}, EnableConsole = {self.isEnableConsole()}, Reserved3 = {self.isReserved3()}, Reserved4 = {self.isReserved4()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()}, Reserved7 = {self.isReserved7()})"
 
 
 

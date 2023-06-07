@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.currentReader.params.MConfig import MConfig
 
 class CurrentReader(ABusFeature):
@@ -8,6 +9,10 @@ class CurrentReader(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return CurrentReader(HausBusUtils.getObjectId(deviceId, 90, instanceId))
 
   """
   @param config .

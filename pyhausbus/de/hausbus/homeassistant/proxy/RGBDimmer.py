@@ -1,12 +1,17 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 
 class RGBDimmer(ABusFeature):
   CLASS_ID:int = 22
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return RGBDimmer(HausBusUtils.getObjectId(deviceId, 22, instanceId))
 
   """
   """

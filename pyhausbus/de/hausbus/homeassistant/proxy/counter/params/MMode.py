@@ -90,7 +90,7 @@ class MMode:
       self.setReserved4(setValue)
 
   def __str__(self):
-    return f"MMode(Increment = "+self.isIncrement()+", FallingEdge = "+self.isFallingEdge()+", RisingEdge = "+self.isRisingEdge()+", ActiveLow = "+self.isActiveLow()+", Reserved1 = "+self.isReserved1()+", Reserved2 = "+self.isReserved2()+", Reserved3 = "+self.isReserved3()+", Reserved4 = "+self.isReserved4()+")"
+    return f"MMode(Increment = {self.isIncrement()}, FallingEdge = {self.isFallingEdge()}, RisingEdge = {self.isRisingEdge()}, ActiveLow = {self.isActiveLow()}, Reserved1 = {self.isReserved1()}, Reserved2 = {self.isReserved2()}, Reserved3 = {self.isReserved3()}, Reserved4 = {self.isReserved4()})"
 
 
 

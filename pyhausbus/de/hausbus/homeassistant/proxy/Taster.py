@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.taster.params.EState import EState
 from pyhausbus.de.hausbus.homeassistant.proxy.taster.params.MEventMask import MEventMask
 from pyhausbus.de.hausbus.homeassistant.proxy.taster.params.MOptionMask import MOptionMask
@@ -11,6 +12,10 @@ class Taster(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Taster(HausBusUtils.getObjectId(deviceId, 16, instanceId))
 
   """
   @param state .

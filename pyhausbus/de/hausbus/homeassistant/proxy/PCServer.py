@@ -1,12 +1,17 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 
 class PCServer(ABusFeature):
   CLASS_ID:int = 1
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return PCServer(HausBusUtils.getObjectId(deviceId, 1, instanceId))
 
   """
   @param command .

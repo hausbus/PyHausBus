@@ -90,7 +90,7 @@ class MLogicalButtonMask:
       self.setLogicalButton7(setValue)
 
   def __str__(self):
-    return f"MLogicalButtonMask(LogicalButton0 = "+self.isLogicalButton0()+", LogicalButton1 = "+self.isLogicalButton1()+", LogicalButton2 = "+self.isLogicalButton2()+", LogicalButton3 = "+self.isLogicalButton3()+", LogicalButton4 = "+self.isLogicalButton4()+", LogicalButton5 = "+self.isLogicalButton5()+", LogicalButton6 = "+self.isLogicalButton6()+", LogicalButton7 = "+self.isLogicalButton7()+")"
+    return f"MLogicalButtonMask(LogicalButton0 = {self.isLogicalButton0()}, LogicalButton1 = {self.isLogicalButton1()}, LogicalButton2 = {self.isLogicalButton2()}, LogicalButton3 = {self.isLogicalButton3()}, LogicalButton4 = {self.isLogicalButton4()}, LogicalButton5 = {self.isLogicalButton5()}, LogicalButton6 = {self.isLogicalButton6()}, LogicalButton7 = {self.isLogicalButton7()})"
 
 
 

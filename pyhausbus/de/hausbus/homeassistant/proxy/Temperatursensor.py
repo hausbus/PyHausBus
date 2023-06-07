@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.temperatursensor.params.ELastEvent import ELastEvent
 from pyhausbus.de.hausbus.homeassistant.proxy.temperatursensor.params.EErrorCode import EErrorCode
 
@@ -9,6 +10,10 @@ class Temperatursensor(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Temperatursensor(HausBusUtils.getObjectId(deviceId, 32, instanceId))
 
   """
   """

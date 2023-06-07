@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.dimmer.params.EMode import EMode
 from pyhausbus.de.hausbus.homeassistant.proxy.dimmer.params.EDirection import EDirection
 from pyhausbus.de.hausbus.homeassistant.proxy.dimmer.params.EErrorCode import EErrorCode
@@ -10,6 +11,10 @@ class Dimmer(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Dimmer(HausBusUtils.getObjectId(deviceId, 17, instanceId))
 
   """
   @param brightness aktuelle Helligkeit 0-100%.

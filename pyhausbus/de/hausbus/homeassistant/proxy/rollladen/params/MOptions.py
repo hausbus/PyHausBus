@@ -90,7 +90,7 @@ class MOptions:
       self.setEnableTracing(setValue)
 
   def __str__(self):
-    return f"MOptions(InvertDirection = "+self.isInvertDirection()+", Independent = "+self.isIndependent()+", InvertOutputs = "+self.isInvertOutputs()+", Reserved1 = "+self.isReserved1()+", Reserved2 = "+self.isReserved2()+", Reserved3 = "+self.isReserved3()+", Reserved4 = "+self.isReserved4()+", EnableTracing = "+self.isEnableTracing()+")"
+    return f"MOptions(InvertDirection = {self.isInvertDirection()}, Independent = {self.isIndependent()}, InvertOutputs = {self.isInvertOutputs()}, Reserved1 = {self.isReserved1()}, Reserved2 = {self.isReserved2()}, Reserved3 = {self.isReserved3()}, Reserved4 = {self.isReserved4()}, EnableTracing = {self.isEnableTracing()})"
 
 
 

@@ -4,6 +4,9 @@ import traceback
 HOMESERVER_DEVICE_ID:int = 9998
 HOMESERVER_OBJECT_ID:int = (HOMESERVER_DEVICE_ID << 16) + (0 << 8) + 1
 
+UDP_PORT = 5855
+UDP_PORT = 9
+
 def getObjectId(deviceId:int, classId:int, instanceId:int) -> int:
   return (deviceId << 16) + (classId << 8) + instanceId
 
@@ -47,6 +50,8 @@ def bytesToWord(data:bytearray, offset) -> int:
 
 def bytesToInt(data:bytearray, offset) -> int:
   try:
+    if (len(data)<=offset[0]):
+      return 0
     result = data[offset[0]] & 0xff;
     offset[0] += 1
     return result

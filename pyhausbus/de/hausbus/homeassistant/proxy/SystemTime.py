@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.systemTime.params.EWeekDay import EWeekDay
 from pyhausbus.de.hausbus.homeassistant.proxy.systemTime.params.EDate import EDate
 from pyhausbus.de.hausbus.homeassistant.proxy.systemTime.params.EMonth import EMonth
@@ -11,6 +12,10 @@ class SystemTime(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return SystemTime(HausBusUtils.getObjectId(deviceId, 3, instanceId))
 
   """
   """

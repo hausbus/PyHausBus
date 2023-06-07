@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.helligkeitssensor.params.ELastEvent import ELastEvent
 from pyhausbus.de.hausbus.homeassistant.proxy.helligkeitssensor.params.EErrorCode import EErrorCode
 
@@ -9,6 +10,10 @@ class Helligkeitssensor(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Helligkeitssensor(HausBusUtils.getObjectId(deviceId, 39, instanceId))
 
   """
   @param brightness Helligkeitswert.

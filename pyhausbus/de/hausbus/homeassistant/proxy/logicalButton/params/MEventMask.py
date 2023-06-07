@@ -90,7 +90,7 @@ class MEventMask:
       self.setEnableFeedBack(setValue)
 
   def __str__(self):
-    return f"MEventMask(NotifyOnCovered = "+self.isNotifyOnCovered()+", NotifyOnClicked = "+self.isNotifyOnClicked()+", NotifyOnStartHold = "+self.isNotifyOnStartHold()+", NotifyOnEndHold = "+self.isNotifyOnEndHold()+", NotifyOnDoubleClicked = "+self.isNotifyOnDoubleClicked()+", NotifyOnFree = "+self.isNotifyOnFree()+", Reserved = "+self.isReserved()+", EnableFeedBack = "+self.isEnableFeedBack()+")"
+    return f"MEventMask(NotifyOnCovered = {self.isNotifyOnCovered()}, NotifyOnClicked = {self.isNotifyOnClicked()}, NotifyOnStartHold = {self.isNotifyOnStartHold()}, NotifyOnEndHold = {self.isNotifyOnEndHold()}, NotifyOnDoubleClicked = {self.isNotifyOnDoubleClicked()}, NotifyOnFree = {self.isNotifyOnFree()}, Reserved = {self.isReserved()}, EnableFeedBack = {self.isEnableFeedBack()})"
 
 
 

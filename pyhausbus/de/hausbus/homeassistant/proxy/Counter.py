@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.counter.params.MMode import MMode
 from pyhausbus.de.hausbus.homeassistant.proxy.counter.params.EErrorCode import EErrorCode
 
@@ -9,6 +10,10 @@ class Counter(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Counter(HausBusUtils.getObjectId(deviceId, 35, instanceId))
 
   """
   """

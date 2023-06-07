@@ -12,7 +12,6 @@ import pyhausbus.HausBusUtils as HausBusUtils
 import traceback
 
 RS485_GATEWAY = "#RS485#"
-UDP_PORT = 9
 EVENTS_START = 200
 RESULT_START = 128
 
@@ -60,6 +59,9 @@ class BusHandler:
 
     logging.info("classId = " + str(featureClassId) + ", functionId = " + str(functionId))
     className = ProxyFactory.getBusClassNameFor(featureClassId, functionId)
+    if (className=="de.hausbus.proxy.LogicalButton"):
+      logging.info("test")
+    
     try:
       module_name, class_name = className.rsplit(".", 1)
       module = importlib.import_module(className)

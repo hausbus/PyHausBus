@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.params.EDirection import EDirection
 from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.params.MOptions import MOptions
 from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.params.EErrorCode import EErrorCode
@@ -11,6 +12,10 @@ class Rollladen(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Rollladen(HausBusUtils.getObjectId(deviceId, 18, instanceId))
 
   """
   """

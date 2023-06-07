@@ -1,12 +1,17 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 
 class IRSensor(ABusFeature):
   CLASS_ID:int = 33
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return IRSensor(HausBusUtils.getObjectId(deviceId, 33, instanceId))
 
   """
   """

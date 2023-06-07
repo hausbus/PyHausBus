@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.taupunkt.params.EErrorCode import EErrorCode
 from pyhausbus.de.hausbus.homeassistant.proxy.taupunkt.params.ELastEvent import ELastEvent
 
@@ -9,6 +10,10 @@ class Taupunkt(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return Taupunkt(HausBusUtils.getObjectId(deviceId, 42, instanceId))
 
   """
   """

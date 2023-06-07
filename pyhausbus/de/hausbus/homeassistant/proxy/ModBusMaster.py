@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.ESensorType import ESensorType
 
 class ModBusMaster(ABusFeature):
@@ -8,6 +9,10 @@ class ModBusMaster(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return ModBusMaster(HausBusUtils.getObjectId(deviceId, 45, instanceId))
 
   """
   @param idx index of the configuration slot.

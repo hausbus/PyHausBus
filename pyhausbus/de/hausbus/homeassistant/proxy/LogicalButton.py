@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.EErrorCode import EErrorCode
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.EStatus import EStatus
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.MEventMask import MEventMask
@@ -12,6 +13,10 @@ class LogicalButton(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return LogicalButton(HausBusUtils.getObjectId(deviceId, 20, instanceId))
 
   """
   """

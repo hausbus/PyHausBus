@@ -23,7 +23,7 @@ class EFirmwareId(Enum):
 
     return EFirmwareId.SER_UNKNOWN
   def getTemplateId(self) -> str:
-    if (self.name.startswith("HB")):
+    if (self.name.startsWith("HB")):
         return "HBC"
     return self.name
 

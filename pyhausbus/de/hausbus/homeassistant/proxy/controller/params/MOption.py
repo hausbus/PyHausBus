@@ -90,7 +90,7 @@ class MOption:
       self.setReserved3(setValue)
 
   def __str__(self):
-    return f"MOption(SEND_TRIGGERED_RULE_EVENT = "+self.isSEND_TRIGGERED_RULE_EVENT()+", READ_ONLY_GATEWAYS = "+self.isREAD_ONLY_GATEWAYS()+", REPORT_GATEWAY_LOAD = "+self.isREPORT_GATEWAY_LOAD()+", REPORT_INTERNAL_TEMPERATURE = "+self.isREPORT_INTERNAL_TEMPERATURE()+", SEND_ZERO_CROSS_DATA = "+self.isSEND_ZERO_CROSS_DATA()+", Reserved1 = "+self.isReserved1()+", Reserved2 = "+self.isReserved2()+", Reserved3 = "+self.isReserved3()+")"
+    return f"MOption(SEND_TRIGGERED_RULE_EVENT = {self.isSEND_TRIGGERED_RULE_EVENT()}, READ_ONLY_GATEWAYS = {self.isREAD_ONLY_GATEWAYS()}, REPORT_GATEWAY_LOAD = {self.isREPORT_GATEWAY_LOAD()}, REPORT_INTERNAL_TEMPERATURE = {self.isREPORT_INTERNAL_TEMPERATURE()}, SEND_ZERO_CROSS_DATA = {self.isSEND_ZERO_CROSS_DATA()}, Reserved1 = {self.isReserved1()}, Reserved2 = {self.isReserved2()}, Reserved3 = {self.isReserved3()})"
 
 
 

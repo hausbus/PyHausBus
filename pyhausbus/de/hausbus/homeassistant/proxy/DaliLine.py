@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.daliLine.params.EErrorCode import EErrorCode
 
 class DaliLine(ABusFeature):
@@ -8,6 +9,10 @@ class DaliLine(ABusFeature):
 
   def __init__ (self,objectId:int):
     super().__init__(objectId)
+
+  @staticmethod
+  def create(deviceId:int, instanceId:int):
+    return DaliLine(HausBusUtils.getObjectId(deviceId, 160, instanceId))
 
   """
   @param address0 .

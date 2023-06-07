@@ -33,7 +33,6 @@ class Main(IBusDataListener):
     ''' Example how to directly create a feature with given class and intance id'''
     deckenLicht = Dimmer.create(22784, 5)
     deckenLicht.setBrightness(0, 0)
-    ''''''
 
   def busDataReceived(self, busDataMessage):
     print("got: " + str(busDataMessage.getData()) + " from " + str(ObjectId(busDataMessage.getSenderObjectId())) + " to " + str(ObjectId(busDataMessage.getReceiverObjectId())))

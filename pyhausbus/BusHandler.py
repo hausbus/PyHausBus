@@ -33,6 +33,7 @@ class BusHandler:
   def __init__(self):
     if BusHandler._singleInstance is None:
       self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+      self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
       x = UdpReceiveWorker(self.busDataReceived)
       x.startWorker()
       self._getBroadcastIp()

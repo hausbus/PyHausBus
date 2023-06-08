@@ -1,9 +1,12 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.EErrorCode import EErrorCode
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.EStatus import EStatus
+from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.data.Status import Status
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.MEventMask import MEventMask
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.MOptionMask import MOptionMask
 from pyhausbus.de.hausbus.homeassistant.proxy.logicalButton.params.MOptions import MOptions
@@ -23,10 +26,9 @@ class LogicalButton(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param button1 instanzId des 1.Tasters.
@@ -65,6 +67,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(led6)
     hbCommand.addByte(led7)
     hbCommand.addByte(led8)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -105,6 +108,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(led6)
     hbCommand.addByte(led7)
     hbCommand.addByte(led8)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -115,6 +119,7 @@ class LogicalButton(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -123,6 +128,7 @@ class LogicalButton(ABusFeature):
   def evOff(self):
     logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -133,6 +139,7 @@ class LogicalButton(ABusFeature):
     logging.info("evOn"+" brightness = "+str(brightness))
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     hbCommand.addByte(brightness)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -141,6 +148,7 @@ class LogicalButton(ABusFeature):
   def evBlink(self):
     logging.info("evBlink")
     hbCommand = HausBusCommand(self.objectId, 202, "evBlink")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -151,6 +159,7 @@ class LogicalButton(ABusFeature):
     logging.info("off"+" offDelay = "+str(offDelay))
     hbCommand = HausBusCommand(self.objectId, 2, "off")
     hbCommand.addWord(offDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -165,6 +174,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
     hbCommand.addWord(onDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -181,6 +191,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(offTime)
     hbCommand.addByte(onTime)
     hbCommand.addByte(quantity)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -191,6 +202,7 @@ class LogicalButton(ABusFeature):
     logging.info("Status"+" status = "+str(status))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(status.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -199,10 +211,9 @@ class LogicalButton(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param holdTimeout Zeit a 10ms.
@@ -217,6 +228,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(waitForDoubleClickTimeout)
     hbCommand.addByte(eventMask.getValue())
     hbCommand.addByte(optionMask.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -233,6 +245,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(minBrightness)
     hbCommand.addWord(timeBase)
     hbCommand.addByte(options.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -243,6 +256,7 @@ class LogicalButton(ABusFeature):
     logging.info("setMinBrightness"+" minBrightness = "+str(minBrightness))
     hbCommand = HausBusCommand(self.objectId, 6, "setMinBrightness")
     hbCommand.addByte(minBrightness)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -251,6 +265,7 @@ class LogicalButton(ABusFeature):
   def getMinBrightness(self):
     logging.info("getMinBrightness")
     hbCommand = HausBusCommand(self.objectId, 7, "getMinBrightness")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

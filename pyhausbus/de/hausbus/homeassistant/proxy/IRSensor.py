@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 
 class IRSensor(ABusFeature):
@@ -18,6 +19,7 @@ class IRSensor(ABusFeature):
   def off(self):
     logging.info("off")
     hbCommand = HausBusCommand(self.objectId, 0, "off")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -26,6 +28,7 @@ class IRSensor(ABusFeature):
   def on(self):
     logging.info("on")
     hbCommand = HausBusCommand(self.objectId, 1, "on")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -38,6 +41,7 @@ class IRSensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 202, "evClicked")
     hbCommand.addWord(address)
     hbCommand.addWord(command)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -46,6 +50,7 @@ class IRSensor(ABusFeature):
   def evOff(self):
     logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -54,6 +59,7 @@ class IRSensor(ABusFeature):
   def evOn(self):
     logging.info("evOn")
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -66,6 +72,7 @@ class IRSensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 203, "evHoldStart")
     hbCommand.addWord(address)
     hbCommand.addWord(command)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -78,6 +85,7 @@ class IRSensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 204, "evHoldEnd")
     hbCommand.addWord(address)
     hbCommand.addWord(command)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

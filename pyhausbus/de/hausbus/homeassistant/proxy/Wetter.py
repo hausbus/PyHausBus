@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.WeekTime import WeekTime
 
@@ -19,6 +20,7 @@ class Wetter(ABusFeature):
   def getWeather(self):
     logging.info("getWeather")
     hbCommand = HausBusCommand(self.objectId, 5, "getWeather")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -41,6 +43,7 @@ class Wetter(ABusFeature):
     hbCommand.addWord(sunrise.getValue())
     hbCommand.addWord(sunset.getValue())
     hbCommand.addString(text)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

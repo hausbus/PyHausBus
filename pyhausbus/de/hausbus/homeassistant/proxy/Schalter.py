@@ -1,10 +1,13 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.schalter.data.Status import Status
 from pyhausbus.de.hausbus.homeassistant.proxy.schalter.params.EState import EState
 from pyhausbus.de.hausbus.homeassistant.proxy.schalter.params.EErrorCode import EErrorCode
 from pyhausbus.de.hausbus.homeassistant.proxy.schalter.params.MOptions import MOptions
+from pyhausbus.de.hausbus.homeassistant.proxy.schalter.data.Configuration import Configuration
 
 class Schalter(ABusFeature):
   CLASS_ID:int = 19
@@ -27,6 +30,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(offTime)
     hbCommand.addByte(onTime)
     hbCommand.addByte(quantity)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -39,6 +43,7 @@ class Schalter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "on")
     hbCommand.addWord(duration)
     hbCommand.addWord(onDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -49,6 +54,7 @@ class Schalter(ABusFeature):
     logging.info("off"+" offDelay = "+str(offDelay))
     hbCommand = HausBusCommand(self.objectId, 2, "off")
     hbCommand.addWord(offDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -59,6 +65,7 @@ class Schalter(ABusFeature):
     logging.info("evOn"+" duration = "+str(duration))
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     hbCommand.addWord(duration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -67,6 +74,7 @@ class Schalter(ABusFeature):
   def evOff(self):
     logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -75,10 +83,9 @@ class Schalter(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param state .
@@ -89,6 +96,7 @@ class Schalter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(state.value)
     hbCommand.addWord(duration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -99,6 +107,7 @@ class Schalter(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -107,6 +116,7 @@ class Schalter(ABusFeature):
   def evToggle(self):
     logging.info("evToggle")
     hbCommand = HausBusCommand(self.objectId, 202, "evToggle")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -125,6 +135,7 @@ class Schalter(ABusFeature):
     hbCommand.addWord(timeBase)
     hbCommand.addByte(options.getValue())
     hbCommand.addByte(disableBitIndex)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -133,10 +144,9 @@ class Schalter(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param maxOnTime Maximale Zeit.
@@ -153,6 +163,7 @@ class Schalter(ABusFeature):
     hbCommand.addWord(timeBase)
     hbCommand.addByte(options.getValue())
     hbCommand.addByte(disableBitIndex)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -163,6 +174,7 @@ class Schalter(ABusFeature):
     logging.info("evCmdDelay"+" cmdDelay = "+str(cmdDelay))
     hbCommand = HausBusCommand(self.objectId, 203, "evCmdDelay")
     hbCommand.addWord(cmdDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -171,6 +183,7 @@ class Schalter(ABusFeature):
   def evDisabled(self):
     logging.info("evDisabled")
     hbCommand = HausBusCommand(self.objectId, 204, "evDisabled")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

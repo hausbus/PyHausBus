@@ -1,9 +1,12 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.params.EDirection import EDirection
 from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.params.MOptions import MOptions
+from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.data.Status import Status
 from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.params.EErrorCode import EErrorCode
 from pyhausbus.de.hausbus.homeassistant.proxy.rollladen.params.ENewState import ENewState
 
@@ -22,10 +25,9 @@ class Rollladen(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param position in Prozent.
@@ -34,6 +36,7 @@ class Rollladen(ABusFeature):
     logging.info("moveToPosition"+" position = "+str(position))
     hbCommand = HausBusCommand(self.objectId, 2, "moveToPosition")
     hbCommand.addByte(position)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -44,6 +47,7 @@ class Rollladen(ABusFeature):
     logging.info("start"+" direction = "+str(direction))
     hbCommand = HausBusCommand(self.objectId, 3, "start")
     hbCommand.addByte(direction.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -52,6 +56,7 @@ class Rollladen(ABusFeature):
   def stop(self):
     logging.info("stop")
     hbCommand = HausBusCommand(self.objectId, 4, "stop")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -66,6 +71,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(closeTime)
     hbCommand.addByte(openTime)
     hbCommand.addByte(options.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -76,6 +82,7 @@ class Rollladen(ABusFeature):
     logging.info("evClosed"+" position = "+str(position))
     hbCommand = HausBusCommand(self.objectId, 200, "evClosed")
     hbCommand.addByte(position)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -86,6 +93,7 @@ class Rollladen(ABusFeature):
     logging.info("evStart"+" direction = "+str(direction))
     hbCommand = HausBusCommand(self.objectId, 201, "evStart")
     hbCommand.addByte(direction.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -94,10 +102,9 @@ class Rollladen(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param position .
@@ -106,6 +113,7 @@ class Rollladen(ABusFeature):
     logging.info("Status"+" position = "+str(position))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(position)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -120,6 +128,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(closeTime)
     hbCommand.addByte(openTime)
     hbCommand.addByte(options.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -130,6 +139,7 @@ class Rollladen(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -140,6 +150,7 @@ class Rollladen(ABusFeature):
     logging.info("setPosition"+" position = "+str(position))
     hbCommand = HausBusCommand(self.objectId, 6, "setPosition")
     hbCommand.addByte(position)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -148,6 +159,7 @@ class Rollladen(ABusFeature):
   def evOpen(self):
     logging.info("evOpen")
     hbCommand = HausBusCommand(self.objectId, 202, "evOpen")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -160,6 +172,7 @@ class Rollladen(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 251, "evNewMainState")
     hbCommand.addByte(newState.value)
     hbCommand.addByte(preState.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -172,6 +185,7 @@ class Rollladen(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 252, "evNewSubState")
     hbCommand.addByte(newState.value)
     hbCommand.addByte(preState.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

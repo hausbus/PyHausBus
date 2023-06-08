@@ -1,7 +1,9 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.daliLine.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.daliLine.params.EErrorCode import EErrorCode
 
 class DaliLine(ABusFeature):
@@ -27,10 +29,9 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(address1)
     hbCommand.addByte(address2)
     hbCommand.addByte(address3)
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param address0 .
@@ -45,6 +46,7 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(address1)
     hbCommand.addByte(address2)
     hbCommand.addByte(address3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -53,6 +55,7 @@ class DaliLine(ABusFeature):
   def allOff(self):
     logging.info("allOff")
     hbCommand = HausBusCommand(self.objectId, 2, "allOff")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -61,6 +64,7 @@ class DaliLine(ABusFeature):
   def allOn(self):
     logging.info("allOn")
     hbCommand = HausBusCommand(self.objectId, 3, "allOn")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -73,6 +77,7 @@ class DaliLine(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 4, "sendCommand")
     hbCommand.addByte(command)
     hbCommand.addByte(address)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -89,6 +94,7 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(address1)
     hbCommand.addByte(address2)
     hbCommand.addByte(address3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -99,6 +105,7 @@ class DaliLine(ABusFeature):
     logging.info("Status"+" status = "+str(status))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(status)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -109,6 +116,7 @@ class DaliLine(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

@@ -1,6 +1,7 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 
 class PCServer(ABusFeature):
@@ -20,6 +21,7 @@ class PCServer(ABusFeature):
     logging.info("exec"+" command = "+str(command))
     hbCommand = HausBusCommand(self.objectId, 0, "exec")
     hbCommand.addString(command)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -32,6 +34,7 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 126, "setVariable")
     hbCommand.addByte(varId)
     hbCommand.addByte(varValue)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -40,6 +43,7 @@ class PCServer(ABusFeature):
   def shutdown(self):
     logging.info("shutdown")
     hbCommand = HausBusCommand(self.objectId, 11, "shutdown")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -48,6 +52,7 @@ class PCServer(ABusFeature):
   def restart(self):
     logging.info("restart")
     hbCommand = HausBusCommand(self.objectId, 12, "restart")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -56,6 +61,7 @@ class PCServer(ABusFeature):
   def quit(self):
     logging.info("quit")
     hbCommand = HausBusCommand(self.objectId, 20, "quit")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -64,6 +70,7 @@ class PCServer(ABusFeature):
   def evOnline(self):
     logging.info("evOnline")
     hbCommand = HausBusCommand(self.objectId, 200, "evOnline")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -72,6 +79,7 @@ class PCServer(ABusFeature):
   def evOffline(self):
     logging.info("evOffline")
     hbCommand = HausBusCommand(self.objectId, 201, "evOffline")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -80,6 +88,7 @@ class PCServer(ABusFeature):
   def standby(self):
     logging.info("standby")
     hbCommand = HausBusCommand(self.objectId, 10, "standby")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -88,6 +97,7 @@ class PCServer(ABusFeature):
   def reloadUserPlugin(self):
     logging.info("reloadUserPlugin")
     hbCommand = HausBusCommand(self.objectId, 13, "reloadUserPlugin")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

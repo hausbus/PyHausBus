@@ -1,8 +1,12 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.led.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.led.params.MOptions import MOptions
+from pyhausbus.de.hausbus.homeassistant.proxy.led.data.Status import Status
+from pyhausbus.de.hausbus.homeassistant.proxy.led.data.MinBrightness import MinBrightness
 
 class Led(ABusFeature):
   CLASS_ID:int = 21
@@ -19,10 +23,9 @@ class Led(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param dimmOffset 0-100% offset auf den im Kommando angegebenen Helligkeitswert.
@@ -37,6 +40,7 @@ class Led(ABusFeature):
     hbCommand.addByte(minBrightness)
     hbCommand.addWord(timeBase)
     hbCommand.addByte(options.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -51,6 +55,7 @@ class Led(ABusFeature):
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
     hbCommand.addWord(onDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -67,6 +72,7 @@ class Led(ABusFeature):
     hbCommand.addByte(offTime)
     hbCommand.addByte(onTime)
     hbCommand.addByte(quantity)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -75,10 +81,9 @@ class Led(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param dimmOffset 0-100% offset auf den im Kommando angegebenen Helligkeitswert.
@@ -93,6 +98,7 @@ class Led(ABusFeature):
     hbCommand.addByte(minBrightness)
     hbCommand.addWord(timeBase)
     hbCommand.addByte(options.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -105,6 +111,7 @@ class Led(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -113,6 +120,7 @@ class Led(ABusFeature):
   def evOff(self):
     logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -125,6 +133,7 @@ class Led(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -133,6 +142,7 @@ class Led(ABusFeature):
   def evBlink(self):
     logging.info("evBlink")
     hbCommand = HausBusCommand(self.objectId, 202, "evBlink")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -143,6 +153,7 @@ class Led(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -153,6 +164,7 @@ class Led(ABusFeature):
     logging.info("off"+" offDelay = "+str(offDelay))
     hbCommand = HausBusCommand(self.objectId, 2, "off")
     hbCommand.addWord(offDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -163,6 +175,7 @@ class Led(ABusFeature):
     logging.info("setMinBrightness"+" minBrightness = "+str(minBrightness))
     hbCommand = HausBusCommand(self.objectId, 6, "setMinBrightness")
     hbCommand.addByte(minBrightness)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -173,6 +186,7 @@ class Led(ABusFeature):
     logging.info("evCmdDelay"+" cmdDelay = "+str(cmdDelay))
     hbCommand = HausBusCommand(self.objectId, 203, "evCmdDelay")
     hbCommand.addWord(cmdDelay)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -181,10 +195,9 @@ class Led(ABusFeature):
   def getMinBrightness(self):
     logging.info("getMinBrightness")
     hbCommand = HausBusCommand(self.objectId, 7, "getMinBrightness")
+    ResultWorker()._setResultInfo(MinBrightness,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param minBrightness Eine ausgeschaltete LED leuchtet immer noch mit dieser Helligkeit 0-100%.
@@ -193,6 +206,7 @@ class Led(ABusFeature):
     logging.info("MinBrightness"+" minBrightness = "+str(minBrightness))
     hbCommand = HausBusCommand(self.objectId, 130, "MinBrightness")
     hbCommand.addByte(minBrightness)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

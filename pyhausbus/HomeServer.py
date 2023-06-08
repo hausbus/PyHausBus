@@ -12,20 +12,23 @@ import traceback
 import time
 import threading
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.EvStarted import EvStarted
+from pyhausbus.ResultWorker import ResultWorker
 
 
-class HomeServer: 
-  bushandler=None
+class HomeServer:
+  _instance = None 
+  bushandler = None
   
+  def __new__(cls, *args, **kwargs):
+    if not cls._instance:
+      cls._instance = super().__new__(cls, *args, **kwargs)
+    return cls._instance
+      
   def __init__(self):
     logging.info("init")
+    print("homeserver init")
     self.bushandler = BusHandler.getInstance()
-    self.resultClass=None
-    self.resultSenderObjectId=0
-    self.resultObject=None
-    self.bushandler.addBusEventListener(self)
-    self.condition = threading.Condition()
-
+    self.bushandler.addBusEventListener(ResultWorker())
     
   def searchDevices(self):
     controler = Controller(0)
@@ -59,20 +62,6 @@ class HomeServer:
         print("error:", err)
         traceback.print_exc()
     return result
-
-  def setResultInfo(self, resultClass, resultSenderObjectId:int):
-    self.resultClass = resultClass
-    self.resultSenderObjectId=resultSenderObjectId
-  
-  def waitForResult(self, timeoutInSeconds:int):
-    start_time = time.time()
-    end_time = start_time + timeoutInSeconds
-    
-    with self.condition:
-      while self.resultObject==None and time.time() < end_time:
-        self.condition.wait(1)
-      
-    return self.resultObject
   
   def busDataReceived(self, busDataMessage):
 
@@ -83,9 +72,4 @@ class HomeServer:
     ''' if a device restarts during runtime, we automatically read moduleId'''
     if (isinstance(busDataMessage.getData(), EvStarted)):
       Controller(busDataMessage.getSenderObjectId()).getModuleId()
-
-    if (self.resultClass!=None and isinstance(busDataMessage.getData(), self.resultClass)):
-      with self.condition:
-        self.resultObject = busDataMessage.getData()
-        self.condition.notify()
-        
+       

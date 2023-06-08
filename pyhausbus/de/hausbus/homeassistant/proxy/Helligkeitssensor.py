@@ -1,8 +1,11 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.helligkeitssensor.params.ELastEvent import ELastEvent
+from pyhausbus.de.hausbus.homeassistant.proxy.helligkeitssensor.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.helligkeitssensor.data.Status import Status
 from pyhausbus.de.hausbus.homeassistant.proxy.helligkeitssensor.params.EErrorCode import EErrorCode
 
 class Helligkeitssensor(ABusFeature):
@@ -24,6 +27,7 @@ class Helligkeitssensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 203, "evStatus")
     hbCommand.addWord(brightness)
     hbCommand.addByte(lastEvent.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -32,6 +36,7 @@ class Helligkeitssensor(ABusFeature):
   def evDark(self):
     logging.info("evDark")
     hbCommand = HausBusCommand(self.objectId, 200, "evDark")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -40,6 +45,7 @@ class Helligkeitssensor(ABusFeature):
   def evLight(self):
     logging.info("evLight")
     hbCommand = HausBusCommand(self.objectId, 201, "evLight")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -48,6 +54,7 @@ class Helligkeitssensor(ABusFeature):
   def evBright(self):
     logging.info("evBright")
     hbCommand = HausBusCommand(self.objectId, 202, "evBright")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -56,10 +63,9 @@ class Helligkeitssensor(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param lowerThreshold untere Helligkeitsschwelle.
@@ -82,6 +88,7 @@ class Helligkeitssensor(ABusFeature):
     hbCommand.addByte(hysteresis)
     hbCommand.addSByte(calibration)
     hbCommand.addByte(deltaSensorID)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -90,10 +97,9 @@ class Helligkeitssensor(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param lowerThreshold untere Helligkeitsschwelle.
@@ -116,6 +122,7 @@ class Helligkeitssensor(ABusFeature):
     hbCommand.addByte(hysteresis)
     hbCommand.addSByte(calibration)
     hbCommand.addByte(deltaSensorID)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -126,6 +133,7 @@ class Helligkeitssensor(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -138,6 +146,7 @@ class Helligkeitssensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addWord(brightness)
     hbCommand.addByte(lastEvent.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

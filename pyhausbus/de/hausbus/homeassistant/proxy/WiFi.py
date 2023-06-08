@@ -1,8 +1,11 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.wiFi.params.EErrorCode import EErrorCode
+from pyhausbus.de.hausbus.homeassistant.proxy.wiFi.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.wiFi.data.CurrentIp import CurrentIp
 
 class WiFi(ABusFeature):
   CLASS_ID:int = 164
@@ -21,6 +24,7 @@ class WiFi(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -29,10 +33,9 @@ class WiFi(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param mac1 .
@@ -51,6 +54,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(mac4)
     hbCommand.addByte(mac5)
     hbCommand.addByte(mac6)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -73,6 +77,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(Server_IP1)
     hbCommand.addByte(Server_IP2)
     hbCommand.addByte(Server_IP3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -95,6 +100,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(Server_IP1)
     hbCommand.addByte(Server_IP2)
     hbCommand.addByte(Server_IP3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -103,10 +109,9 @@ class WiFi(ABusFeature):
   def getCurrentIp(self):
     logging.info("getCurrentIp")
     hbCommand = HausBusCommand(self.objectId, 3, "getCurrentIp")
+    ResultWorker()._setResultInfo(CurrentIp,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param IP0 .
@@ -121,6 +126,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(IP1)
     hbCommand.addByte(IP2)
     hbCommand.addByte(IP3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

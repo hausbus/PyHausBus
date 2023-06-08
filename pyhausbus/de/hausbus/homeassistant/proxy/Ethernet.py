@@ -1,9 +1,12 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.ethernet.params.MOptions import MOptions
+from pyhausbus.de.hausbus.homeassistant.proxy.ethernet.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.ethernet.params.EErrorCode import EErrorCode
+from pyhausbus.de.hausbus.homeassistant.proxy.ethernet.data.CurrentIp import CurrentIp
 
 class Ethernet(ABusFeature):
   CLASS_ID:int = 162
@@ -32,6 +35,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(mac2)
     hbCommand.addByte(mac1)
     hbCommand.addByte(mac0)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -60,6 +64,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(Server_IP1)
     hbCommand.addByte(Server_IP2)
     hbCommand.addByte(Server_IP3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -88,6 +93,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(Server_IP1)
     hbCommand.addByte(Server_IP2)
     hbCommand.addByte(Server_IP3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -96,10 +102,9 @@ class Ethernet(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param errorCode .
@@ -108,6 +113,7 @@ class Ethernet(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -124,6 +130,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(IP1)
     hbCommand.addByte(IP2)
     hbCommand.addByte(IP3)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -132,9 +139,8 @@ class Ethernet(ABusFeature):
   def getCurrentIp(self):
     logging.info("getCurrentIp")
     hbCommand = HausBusCommand(self.objectId, 3, "getCurrentIp")
+    ResultWorker()._setResultInfo(CurrentIp,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
 

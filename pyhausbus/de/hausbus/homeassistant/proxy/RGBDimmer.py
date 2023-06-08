@@ -1,7 +1,10 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.rGBDimmer.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.rGBDimmer.data.Status import Status
 
 class RGBDimmer(ABusFeature):
   CLASS_ID:int = 22
@@ -18,6 +21,7 @@ class RGBDimmer(ABusFeature):
   def evOff(self):
     logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -34,6 +38,7 @@ class RGBDimmer(ABusFeature):
     hbCommand.addByte(brightnessGreen)
     hbCommand.addByte(brightnessBlue)
     hbCommand.addWord(duration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -50,6 +55,7 @@ class RGBDimmer(ABusFeature):
     hbCommand.addByte(brightnessGreen)
     hbCommand.addByte(brightnessBlue)
     hbCommand.addWord(duration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -58,10 +64,9 @@ class RGBDimmer(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param fadingTime Zeit a 50ms um 0-100% zu dimmen.
@@ -70,6 +75,7 @@ class RGBDimmer(ABusFeature):
     logging.info("setConfiguration"+" fadingTime = "+str(fadingTime))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addByte(fadingTime)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -78,10 +84,9 @@ class RGBDimmer(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param fadingTime Zeit a 50ms um zwischen den unterschiedlichen Helligkeitsstufen zu schalten.
@@ -90,6 +95,7 @@ class RGBDimmer(ABusFeature):
     logging.info("Configuration"+" fadingTime = "+str(fadingTime))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addByte(fadingTime)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -106,6 +112,7 @@ class RGBDimmer(ABusFeature):
     hbCommand.addByte(brightnessGreen)
     hbCommand.addByte(brightnessBlue)
     hbCommand.addWord(duration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

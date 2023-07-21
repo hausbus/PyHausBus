@@ -1,7 +1,10 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.temperatursensor.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.temperatursensor.data.Status import Status
 from pyhausbus.de.hausbus.homeassistant.proxy.temperatursensor.params.ELastEvent import ELastEvent
 from pyhausbus.de.hausbus.homeassistant.proxy.temperatursensor.params.EErrorCode import EErrorCode
 
@@ -20,6 +23,7 @@ class Temperatursensor(ABusFeature):
   def evCold(self):
     logging.info("evCold")
     hbCommand = HausBusCommand(self.objectId, 200, "evCold")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -28,6 +32,7 @@ class Temperatursensor(ABusFeature):
   def evWarm(self):
     logging.info("evWarm")
     hbCommand = HausBusCommand(self.objectId, 201, "evWarm")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -36,6 +41,7 @@ class Temperatursensor(ABusFeature):
   def evHot(self):
     logging.info("evHot")
     hbCommand = HausBusCommand(self.objectId, 202, "evHot")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -44,10 +50,9 @@ class Temperatursensor(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param lowerThreshold untere Temperaturschwelle.
@@ -74,6 +79,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(hysteresis)
     hbCommand.addSByte(calibration)
     hbCommand.addByte(deltaSensorID)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -102,6 +108,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(hysteresis)
     hbCommand.addSByte(calibration)
     hbCommand.addByte(deltaSensorID)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -110,10 +117,9 @@ class Temperatursensor(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param celsius Grad Celsius.
@@ -126,6 +132,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addSByte(celsius)
     hbCommand.addSByte(centiCelsius)
     hbCommand.addByte(lastEvent.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -136,6 +143,7 @@ class Temperatursensor(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -150,6 +158,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addSByte(celsius)
     hbCommand.addSByte(centiCelsius)
     hbCommand.addByte(lastEvent.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

@@ -6,16 +6,30 @@ from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EI
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import RemoteObjects
 import pyhausbus.de.hausbus.homeassistant.proxy.ProxyFactory as ProxyFactory
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
 import importlib
 import traceback
+import time
+import threading
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.EvStarted import EvStarted
+from pyhausbus.ResultWorker import ResultWorker
 
-class HomeServer: 
-  bushandler=None
+
+class HomeServer:
+  _instance = None 
+  bushandler = None
   
+  def __new__(cls, *args, **kwargs):
+    if not cls._instance:
+      cls._instance = super().__new__(cls, *args, **kwargs)
+    return cls._instance
+      
   def __init__(self):
     logging.info("init")
+    print("homeserver init")
     self.bushandler = BusHandler.getInstance()
-
+    self.bushandler.addBusEventListener(ResultWorker())
+    
   def searchDevices(self):
     controler = Controller(0)
     controler.getModuleId(EIndex.RUNNING)
@@ -48,3 +62,14 @@ class HomeServer:
         print("error:", err)
         traceback.print_exc()
     return result
+  
+  def busDataReceived(self, busDataMessage):
+
+    ''' if we receive a ModuleId from a device we automatically ask for the remote objects'''
+    if (isinstance(busDataMessage.getData(), ModuleId)):
+      Controller(busDataMessage.getSenderObjectId()).getRemoteObjects()
+    
+    ''' if a device restarts during runtime, we automatically read moduleId'''
+    if (isinstance(busDataMessage.getData(), EvStarted)):
+      Controller(busDataMessage.getSenderObjectId()).getModuleId()
+       

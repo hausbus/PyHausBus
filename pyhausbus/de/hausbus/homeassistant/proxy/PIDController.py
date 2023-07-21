@@ -1,7 +1,9 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.params.EEnable import EEnable
 from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.params.EErrorCode import EErrorCode
 
@@ -20,10 +22,9 @@ class PIDController(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param P P-Anteil des Reglers.
@@ -46,6 +47,7 @@ class PIDController(ABusFeature):
     hbCommand.addDWord(actorObjectId)
     hbCommand.addWord(timeout)
     hbCommand.addByte(hysteresis)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -70,6 +72,7 @@ class PIDController(ABusFeature):
     hbCommand.addDWord(actorObjectId)
     hbCommand.addWord(timeout)
     hbCommand.addByte(hysteresis)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -80,6 +83,7 @@ class PIDController(ABusFeature):
     logging.info("setTargetValue"+" targetValue = "+str(targetValue))
     hbCommand = HausBusCommand(self.objectId, 2, "setTargetValue")
     hbCommand.addWord(targetValue)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -90,6 +94,7 @@ class PIDController(ABusFeature):
     logging.info("enable"+" enable = "+str(enable))
     hbCommand = HausBusCommand(self.objectId, 3, "enable")
     hbCommand.addByte(enable.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -98,6 +103,7 @@ class PIDController(ABusFeature):
   def evOn(self):
     logging.info("evOn")
     hbCommand = HausBusCommand(self.objectId, 200, "evOn")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -108,6 +114,7 @@ class PIDController(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -116,6 +123,7 @@ class PIDController(ABusFeature):
   def evOff(self):
     logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 201, "evOff")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

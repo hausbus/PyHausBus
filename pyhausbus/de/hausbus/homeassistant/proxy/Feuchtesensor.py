@@ -1,8 +1,11 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.feuchtesensor.params.EErrorCode import EErrorCode
+from pyhausbus.de.hausbus.homeassistant.proxy.feuchtesensor.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.feuchtesensor.data.Status import Status
 from pyhausbus.de.hausbus.homeassistant.proxy.feuchtesensor.params.ELastEvent import ELastEvent
 
 class Feuchtesensor(ABusFeature):
@@ -20,6 +23,7 @@ class Feuchtesensor(ABusFeature):
   def evDry(self):
     logging.info("evDry")
     hbCommand = HausBusCommand(self.objectId, 200, "evDry")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -28,6 +32,7 @@ class Feuchtesensor(ABusFeature):
   def evConfortable(self):
     logging.info("evConfortable")
     hbCommand = HausBusCommand(self.objectId, 201, "evConfortable")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -36,6 +41,7 @@ class Feuchtesensor(ABusFeature):
   def evWet(self):
     logging.info("evWet")
     hbCommand = HausBusCommand(self.objectId, 202, "evWet")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -46,6 +52,7 @@ class Feuchtesensor(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -54,10 +61,9 @@ class Feuchtesensor(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param lowerThreshold untere Temperaturschwelle.
@@ -84,6 +90,7 @@ class Feuchtesensor(ABusFeature):
     hbCommand.addByte(hysteresis)
     hbCommand.addSByte(calibration)
     hbCommand.addByte(deltaSensorID)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -92,10 +99,9 @@ class Feuchtesensor(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param lowerThreshold untere Temperaturschwelle.
@@ -122,6 +128,7 @@ class Feuchtesensor(ABusFeature):
     hbCommand.addByte(hysteresis)
     hbCommand.addSByte(calibration)
     hbCommand.addByte(deltaSensorID)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -136,6 +143,7 @@ class Feuchtesensor(ABusFeature):
     hbCommand.addByte(relativeHumidity)
     hbCommand.addByte(centiHumidity)
     hbCommand.addByte(lastEvent.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -150,6 +158,7 @@ class Feuchtesensor(ABusFeature):
     hbCommand.addByte(relativeHumidity)
     hbCommand.addByte(centiHumidity)
     hbCommand.addByte(lastEvent.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

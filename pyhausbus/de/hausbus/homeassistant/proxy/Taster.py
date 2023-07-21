@@ -1,11 +1,15 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.taster.params.EState import EState
+from pyhausbus.de.hausbus.homeassistant.proxy.taster.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.taster.params.MEventMask import MEventMask
 from pyhausbus.de.hausbus.homeassistant.proxy.taster.params.MOptionMask import MOptionMask
 from pyhausbus.de.hausbus.homeassistant.proxy.taster.params.EEnable import EEnable
+from pyhausbus.de.hausbus.homeassistant.proxy.taster.data.Status import Status
+from pyhausbus.de.hausbus.homeassistant.proxy.taster.data.Enabled import Enabled
 
 class Taster(ABusFeature):
   CLASS_ID:int = 16
@@ -24,6 +28,7 @@ class Taster(ABusFeature):
     logging.info("evClicked"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 201, "evClicked")
     hbCommand.addByte(state.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -34,6 +39,7 @@ class Taster(ABusFeature):
     logging.info("evDoubleClick"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 202, "evDoubleClick")
     hbCommand.addByte(state.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -44,6 +50,7 @@ class Taster(ABusFeature):
     logging.info("evHoldStart"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 203, "evHoldStart")
     hbCommand.addByte(state.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -54,6 +61,7 @@ class Taster(ABusFeature):
     logging.info("evHoldEnd"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 204, "evHoldEnd")
     hbCommand.addByte(state.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -62,10 +70,9 @@ class Taster(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param holdTimeout Zeit a 10ms.
@@ -82,6 +89,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(eventMask.getValue())
     hbCommand.addByte(optionMask.getValue())
     hbCommand.addByte(debounceTime)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -100,6 +108,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(eventMask.getValue())
     hbCommand.addByte(optionMask.getValue())
     hbCommand.addByte(debounceTime)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -110,6 +119,7 @@ class Taster(ABusFeature):
     logging.info("evCovered"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 200, "evCovered")
     hbCommand.addByte(state.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -120,6 +130,7 @@ class Taster(ABusFeature):
     logging.info("evFree"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 205, "evFree")
     hbCommand.addByte(state.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -130,6 +141,7 @@ class Taster(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -142,6 +154,7 @@ class Taster(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 2, "enableEvents")
     hbCommand.addByte(enable.value)
     hbCommand.addByte(disabledDuration)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -150,10 +163,9 @@ class Taster(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 3, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param state .
@@ -162,6 +174,7 @@ class Taster(ABusFeature):
     logging.info("Status"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(state.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -172,6 +185,7 @@ class Taster(ABusFeature):
     logging.info("evEnabled"+" enabled = "+str(enabled))
     hbCommand = HausBusCommand(self.objectId, 206, "evEnabled")
     hbCommand.addByte(enabled)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -182,6 +196,7 @@ class Taster(ABusFeature):
     logging.info("Enabled"+" enabled = "+str(enabled))
     hbCommand = HausBusCommand(self.objectId, 130, "Enabled")
     hbCommand.addByte(enabled)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -190,9 +205,8 @@ class Taster(ABusFeature):
   def getEnabled(self):
     logging.info("getEnabled")
     hbCommand = HausBusCommand(self.objectId, 4, "getEnabled")
+    ResultWorker()._setResultInfo(Enabled,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
 

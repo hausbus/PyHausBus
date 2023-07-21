@@ -1,17 +1,29 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EFirmwareId import EFirmwareId
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.MLogicalButtonMask import MLogicalButtonMask
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.ESlotType import ESlotType
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import RemoteObjects
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.UnusedMemory import UnusedMemory
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.MemoryData import MemoryData
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.MemoryStatus import MemoryStatus
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Pong import Pong
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EStatus import EStatus
 from pyhausbus.WeekTime import WeekTime
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EReason import EReason
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EErrorCode import EErrorCode
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Time import Time
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RuleState import RuleState
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.MOption import MOption
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EType import EType
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.SystemVariable import SystemVariable
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.UnitGroupStatus import UnitGroupStatus
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EFeatureId import EFeatureId
 
 class Controller(ABusFeature):
@@ -31,20 +43,18 @@ class Controller(ABusFeature):
     logging.info("getModuleId"+" index = "+str(index))
     hbCommand = HausBusCommand(self.objectId, 2, "getModuleId")
     hbCommand.addByte(index.value)
+    ResultWorker()._setResultInfo(ModuleId,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   """
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 5, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param name Modulname.
@@ -61,6 +71,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(majorRelease)
     hbCommand.addByte(minorRelease)
     hbCommand.addByte(firmwareId.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -101,6 +112,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(reserve)
     hbCommand.addWord(dataBlockSize)
     hbCommand.addByte(FCKE)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -109,10 +121,9 @@ class Controller(ABusFeature):
   def getRemoteObjects(self):
     logging.info("getRemoteObjects")
     hbCommand = HausBusCommand(self.objectId, 3, "getRemoteObjects")
+    ResultWorker()._setResultInfo(RemoteObjects,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param objectList Eine Liste der Verfuegbaren Objekte im Geraete.
@@ -121,6 +132,7 @@ class Controller(ABusFeature):
     logging.info("RemoteObjects"+" objectList = "+str(objectList))
     hbCommand = HausBusCommand(self.objectId, 129, "RemoteObjects")
     hbCommand.addMap(objectList)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -129,6 +141,7 @@ class Controller(ABusFeature):
   def generateRandomDeviceId(self):
     logging.info("generateRandomDeviceId")
     hbCommand = HausBusCommand(self.objectId, 0, "generateRandomDeviceId")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -137,6 +150,7 @@ class Controller(ABusFeature):
   def reset(self):
     logging.info("reset")
     hbCommand = HausBusCommand(self.objectId, 1, "reset")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -145,10 +159,9 @@ class Controller(ABusFeature):
   def getUnusedMemory(self):
     logging.info("getUnusedMemory")
     hbCommand = HausBusCommand(self.objectId, 4, "getUnusedMemory")
+    ResultWorker()._setResultInfo(UnusedMemory,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param startupDelay a 10ms.
@@ -179,6 +192,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(slotType5.value)
     hbCommand.addByte(slotType6.value)
     hbCommand.addByte(slotType7.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -191,6 +205,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 130, "UnusedMemory")
     hbCommand.addWord(freeStack)
     hbCommand.addWord(freeHeap)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -203,10 +218,9 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 7, "readMemory")
     hbCommand.addDWord(address)
     hbCommand.addWord(length)
+    ResultWorker()._setResultInfo(MemoryData,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param address .
@@ -217,26 +231,25 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 8, "writeMemory")
     hbCommand.addDWord(address)
     hbCommand.addBlob(data)
+    ResultWorker()._setResultInfo(MemoryStatus,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   """
   def ping(self):
     logging.info("ping")
     hbCommand = HausBusCommand(self.objectId, 127, "ping")
+    ResultWorker()._setResultInfo(Pong,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   """
   def pong(self):
     logging.info("pong")
     hbCommand = HausBusCommand(self.objectId, 199, "pong")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -249,6 +262,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 132, "MemoryData")
     hbCommand.addDWord(address)
     hbCommand.addBlob(data)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -261,6 +275,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 133, "MemoryStatus")
     hbCommand.addByte(status.value)
     hbCommand.addDWord(address)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -273,6 +288,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 9, "writeRules")
     hbCommand.addWord(offset)
     hbCommand.addBlob(data)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -285,6 +301,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 10, "readRules")
     hbCommand.addWord(offset)
     hbCommand.addWord(length)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -297,6 +314,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 134, "RulesData")
     hbCommand.addWord(offset)
     hbCommand.addBlob(data)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -308,6 +326,7 @@ class Controller(ABusFeature):
     logging.info("evTime"+" weektime = "+str(weektime))
     hbCommand = HausBusCommand(self.objectId, 200, "evTime")
     hbCommand.addWord(weektime.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -318,6 +337,7 @@ class Controller(ABusFeature):
     logging.info("evNewDeviceId"+" deviceId = "+str(deviceId))
     hbCommand = HausBusCommand(self.objectId, 201, "evNewDeviceId")
     hbCommand.addWord(deviceId)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -328,6 +348,7 @@ class Controller(ABusFeature):
     logging.info("evStarted"+" reason = "+str(reason))
     hbCommand = HausBusCommand(self.objectId, 202, "evStarted")
     hbCommand.addByte(reason.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -338,6 +359,7 @@ class Controller(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -346,10 +368,9 @@ class Controller(ABusFeature):
   def getTime(self):
     logging.info("getTime")
     hbCommand = HausBusCommand(self.objectId, 126, "getTime")
+    ResultWorker()._setResultInfo(Time,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param weekTime .
@@ -359,6 +380,7 @@ class Controller(ABusFeature):
     logging.info("setTime"+" weekTime = "+str(weekTime))
     hbCommand = HausBusCommand(self.objectId, 125, "setTime")
     hbCommand.addWord(weekTime.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -370,6 +392,7 @@ class Controller(ABusFeature):
     logging.info("Time"+" weekTime = "+str(weekTime))
     hbCommand = HausBusCommand(self.objectId, 198, "Time")
     hbCommand.addWord(weekTime.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -380,10 +403,9 @@ class Controller(ABusFeature):
     logging.info("getRuleState"+" index = "+str(index))
     hbCommand = HausBusCommand(self.objectId, 12, "getRuleState")
     hbCommand.addByte(index)
+    ResultWorker()._setResultInfo(RuleState,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param index Index des zu setzenden Regelzustandes auf dem Controller..
@@ -394,6 +416,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 11, "setRuleState")
     hbCommand.addByte(index)
     hbCommand.addByte(state)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -406,6 +429,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 13, "triggerRuleElement")
     hbCommand.addByte(indexRule)
     hbCommand.addByte(indexElement)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -418,6 +442,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 135, "RuleState")
     hbCommand.addByte(index)
     hbCommand.addByte(state)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -434,6 +459,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(member)
     hbCommand.addByte(state)
     hbCommand.addByte(triggerBits)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -446,6 +472,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 203, "evGroupOn")
     hbCommand.addByte(index)
     hbCommand.addWord(status)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -458,6 +485,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 205, "evGroupOff")
     hbCommand.addByte(index)
     hbCommand.addWord(status)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -470,6 +498,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 204, "evGroupUndefined")
     hbCommand.addByte(index)
     hbCommand.addWord(status)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -482,6 +511,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 136, "TriggeredRule")
     hbCommand.addByte(ruleIndex)
     hbCommand.addByte(elementIndex)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -492,6 +522,7 @@ class Controller(ABusFeature):
     logging.info("setDebugOptions"+" option = "+str(option))
     hbCommand = HausBusCommand(self.objectId, 124, "setDebugOptions")
     hbCommand.addByte(option.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -502,6 +533,7 @@ class Controller(ABusFeature):
     logging.info("TimeDifference"+" timeDifference = "+str(timeDifference))
     hbCommand = HausBusCommand(self.objectId, 197, "TimeDifference")
     hbCommand.addByte(timeDifference)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -510,6 +542,7 @@ class Controller(ABusFeature):
   def evDay(self):
     logging.info("evDay")
     hbCommand = HausBusCommand(self.objectId, 206, "evDay")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -518,6 +551,7 @@ class Controller(ABusFeature):
   def evNight(self):
     logging.info("evNight")
     hbCommand = HausBusCommand(self.objectId, 207, "evNight")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -532,6 +566,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 15, "setSunTimes")
     hbCommand.addWord(sunriseTime.getValue())
     hbCommand.addWord(sunsetTime.getValue())
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -546,6 +581,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(type.value)
     hbCommand.addByte(index)
     hbCommand.addWord(value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -558,10 +594,9 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 17, "getSystemVariable")
     hbCommand.addByte(type.value)
     hbCommand.addByte(index)
+    ResultWorker()._setResultInfo(SystemVariable,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param type Gibt den Typ der Variable an.
@@ -574,6 +609,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(type.value)
     hbCommand.addByte(index)
     hbCommand.addWord(value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -584,10 +620,9 @@ class Controller(ABusFeature):
     logging.info("getUnitGroupStatus"+" index = "+str(index))
     hbCommand = HausBusCommand(self.objectId, 18, "getUnitGroupStatus")
     hbCommand.addByte(index)
+    ResultWorker()._setResultInfo(UnitGroupStatus,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param index Index der logischen Gruppe in diesem Controller.
@@ -598,6 +633,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 138, "UnitGroupStatus")
     hbCommand.addByte(index)
     hbCommand.addWord(status)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -608,6 +644,7 @@ class Controller(ABusFeature):
     logging.info("evConsole"+" consoleString = "+str(consoleString))
     hbCommand = HausBusCommand(self.objectId, 250, "evConsole")
     hbCommand.addString(consoleString)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -616,6 +653,7 @@ class Controller(ABusFeature):
   def evResetWifi(self):
     logging.info("evResetWifi")
     hbCommand = HausBusCommand(self.objectId, 208, "evResetWifi")
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -690,6 +728,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(pulsWidth13)
     hbCommand.addWord(pulsWidth14)
     hbCommand.addWord(pulsWidth15)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -702,6 +741,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 19, "enableFeature")
     hbCommand.addByte(featureId.value)
     hbCommand.addString(key)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -716,6 +756,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(type.value)
     hbCommand.addByte(index)
     hbCommand.addWord(value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

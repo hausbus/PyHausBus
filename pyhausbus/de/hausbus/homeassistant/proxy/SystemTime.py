@@ -1,7 +1,9 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.systemTime.data.Time import Time
 from pyhausbus.de.hausbus.homeassistant.proxy.systemTime.params.EWeekDay import EWeekDay
 from pyhausbus.de.hausbus.homeassistant.proxy.systemTime.params.EDate import EDate
 from pyhausbus.de.hausbus.homeassistant.proxy.systemTime.params.EMonth import EMonth
@@ -22,10 +24,9 @@ class SystemTime(ABusFeature):
   def getTime(self):
     logging.info("getTime")
     hbCommand = HausBusCommand(self.objectId, 0, "getTime")
+    ResultWorker()._setResultInfo(Time,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param weekDay .
@@ -46,6 +47,7 @@ class SystemTime(ABusFeature):
     hbCommand.addByte(hours)
     hbCommand.addByte(minutes)
     hbCommand.addByte(seconds)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -68,6 +70,7 @@ class SystemTime(ABusFeature):
     hbCommand.addByte(hours)
     hbCommand.addByte(minutes)
     hbCommand.addByte(seconds)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -78,6 +81,7 @@ class SystemTime(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

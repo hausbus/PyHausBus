@@ -1,7 +1,9 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.ESensorType import ESensorType
 
 class ModBusMaster(ABusFeature):
@@ -21,10 +23,9 @@ class ModBusMaster(ABusFeature):
     logging.info("getConfiguration"+" idx = "+str(idx))
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     hbCommand.addByte(idx)
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param idx index of the configuration slot.
@@ -37,6 +38,7 @@ class ModBusMaster(ABusFeature):
     hbCommand.addByte(idx)
     hbCommand.addByte(node)
     hbCommand.addByte(sensorType.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -51,6 +53,7 @@ class ModBusMaster(ABusFeature):
     hbCommand.addByte(idx)
     hbCommand.addByte(node)
     hbCommand.addByte(sensorType.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

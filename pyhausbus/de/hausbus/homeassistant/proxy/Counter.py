@@ -1,8 +1,11 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.counter.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.counter.params.MMode import MMode
+from pyhausbus.de.hausbus.homeassistant.proxy.counter.data.Status import Status
 from pyhausbus.de.hausbus.homeassistant.proxy.counter.params.EErrorCode import EErrorCode
 
 class Counter(ABusFeature):
@@ -20,10 +23,9 @@ class Counter(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param mode increment: 1 = Zaehler inkrementieren.
@@ -38,6 +40,7 @@ class Counter(ABusFeature):
     hbCommand.addByte(debounceTime)
     hbCommand.addWord(reportTime)
     hbCommand.addWord(scaleFaktor)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -46,10 +49,9 @@ class Counter(ABusFeature):
   def getStatus(self):
     logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
+    ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param counter Zaehler ganze Einheiten.
@@ -60,6 +62,7 @@ class Counter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "setCount")
     hbCommand.addDWord(counter)
     hbCommand.addWord(fraction)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -76,6 +79,7 @@ class Counter(ABusFeature):
     hbCommand.addByte(debounceTime)
     hbCommand.addWord(reportTime)
     hbCommand.addWord(scaleFaktor)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -86,6 +90,7 @@ class Counter(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -98,6 +103,7 @@ class Counter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addDWord(counter)
     hbCommand.addWord(fraction)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -110,6 +116,7 @@ class Counter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evStatus")
     hbCommand.addDWord(counter)
     hbCommand.addWord(fraction)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

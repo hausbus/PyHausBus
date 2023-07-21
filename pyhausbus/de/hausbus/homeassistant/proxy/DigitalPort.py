@@ -1,7 +1,9 @@
 import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
+from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.de.hausbus.homeassistant.proxy.digitalPort.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.digitalPort.params.EPin import EPin
 from pyhausbus.de.hausbus.homeassistant.proxy.digitalPort.params.EErrorCode import EErrorCode
 
@@ -20,10 +22,9 @@ class DigitalPort(ABusFeature):
   def getConfiguration(self):
     logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
+    ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    resultObject=None
-    logging.info("returns"+str(resultObject))
-    return resultObject
+    logging.info("returns")
 
   """
   @param pin0 .
@@ -46,6 +47,7 @@ class DigitalPort(ABusFeature):
     hbCommand.addByte(pin5.value)
     hbCommand.addByte(pin6.value)
     hbCommand.addByte(pin7.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -70,6 +72,7 @@ class DigitalPort(ABusFeature):
     hbCommand.addByte(pin5.value)
     hbCommand.addByte(pin6.value)
     hbCommand.addByte(pin7.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 
@@ -80,6 +83,7 @@ class DigitalPort(ABusFeature):
     logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     logging.info("returns")
 

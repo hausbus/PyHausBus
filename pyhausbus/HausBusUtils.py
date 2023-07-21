@@ -5,7 +5,6 @@ HOMESERVER_DEVICE_ID:int = 9998
 HOMESERVER_OBJECT_ID:int = (HOMESERVER_DEVICE_ID << 16) + (0 << 8) + 1
 
 UDP_PORT = 5855
-UDP_PORT = 9
 
 def getObjectId(deviceId:int, classId:int, instanceId:int) -> int:
   return (deviceId << 16) + (classId << 8) + instanceId
@@ -144,13 +143,13 @@ def dWordToBytes(value: int) -> bytearray:
 def addWord(value: int, inOutList):
   inOutList.append(value & 0xff)
   inOutList.append((value >> 8) & 0xff)
-  
+
 def addDword(value: int, inOutList):
   inOutList.append(value & 0xff)
   inOutList.append((value >> 8) & 0xff)
   inOutList.append((value >> 16) & 0xff)
   inOutList.append((value >> 24) & 0xff)
-  
+
 def wordToBytes(value: int) -> bytearray:
   result = bytearray(2)
   result[0] = value & 0xff
@@ -167,12 +166,12 @@ def bytesToSInt(data:bytearray, offset) -> int:
 def formatBytes(data:bytearray, offset:int=0, length:int=-1, asHex:bool=True) -> str:
   if (length==-1):
     length=len(data)
-      
+
     if (data == None):
       return "NULL"
 
     result=""
-    
+
     for i in range (offset,length):
       if (asHex):
         result+="0x"+hex(data[i])

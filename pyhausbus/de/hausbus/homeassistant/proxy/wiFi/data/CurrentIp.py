@@ -16,8 +16,7 @@ class CurrentIp:
     return CurrentIp(HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset))
 
   def __str__(self):
-    return f"CurrentIp(b.append(IP0+"."+IP1+"."+IP2+"."+IP3);
-)"
+    return f"CurrentIp({self.IP0}.{self.IP1}.{self.IP2}.{self.IP3})"
 
   '''
   @param IP0 .

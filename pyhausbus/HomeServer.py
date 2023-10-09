@@ -67,10 +67,6 @@ class HomeServer(IBusDataListener):
         return result
 
     def busDataReceived(self, busDataMessage):
-        """if we receive a ModuleId from a device we automatically ask for the remote objects"""
-        if isinstance(busDataMessage.getData(), ModuleId):
-            Controller(busDataMessage.getSenderObjectId()).getRemoteObjects()
-
-        """ if a device restarts during runtime, we automatically read moduleId"""
+        """if a device restarts during runtime, we automatically read moduleId"""
         if isinstance(busDataMessage.getData(), EvStarted):
             Controller(busDataMessage.getSenderObjectId()).getModuleId(EIndex.RUNNING)

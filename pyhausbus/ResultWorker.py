@@ -1,4 +1,4 @@
-import logging
+from pyhausbus.HausBusUtils import LOGGER
 import time
 import threading
 
@@ -35,7 +35,7 @@ class ResultWorker:
     self._resultClass = event
     self._resultSenderObjectId = eventSenderObjectId
     self._resultObject=None
-    
+
     start_time = time.time()
     end_time = start_time + timeoutInSeconds
 

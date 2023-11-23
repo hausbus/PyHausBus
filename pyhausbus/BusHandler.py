@@ -1,4 +1,3 @@
-import logging
 import threading
 from pyhausbus.de.hausbus.homeassistant.proxy import ProxyFactory
 from pyhausbus.HausBusUtils import *
@@ -14,7 +13,6 @@ import traceback
 RS485_GATEWAY = "#RS485#"
 EVENTS_START = 200
 RESULT_START = 128
-
 
 class BusHandler:
 
@@ -57,11 +55,11 @@ class BusHandler:
       featureClassId = getClassId(senderObjectId)
       identifierId = senderObjectId
 
-    logging.info("classId = " + str(featureClassId) + ", functionId = " + str(functionId))
+    LOGGER.debug("classId = " + str(featureClassId) + ", functionId = " + str(functionId))
     className = ProxyFactory.getBusClassNameFor(featureClassId, functionId)
     if (className=="de.hausbus.proxy.LogicalButton"):
-      logging.info("test")
-    
+      LOGGER.debug("test")
+
     try:
       module_name, class_name = className.rsplit(".", 1)
       module = importlib.import_module(className)
@@ -75,31 +73,27 @@ class BusHandler:
         add = " (corrupted) "
 
       message = gateway + " COMMAND IN " + add + " from " + str(getDeviceId(senderObjectId)) + " to " + str(getDeviceId(receiverObjectId)) + ": " + str(newObject) + ", Sender: " + formatObjectId(senderObjectId) + ", Receiver: " + str(formatObjectId(receiverObjectId))
-      logging.info(message);
+      LOGGER.debug(message)
 
       if (not corrupted):
         newMessage = BusDataMessage(senderObjectId, receiverObjectId, newObject)
-        logging.info("got: " + str(newObject) + " from " + str(senderObjectId) + " to " + str(receiverObjectId))
+        LOGGER.debug("got: " + str(newObject) + " from " + str(senderObjectId) + " to " + str(receiverObjectId))
         for actListener in self.listeners:
           actListener.busDataReceived(newMessage)
     except (Exception, RuntimeError, TypeError, NameError, OSError) as err:
-        print("error:", err)
-        traceback.print_exc()
+        LOGGER.error(err,exc_info=True,stack_info=True)
 
   def sendData(self, data:bytearray, debug:str):
 
     udpData:bytearray = self.prepareForUDP(data)
 
-    logging.info(UdpReceiveWorker.UDP_GATEWAY + " COMMAND OUT " + debug);
-    logging.info(UdpReceiveWorker.UDP_GATEWAY + " DATA OUT " + HausBusUtils.formatBytes(udpData))
-
-    # print (HausBusUtils.formatBytes(udpData))
+    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " COMMAND OUT " + debug)
+    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " DATA OUT " + HausBusUtils.formatBytes(udpData))
 
     try:
       self.sock.sendto(udpData, (self.broadcastIp, UDP_PORT))
     except socket.error as e:
-      print("error:", e)
-      traceback.print_exc()
+      LOGGER.error(e,exc_info=True,stack_info=True)
 
   def prepareForUDP(self, data:bytearray) -> bytearray:
     result = bytearray(len(data) + 2)

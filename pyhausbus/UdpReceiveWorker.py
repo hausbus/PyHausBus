@@ -1,4 +1,3 @@
-import logging
 import socket
 import threading
 import traceback
@@ -14,13 +13,13 @@ class UdpReceiveWorker:
   UDP_GATEWAY = "#UDP#"
 
   def __init__(self, func):
-    logging.info("init UdpReceiveWorker")
+    LOGGER.debug("init UdpReceiveWorker")
     self.func = func
-    
+
   def startWorker(self):
-    logging.info("starting udp receive worker")
+    LOGGER.debug("starting udp receive worker")
     t = threading.Thread(target=self.runable)
-    t.start()    
+    t.start()
 
   def runable(self):
     while(True):
@@ -29,47 +28,46 @@ class UdpReceiveWorker:
         UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
         UDPServerSocket.bind((BROADCAST_RECEIVE_IP, UDP_PORT))
-        logging.info("UDP server up and listening")
+        LOGGER.debug("UDP server up and listening")
 
         while(True):
           bytesAddressPair = UDPServerSocket.recvfrom(BUFFER_SIZE)
           message = bytesAddressPair[0]
           address = bytesAddressPair[1]
-          logging.info("Message from Client "+format(address)+": "+bytesToDebugString(message))
-          
-          
+          LOGGER.debug("Message from Client "+format(address)+": "+bytesToDebugString(message))
+
+
           if (len(message) == 0):
-            logging.info("got empty message");
-            continue;
+            LOGGER.debug("got empty message")
+            continue
 
           if (message[0] != 0xef | message[1] != 0xef):
-            logging.info("invalid header");
-            continue;
+            LOGGER.debug("invalid header")
+            continue
 
           if (len(message) < 15):
-            logging.info("message size " + len(message) + " is too short");
-            continue;
+            LOGGER.debug("message size " + len(message) + " is too short")
+            continue
 
           # 2 = Kontrollbyte 3 = MessageCounter
           offset = [4]
           senderObjectId = bytesToDWord(message, offset)
-          logging.info("senderObjectId = "+str(senderObjectId))
+          LOGGER.debug("senderObjectId = "+str(senderObjectId))
 
           receiverObjectId = bytesToDWord(message, offset)
-          logging.info("receiverObjectId = "+str(receiverObjectId))
+          LOGGER.debug("receiverObjectId = "+str(receiverObjectId))
 
           dataLength = bytesToWord(message, offset)
           if (len(message) < 14 + dataLength):
-            logging.info("message size " + str(len(message)) + " is too short for data length " + str(dataLength) + ": " + bytesToDebugString(message))
+            LOGGER.debug("message size " + str(len(message)) + " is too short for data length " + str(dataLength) + ": " + bytesToDebugString(message))
             dataLength = len(message) - 14
-            # continue;
+            # continue
           functionId = bytesToInt(message, offset)
           functionData = message[15:]
 
-          logging.info("functionId " + str(functionId) + ", functionData " + bytesToDebugString(functionData))
+          LOGGER.debug("functionId " + str(functionId) + ", functionData " + bytesToDebugString(functionData))
 
           self.func(senderObjectId, receiverObjectId, functionId, functionData, self.UDP_GATEWAY, False)
       except (Exception) as err:
-        print("error:", err)
-        traceback.print_exc()
+        LOGGER.error(err,exc_info=True,stack_info=True)
         time.sleep(5)

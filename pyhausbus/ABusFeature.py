@@ -1,4 +1,4 @@
-import logging
+from pyhausbus.HausBusUtils import LOGGER
 from pyhausbus.ObjectId import ObjectId
 
 class ABusFeature:

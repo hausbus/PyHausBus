@@ -1,7 +1,7 @@
 from pyhausbus.BusHandler import BusHandler
 import pyhausbus.HausBusUtils as HausBusUtils
-import logging
-from pyhausbus.ObjectId import ObjectId  
+from pyhausbus.HausBusUtils import LOGGER
+from pyhausbus.ObjectId import ObjectId
 
 class HausBusCommand:
 
@@ -16,11 +16,11 @@ class HausBusCommand:
 
     # Kontroll-Byte
     self.data.append(0)
-    
+
     # Nachrichtenzaehler
     self.data.append(0)
 
-    # Sender-ID 
+    # Sender-ID
     for act in HausBusUtils.dWordToBytes(HausBusUtils.HOMESERVER_OBJECT_ID):
       self.data.append(act)
 
@@ -29,7 +29,7 @@ class HausBusCommand:
       self.data.append(act)
 
     self.params.append(functionId)
- 
+
   def addByte(self, byteParam:int):
     self.params.append(byteParam)
 
@@ -60,11 +60,11 @@ class HausBusCommand:
     HausBusUtils.addDword(dWordParam, self.params)
 
   def _createBytes(self):
-    
+
     # Datenlaenge
     for act in HausBusUtils.wordToBytes(len(self.params)):
       self.data.append(act)
- 
+
     # Daten
     for act in self.params:
       self.data.append(act)
@@ -74,11 +74,11 @@ class HausBusCommand:
       self.bytes[i] = self.data[i]
 
   def send(self):
-    logging.info("Sende " + self.debug + " an " + str(ObjectId(self.receiverObjectId)))
+    LOGGER.debug("Sende " + self.debug + " an " + str(ObjectId(self.receiverObjectId)))
     if (self.bytes == None):
-      self._createBytes();
+      self._createBytes()
 
-    return self.busHandler.sendData(self.bytes, self.debug + " to " + str(HausBusUtils.getDeviceId(self.receiverObjectId)));
+    return self.busHandler.sendData(self.bytes, self.debug + " to " + str(HausBusUtils.getDeviceId(self.receiverObjectId)))
 
   def __str__(self):
     return f"HausBusCommand(debug={self.debug} to {HausBusUtils.formatObjectId(self.receiverObjectId)}, params={self.params}, data={self.data}"

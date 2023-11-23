@@ -3,49 +3,49 @@ class MEventMask:
 
   def setNotifyOnCovered(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 0, self.value)
-    return self;
+    return self
 
   def isNotifyOnCovered(self):
     return HausBusUtils.isBitSet(0, self.value)
   def setNotifyOnClicked(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 1, self.value)
-    return self;
+    return self
 
   def isNotifyOnClicked(self):
     return HausBusUtils.isBitSet(1, self.value)
   def setNotifyOnStartHold(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 2, self.value)
-    return self;
+    return self
 
   def isNotifyOnStartHold(self):
     return HausBusUtils.isBitSet(2, self.value)
   def setNotifyOnEndHold(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 3, self.value)
-    return self;
+    return self
 
   def isNotifyOnEndHold(self):
     return HausBusUtils.isBitSet(3, self.value)
   def setNotifyOnDoubleClicked(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 4, self.value)
-    return self;
+    return self
 
   def isNotifyOnDoubleClicked(self):
     return HausBusUtils.isBitSet(4, self.value)
   def setNotifyOnFree(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 5, self.value)
-    return self;
+    return self
 
   def isNotifyOnFree(self):
     return HausBusUtils.isBitSet(5, self.value)
   def setReserved(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 6, self.value)
-    return self;
+    return self
 
   def isReserved(self):
     return HausBusUtils.isBitSet(6, self.value)
   def setEnableFeedBack(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 7, self.value)
-    return self;
+    return self
 
   def isEnableFeedBack(self):
     return HausBusUtils.isBitSet(7, self.value)

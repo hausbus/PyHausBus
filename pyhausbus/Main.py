@@ -23,7 +23,7 @@ class Main(IBusDataListener):
 
   def __init__(self):
 
-    ''' 
+    '''
     Instantiate Homeserver, add as Lister and search Devices
     Afterwards all devices respond with their moduleId. See method busDataReceived
     '''
@@ -41,10 +41,10 @@ class Main(IBusDataListener):
     ''' And then wait for the Result with a timeout of 2 seconds'''
     configuration = ResultWorker().waitForResult(2)
     print("configuration = "+str(configuration))
-    
+
     self.doTests()
-    
-  
+
+
 
 
   def busDataReceived(self, busDataMessage):
@@ -54,19 +54,19 @@ class Main(IBusDataListener):
       instances = self.server.getDeviceInstances(busDataMessage.getSenderObjectId(), busDataMessage.getData())
       for actInstance in instances:
         print (actInstance)
-  
-  
+
+
   def doTests(self):
-    
+
     controller = Controller.create(3359, 1)
-    controller.getConfiguration();
+    controller.getConfiguration()
     print("Controller.configuration = "+str(ResultWorker().waitForResult(2)))
     controller.getModuleId(EIndex.EIndex.RUNNING)
     print("Controller.moduleId = "+str(ResultWorker().waitForResult(2)))
     controller.ping()
     print("Controller.pong = "+str(ResultWorker().waitForResult(2)))
-    
-    dimmer = Dimmer.create(22784, 5);
+
+    dimmer = Dimmer.create(22784, 5)
     dimmer.getConfiguration()
     print("Dimmer.configuration = "+str(ResultWorker().waitForResult(2)))
     dimmer.getStatus()
@@ -75,13 +75,13 @@ class Main(IBusDataListener):
     print("Dimmer.evOn = "+str(ResultWorker().waitForEvent(EvOn, dimmer.getObjectId(), 5)))
     dimmer.start(EDirection.TO_DARK)
     print("Dimmer.evOff = "+str(ResultWorker().waitForEvent(EvOff, dimmer.getObjectId(), 5)))
-    
+
     feuchtesensor = Feuchtesensor.create(25661 , 88)
     feuchtesensor.getConfiguration()
     print("Feuchtesensor.configuration = "+str(ResultWorker().waitForResult(2)))
     feuchtesensor.getStatus()
     print("Feuchtesensor.status = "+str(ResultWorker().waitForResult(2)))
-    
+
     led = Led.create(20043,54)
     led.getConfiguration()
     print("Led.configuration = "+str(ResultWorker().waitForResult(2)))

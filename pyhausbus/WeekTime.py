@@ -26,7 +26,7 @@ class WeekTime:
 
   @staticmethod
   def fromValue(value:int) -> 'WeekTime':
-    result = WeekTime()
+    result = WeekTime(0,0,0)
     result.setMinute(value & 0xff)
 
     value = value >> 8
@@ -35,7 +35,7 @@ class WeekTime:
     return result
 
   def getDay(self) -> int:
-    return self.day;
+    return self.day
 
   def setDay(self, day:int):
     self.day = day
@@ -51,6 +51,6 @@ class WeekTime:
 
   def setMinute(self, minute:int):
     self.minute = minute
-    
+
   def __str__(self):
     return f"WeekTime(day={self.day}, hour={self.hour}, minute={self.minute})"

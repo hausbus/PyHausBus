@@ -1,4 +1,4 @@
-import logging
+from pyhausbus.HausBusUtils import LOGGER
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -21,38 +21,38 @@ class Temperatursensor(ABusFeature):
   """
   """
   def evCold(self):
-    logging.info("evCold")
+    LOGGER.debug("evCold")
     hbCommand = HausBusCommand(self.objectId, 200, "evCold")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def evWarm(self):
-    logging.info("evWarm")
+    LOGGER.debug("evWarm")
     hbCommand = HausBusCommand(self.objectId, 201, "evWarm")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def evHot(self):
-    logging.info("evHot")
+    LOGGER.debug("evHot")
     hbCommand = HausBusCommand(self.objectId, 202, "evHot")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getConfiguration(self):
-    logging.info("getConfiguration")
+    LOGGER.debug("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param lowerThreshold untere Temperaturschwelle.
@@ -67,7 +67,7 @@ class Temperatursensor(ABusFeature):
   @param deltaSensorID Die InstanceID des Sensors auf diesem Controller.
   """
   def Configuration(self, lowerThreshold:int, lowerThresholdFraction:int, upperThreshold:int, upperThresholdFraction:int, reportTimeBase:int, minReportTime:int, maxReportTime:int, hysteresis:int, calibration:int, deltaSensorID:int):
-    logging.info("Configuration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
+    LOGGER.debug("Configuration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addSByte(lowerThreshold)
     hbCommand.addSByte(lowerThresholdFraction)
@@ -81,7 +81,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param lowerThreshold untere Temperaturschwelle.
@@ -96,7 +96,7 @@ class Temperatursensor(ABusFeature):
   @param deltaSensorID Die InstanceID des Sensors auf diesem Controller.
   """
   def setConfiguration(self, lowerThreshold:int, lowerThresholdFraction:int, upperThreshold:int, upperThresholdFraction:int, reportTimeBase:int, minReportTime:int, maxReportTime:int, hysteresis:int, calibration:int, deltaSensorID:int):
-    logging.info("setConfiguration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
+    LOGGER.debug("setConfiguration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addSByte(lowerThreshold)
     hbCommand.addSByte(lowerThresholdFraction)
@@ -110,16 +110,16 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getStatus(self):
-    logging.info("getStatus")
+    LOGGER.debug("getStatus")
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param celsius Grad Celsius.
@@ -127,25 +127,25 @@ class Temperatursensor(ABusFeature):
   @param lastEvent .
   """
   def evStatus(self, celsius:int, centiCelsius:int, lastEvent:ELastEvent):
-    logging.info("evStatus"+" celsius = "+str(celsius)+" centiCelsius = "+str(centiCelsius)+" lastEvent = "+str(lastEvent))
+    LOGGER.debug("evStatus"+" celsius = "+str(celsius)+" centiCelsius = "+str(centiCelsius)+" lastEvent = "+str(lastEvent))
     hbCommand = HausBusCommand(self.objectId, 203, "evStatus")
     hbCommand.addSByte(celsius)
     hbCommand.addSByte(centiCelsius)
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    logging.info("evError"+" errorCode = "+str(errorCode))
+    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param celsius Grad Celsius.
@@ -153,13 +153,13 @@ class Temperatursensor(ABusFeature):
   @param lastEvent .
   """
   def Status(self, celsius:int, centiCelsius:int, lastEvent:ELastEvent):
-    logging.info("Status"+" celsius = "+str(celsius)+" centiCelsius = "+str(centiCelsius)+" lastEvent = "+str(lastEvent))
+    LOGGER.debug("Status"+" celsius = "+str(celsius)+" centiCelsius = "+str(centiCelsius)+" lastEvent = "+str(lastEvent))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addSByte(celsius)
     hbCommand.addSByte(centiCelsius)
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

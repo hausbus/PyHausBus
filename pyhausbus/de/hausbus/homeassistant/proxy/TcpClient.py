@@ -1,4 +1,4 @@
-import logging
+from pyhausbus.HausBusUtils import LOGGER
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -23,7 +23,7 @@ class TcpClient(ABusFeature):
   @param port .
   """
   def announceServer(self, IP0:int, IP1:int, IP2:int, IP3:int, port:int):
-    logging.info("announceServer"+" IP0 = "+str(IP0)+" IP1 = "+str(IP1)+" IP2 = "+str(IP2)+" IP3 = "+str(IP3)+" port = "+str(port))
+    LOGGER.debug("announceServer"+" IP0 = "+str(IP0)+" IP1 = "+str(IP1)+" IP2 = "+str(IP2)+" IP3 = "+str(IP3)+" port = "+str(port))
     hbCommand = HausBusCommand(self.objectId, 1, "announceServer")
     hbCommand.addByte(IP0)
     hbCommand.addByte(IP1)
@@ -32,16 +32,16 @@ class TcpClient(ABusFeature):
     hbCommand.addWord(port)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getCurrentIp(self):
-    logging.info("getCurrentIp")
+    LOGGER.debug("getCurrentIp")
     hbCommand = HausBusCommand(self.objectId, 2, "getCurrentIp")
     ResultWorker()._setResultInfo(CurrentIp,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param IP0 .
@@ -50,7 +50,7 @@ class TcpClient(ABusFeature):
   @param IP3 .
   """
   def CurrentIp(self, IP0:int, IP1:int, IP2:int, IP3:int):
-    logging.info("CurrentIp"+" IP0 = "+str(IP0)+" IP1 = "+str(IP1)+" IP2 = "+str(IP2)+" IP3 = "+str(IP3))
+    LOGGER.debug("CurrentIp"+" IP0 = "+str(IP0)+" IP1 = "+str(IP1)+" IP2 = "+str(IP2)+" IP3 = "+str(IP3))
     hbCommand = HausBusCommand(self.objectId, 128, "CurrentIp")
     hbCommand.addByte(IP0)
     hbCommand.addByte(IP1)
@@ -58,15 +58,15 @@ class TcpClient(ABusFeature):
     hbCommand.addByte(IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def evWhoIsServer(self):
-    logging.info("evWhoIsServer")
+    LOGGER.debug("evWhoIsServer")
     hbCommand = HausBusCommand(self.objectId, 200, "evWhoIsServer")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

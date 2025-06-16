@@ -18,6 +18,11 @@ class EErrorCode(Enum):
   UNIT_GROUP_NOT_EXISTS=19
   MAX_OBJECTS_REACHED=10
   MODBUS_STREAM_NOT_EXISTS=20
+  CONFIGURATION_OUT_OF_MEMORY=128
+  HEAP_OUT_OF_MEMORY=129
+  CMD_NOT_SUPPORTED=130
+  DEVICE_ID_RESTORED=11
+  ANY_ERROR=255
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -28,6 +33,14 @@ class EErrorCode(Enum):
         return act
 
     return EErrorCode.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

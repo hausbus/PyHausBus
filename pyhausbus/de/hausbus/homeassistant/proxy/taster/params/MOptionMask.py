@@ -3,49 +3,49 @@ class MOptionMask:
 
   def setInverted(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 0, self.value)
-    return self
+    return self;
 
   def isInverted(self):
     return HausBusUtils.isBitSet(0, self.value)
   def setPulldown(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 1, self.value)
-    return self
+    return self;
 
   def isPulldown(self):
     return HausBusUtils.isBitSet(1, self.value)
   def setReserved1(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 2, self.value)
-    return self
+    return self;
 
   def isReserved1(self):
     return HausBusUtils.isBitSet(2, self.value)
   def setReserved2(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 3, self.value)
-    return self
+    return self;
 
   def isReserved2(self):
     return HausBusUtils.isBitSet(3, self.value)
   def setReserved3(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 4, self.value)
-    return self
+    return self;
 
   def isReserved3(self):
     return HausBusUtils.isBitSet(4, self.value)
   def setReserved4(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 5, self.value)
-    return self
+    return self;
 
   def isReserved4(self):
     return HausBusUtils.isBitSet(5, self.value)
   def setReserved5(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 6, self.value)
-    return self
+    return self;
 
   def isReserved5(self):
     return HausBusUtils.isBitSet(6, self.value)
   def setReserved6(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 7, self.value)
-    return self
+    return self;
 
   def isReserved6(self):
     return HausBusUtils.isBitSet(7, self.value)

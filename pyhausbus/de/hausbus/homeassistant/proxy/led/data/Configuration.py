@@ -38,7 +38,7 @@ class Configuration:
     return self.timeBase
 
   '''
-  @param options Reservierte Bits m?  ? ? ?ssen immer deaktiviert sein. Das Aktivieren eines reservierten Bits f?  ? ? ?hrt nach dem Neustart des Controllers zu den Standart-Einstellungen..
+  @param options Reservierte Bits muessen immer deaktiviert sein. Das Aktivieren eines reservierten Bits fuehrt nach dem Neustart des Controllers zu den Standart-Einstellungen..
   '''
   def getOptions(self) -> MOptions:
     return self.options

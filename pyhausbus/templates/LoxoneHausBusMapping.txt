@@ -1,0 +1,80 @@
+Module:Type=LoxLIVE;Miniserver;8-fach Relais,16-fach Relais,32-fach IO Modul
+Type=DigitalIn;DIGITAL_IN
+Type=VoltageIn;ANALOG_VOLTAGE_IN
+Type=Actor;RELAY
+Type=Lox1wireAsensor;TEMPERATURE
+Type=DimCurrentIn;ANALOG_CURRENT_IN
+Type=VoltageOut;ANALOG_OUT
+Type=Dimmer;DIMMER
+
+Module:Type=TreeDevice,TreeType=32780;RGBW Dimmer Tree
+Type=TreeAactor;PWM_DIMMER
+
+Module:Type=TreeDevice,TreeType=32794;Präsenzmelder Tree
+Type=TreeSensor,EnoceanSubType=4;MOVEMENT
+Type=TreeSensor,EnoceanSubType=170;PRESENCE
+Type=TreeSensor,EnoceanSubType=168;FILTER;Lautstärke Alarm
+Type=TreeAsensor,EnoceanSubType=57;FILTER;Lautstärke Minimum
+Type=TreeAsensor,EnoceanSubType=58;FILTER;Lautstärke Maximum
+Type=TreeAsensor,EnoceanSubType=5;BRIGHTNESS
+Type=TreeAactor,SubType=61;FILTER;Nachlaufzeit Präsenz
+Type=TreeAactor,SubType=62;FILTER;Zeit
+
+Module:Type=TreeDevice,TreeType=32773;Touch Pure Tree
+Type=TreeSensor,EnoceanSubType=16;TASTER
+Type=TreeSensor,EnoceanSubType=17;TASTER
+Type=TreeSensor,EnoceanSubType=18;TASTER
+Type=TreeSensor,EnoceanSubType=19;TASTER
+Type=TreeSensor,EnoceanSubType=20;TASTER
+Type=TreeAsensor,EnoceanSubType=1;TEMPERATURE
+Type=TreeAsensor,EnoceanSubType=2;HUMIDITY
+Type=TreeAsensor,Title=T5;TASTER_T5;T5 ?
+Type=TreeActor,SubType=52;BACKLIGHT
+Type=TreeActor,SubType=163;FILTER;Akustisches Klick-Signal
+
+Module:Type=TreeDevice,TreeType=32769;Stellantrieb Tree
+Type=TreeAactor,SubType=24;DIGITAL_OUT
+Type=TreeSensor,EnoceanSubType=77;FILTER;Kein Ventil erkannt
+Type=TreeSensor,EnoceanSubType=78;FILTER;Ventil steckt fest
+
+Module:Type=TreeDevice,TreeType=32778;FILTER;Wetterstation Tree
+
+Module:Type=LoxAIRDevice,AirType=61;Präsenzmelder Air
+Type=LoxAIRsensor,EnoceanSubType=4;MOVEMENT
+Type=LoxAIRsensor,EnoceanSubType=170;PRESENCE
+Type=LoxAIRsensor,EnoceanSubType=168;FILTER;Lautstärkealarm
+Type=LoxAIRAsensor,EnoceanSubType=57;FILTER;Lautstärke Minimum
+Type=LoxAIRAsensor,EnoceanSubType=58;FILTER;Lautstärke Maximum
+Type=LoxAIRAsensor,EnoceanSubType=5;BRIGHTNESS
+Type=LoxAIRsensor,EnoceanSubType=68;FILTER;Batterie schwach
+Type=LoxAIRAsensor,EnoceanSubType=69;FILTER;Batterie Kapazität
+Type=LoxAIRAactor,SubType=61;FILTER;Nachlaufzeit Präsenz
+Type=LoxAIRAactor,SubType=62;FILTER;Zeit
+
+Module:Type=LoxREL;Relais Extension
+Type=Actor;RELAY
+
+Module:Type=TreeDevice,TreeType=32793;Nano 2 Relay Tree
+Type=TreeSensor,EnoceanSubType=157;FILTER;Stromfluss
+Type=TreeAsensor,EnoceanSubType=57;FILTER;Fahrzeit
+Type=TreeActor;RELAY
+Type=ApiActor;FILTER;API Connector
+
+Module:Type=LoxAIRDevice,AirType=31;Eingangsmodul Air
+Type=LoxAIRsensor,EnoceanSubType=68;FILTER;Batterie schwach
+Type=LoxAIRAsensor,EnoceanSubType=69;FILTER;Batterie Kapazität
+Type=LoxAIRsensor,EnoceanSubType=16;DIGITAL_IN
+Type=LoxAIRsensor,EnoceanSubType=17;DIGITAL_IN
+
+Module:Type=TreeDevice,TreeType=32779;Nano DI Tree
+Type=TreeSensor,EnoceanSubType=16;DIGITAL_IN
+Type=TreeSensor,EnoceanSubType=17;DIGITAL_IN
+Type=TreeSensor,EnoceanSubType=18;DIGITAL_IN
+Type=TreeSensor,EnoceanSubType=19;DIGITAL_IN
+Type=TreeSensor,EnoceanSubType=20;DIGITAL_IN
+Type=TreeSensor,EnoceanSubType=21;DIGITAL_IN
+
+Module:Type=LoxAout;AO Extension
+Type=VoltageOut;ANALOG_OUT
+
+Module:Type=NetworkDevice;NetworkDevice

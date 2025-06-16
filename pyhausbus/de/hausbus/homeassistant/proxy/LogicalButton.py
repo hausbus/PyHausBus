@@ -1,4 +1,4 @@
-from pyhausbus.HausBusUtils import LOGGER
+import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -24,11 +24,11 @@ class LogicalButton(ABusFeature):
   """
   """
   def getConfiguration(self):
-    LOGGER.debug("getConfiguration")
+    logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param button1 instanzId des 1.Tasters.
@@ -49,7 +49,7 @@ class LogicalButton(ABusFeature):
   @param led8 .
   """
   def setConfiguration(self, button1:int, button2:int, button3:int, button4:int, button5:int, button6:int, button7:int, button8:int, led1:int, led2:int, led3:int, led4:int, led5:int, led6:int, led7:int, led8:int):
-    LOGGER.debug("setConfiguration"+" button1 = "+str(button1)+" button2 = "+str(button2)+" button3 = "+str(button3)+" button4 = "+str(button4)+" button5 = "+str(button5)+" button6 = "+str(button6)+" button7 = "+str(button7)+" button8 = "+str(button8)+" led1 = "+str(led1)+" led2 = "+str(led2)+" led3 = "+str(led3)+" led4 = "+str(led4)+" led5 = "+str(led5)+" led6 = "+str(led6)+" led7 = "+str(led7)+" led8 = "+str(led8))
+    logging.info("setConfiguration"+" button1 = "+str(button1)+" button2 = "+str(button2)+" button3 = "+str(button3)+" button4 = "+str(button4)+" button5 = "+str(button5)+" button6 = "+str(button6)+" button7 = "+str(button7)+" button8 = "+str(button8)+" led1 = "+str(led1)+" led2 = "+str(led2)+" led3 = "+str(led3)+" led4 = "+str(led4)+" led5 = "+str(led5)+" led6 = "+str(led6)+" led7 = "+str(led7)+" led8 = "+str(led8))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addByte(button1)
     hbCommand.addByte(button2)
@@ -69,7 +69,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(led8)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param button1 .
@@ -90,7 +90,7 @@ class LogicalButton(ABusFeature):
   @param led8 .
   """
   def Configuration(self, button1:int, button2:int, button3:int, button4:int, button5:int, button6:int, button7:int, button8:int, led1:int, led2:int, led3:int, led4:int, led5:int, led6:int, led7:int, led8:int):
-    LOGGER.debug("Configuration"+" button1 = "+str(button1)+" button2 = "+str(button2)+" button3 = "+str(button3)+" button4 = "+str(button4)+" button5 = "+str(button5)+" button6 = "+str(button6)+" button7 = "+str(button7)+" button8 = "+str(button8)+" led1 = "+str(led1)+" led2 = "+str(led2)+" led3 = "+str(led3)+" led4 = "+str(led4)+" led5 = "+str(led5)+" led6 = "+str(led6)+" led7 = "+str(led7)+" led8 = "+str(led8))
+    logging.info("Configuration"+" button1 = "+str(button1)+" button2 = "+str(button2)+" button3 = "+str(button3)+" button4 = "+str(button4)+" button5 = "+str(button5)+" button6 = "+str(button6)+" button7 = "+str(button7)+" button8 = "+str(button8)+" led1 = "+str(led1)+" led2 = "+str(led2)+" led3 = "+str(led3)+" led4 = "+str(led4)+" led5 = "+str(led5)+" led6 = "+str(led6)+" led7 = "+str(led7)+" led8 = "+str(led8))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addByte(button1)
     hbCommand.addByte(button2)
@@ -110,58 +110,58 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(led8)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
+    logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOff(self):
-    LOGGER.debug("evOff")
+    logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param brightness 0-100% Helligkeit.
   """
   def evOn(self, brightness:int):
-    LOGGER.debug("evOn"+" brightness = "+str(brightness))
+    logging.info("evOn"+" brightness = "+str(brightness))
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     hbCommand.addByte(brightness)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evBlink(self):
-    LOGGER.debug("evBlink")
+    logging.info("evBlink")
     hbCommand = HausBusCommand(self.objectId, 202, "evBlink")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param offDelay Ausschaltverzoegerung: Wert * Zeitbasis [ms]\r\n0=Keine.
   """
   def off(self, offDelay:int):
-    LOGGER.debug("off"+" offDelay = "+str(offDelay))
+    logging.info("off"+" offDelay = "+str(offDelay))
     hbCommand = HausBusCommand(self.objectId, 2, "off")
     hbCommand.addWord(offDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param brightness 0-100% Helligkeit.
@@ -169,14 +169,14 @@ class LogicalButton(ABusFeature):
   @param onDelay Einschaltverzoegerung: Wert * Zeitbasis [ms]\r\n0=Keine.
   """
   def on(self, brightness:int, duration:int, onDelay:int):
-    LOGGER.debug("on"+" brightness = "+str(brightness)+" duration = "+str(duration)+" onDelay = "+str(onDelay))
+    logging.info("on"+" brightness = "+str(brightness)+" duration = "+str(duration)+" onDelay = "+str(onDelay))
     hbCommand = HausBusCommand(self.objectId, 3, "on")
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
     hbCommand.addWord(onDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param brightness 0-100% Helligkeit.
@@ -185,7 +185,7 @@ class LogicalButton(ABusFeature):
   @param quantity Anzahl Blinks.
   """
   def blink(self, brightness:int, offTime:int, onTime:int, quantity:int):
-    LOGGER.debug("blink"+" brightness = "+str(brightness)+" offTime = "+str(offTime)+" onTime = "+str(onTime)+" quantity = "+str(quantity))
+    logging.info("blink"+" brightness = "+str(brightness)+" offTime = "+str(offTime)+" onTime = "+str(onTime)+" quantity = "+str(quantity))
     hbCommand = HausBusCommand(self.objectId, 4, "blink")
     hbCommand.addByte(brightness)
     hbCommand.addByte(offTime)
@@ -193,27 +193,27 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(quantity)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param status Zustand der Taster LEDs.
   """
   def Status(self, status:EStatus):
-    LOGGER.debug("Status"+" status = "+str(status))
+    logging.info("Status"+" status = "+str(status))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(status.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getStatus(self):
-    LOGGER.debug("getStatus")
+    logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param holdTimeout Zeit a 10ms.
@@ -222,7 +222,7 @@ class LogicalButton(ABusFeature):
   @param optionMask 0: invertiert die Eingangslogik\r\n1: setzt den Initialzustand auf 0.
   """
   def setButtonConfiguration(self, holdTimeout:int, waitForDoubleClickTimeout:int, eventMask:MEventMask, optionMask:MOptionMask):
-    LOGGER.debug("setButtonConfiguration"+" holdTimeout = "+str(holdTimeout)+" waitForDoubleClickTimeout = "+str(waitForDoubleClickTimeout)+" eventMask = "+str(eventMask)+" optionMask = "+str(optionMask))
+    logging.info("setButtonConfiguration"+" holdTimeout = "+str(holdTimeout)+" waitForDoubleClickTimeout = "+str(waitForDoubleClickTimeout)+" eventMask = "+str(eventMask)+" optionMask = "+str(optionMask))
     hbCommand = HausBusCommand(self.objectId, 11, "setButtonConfiguration")
     hbCommand.addByte(holdTimeout)
     hbCommand.addByte(waitForDoubleClickTimeout)
@@ -230,7 +230,7 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(optionMask.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param dimmOffset 0-100% offset auf den im Kommando angegebenen Helligkeitswert.
@@ -239,7 +239,7 @@ class LogicalButton(ABusFeature):
   @param options eservierte Bits muessen immer deaktiviert sein. Das Aktivieren eines reservierten Bits fuehrt nach dem Neustart des Controllers zu den Standard-Einstellungen..
   """
   def setLedConfiguration(self, dimmOffset:int, minBrightness:int, timeBase:int, options:MOptions):
-    LOGGER.debug("setLedConfiguration"+" dimmOffset = "+str(dimmOffset)+" minBrightness = "+str(minBrightness)+" timeBase = "+str(timeBase)+" options = "+str(options))
+    logging.info("setLedConfiguration"+" dimmOffset = "+str(dimmOffset)+" minBrightness = "+str(minBrightness)+" timeBase = "+str(timeBase)+" options = "+str(options))
     hbCommand = HausBusCommand(self.objectId, 12, "setLedConfiguration")
     hbCommand.addByte(dimmOffset)
     hbCommand.addByte(minBrightness)
@@ -247,26 +247,26 @@ class LogicalButton(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param minBrightness Eine ausgeschaltete LED leuchtet immer noch mit dieser Helligkeit 0-100%.
   """
   def setMinBrightness(self, minBrightness:int):
-    LOGGER.debug("setMinBrightness"+" minBrightness = "+str(minBrightness))
+    logging.info("setMinBrightness"+" minBrightness = "+str(minBrightness))
     hbCommand = HausBusCommand(self.objectId, 6, "setMinBrightness")
     hbCommand.addByte(minBrightness)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getMinBrightness(self):
-    LOGGER.debug("getMinBrightness")
+    logging.info("getMinBrightness")
     hbCommand = HausBusCommand(self.objectId, 7, "getMinBrightness")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
 

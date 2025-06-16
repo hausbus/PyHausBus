@@ -6,6 +6,8 @@ class EErrorCode(Enum):
   INVALID_PERIOD=2
   INVALID_MODE=3
   DEFECT=4
+  CONFIGURATION_OUT_OF_MEMORY=128
+  ANY_ERROR=255
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -16,6 +18,14 @@ class EErrorCode(Enum):
         return act
 
     return EErrorCode.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

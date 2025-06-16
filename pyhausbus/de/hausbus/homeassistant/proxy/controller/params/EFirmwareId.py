@@ -12,6 +12,7 @@ class EFirmwareId(Enum):
   HBC=8
   HBX192C3=9
   ESP32=10
+  ESP32C3=11
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -22,6 +23,14 @@ class EFirmwareId(Enum):
         return act
 
     return EFirmwareId.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
   def getTemplateId(self) -> str:
     if (self.name.startswith("HB")):
         return "HBC"

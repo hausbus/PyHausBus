@@ -49,7 +49,7 @@ class SetConfiguration:
     return self.upperThresholdFraction
 
   '''
-  @param reportTimeBase Zeitbasis f?r die Einstellungen von minReportTime und maxReportTime.
+  @param reportTimeBase Zeitbasis fuer die Einstellungen von minReportTime und maxReportTime [s].
   '''
   def getReportTimeBase(self):
     return self.reportTimeBase

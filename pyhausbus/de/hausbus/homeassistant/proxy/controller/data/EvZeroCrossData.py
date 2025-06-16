@@ -4,8 +4,10 @@ class EvZeroCrossData:
   CLASS_ID = 0
   FUNCTION_ID = 209
 
-  def __init__(self,channel:int, lowTime0:int, lowTime1:int, lowTime2:int, lowTime3:int, lowTime4:int, lowTime5:int, lowTime6:int, lowTime7:int, lowTime8:int, lowTime9:int, lowTime10:int, lowTime11:int, lowTime12:int, lowTime13:int, lowTime14:int, lowTime15:int, pulsWidth0:int, pulsWidth1:int, pulsWidth2:int, pulsWidth3:int, pulsWidth4:int, pulsWidth5:int, pulsWidth6:int, pulsWidth7:int, pulsWidth8:int, pulsWidth9:int, pulsWidth10:int, pulsWidth11:int, pulsWidth12:int, pulsWidth13:int, pulsWidth14:int, pulsWidth15:int):
+  def __init__(self,channel:int, pulseCount:int, deltaTime:int, lowTime0:int, lowTime1:int, lowTime2:int, lowTime3:int, lowTime4:int, lowTime5:int, lowTime6:int, lowTime7:int, lowTime8:int, lowTime9:int, lowTime10:int, lowTime11:int, lowTime12:int, lowTime13:int, lowTime14:int, lowTime15:int, pulsWidth0:int, pulsWidth1:int, pulsWidth2:int, pulsWidth3:int, pulsWidth4:int, pulsWidth5:int, pulsWidth6:int, pulsWidth7:int, pulsWidth8:int, pulsWidth9:int, pulsWidth10:int, pulsWidth11:int, pulsWidth12:int, pulsWidth13:int, pulsWidth14:int, pulsWidth15:int):
     self.channel=channel
+    self.pulseCount=pulseCount
+    self.deltaTime=deltaTime
     self.lowTime0=lowTime0
     self.lowTime1=lowTime1
     self.lowTime2=lowTime2
@@ -42,16 +44,28 @@ class EvZeroCrossData:
 
   @staticmethod
   def _fromBytes(dataIn:bytearray, offset):
-    return EvZeroCrossData(HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset))
+    return EvZeroCrossData(HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset))
 
   def __str__(self):
-    return f"EvZeroCrossData(channel={self.channel}, lowTime0={self.lowTime0}, lowTime1={self.lowTime1}, lowTime2={self.lowTime2}, lowTime3={self.lowTime3}, lowTime4={self.lowTime4}, lowTime5={self.lowTime5}, lowTime6={self.lowTime6}, lowTime7={self.lowTime7}, lowTime8={self.lowTime8}, lowTime9={self.lowTime9}, lowTime10={self.lowTime10}, lowTime11={self.lowTime11}, lowTime12={self.lowTime12}, lowTime13={self.lowTime13}, lowTime14={self.lowTime14}, lowTime15={self.lowTime15}, pulsWidth0={self.pulsWidth0}, pulsWidth1={self.pulsWidth1}, pulsWidth2={self.pulsWidth2}, pulsWidth3={self.pulsWidth3}, pulsWidth4={self.pulsWidth4}, pulsWidth5={self.pulsWidth5}, pulsWidth6={self.pulsWidth6}, pulsWidth7={self.pulsWidth7}, pulsWidth8={self.pulsWidth8}, pulsWidth9={self.pulsWidth9}, pulsWidth10={self.pulsWidth10}, pulsWidth11={self.pulsWidth11}, pulsWidth12={self.pulsWidth12}, pulsWidth13={self.pulsWidth13}, pulsWidth14={self.pulsWidth14}, pulsWidth15={self.pulsWidth15})"
+    return f"EvZeroCrossData(channel={self.channel}, pulseCount={self.pulseCount}, deltaTime={self.deltaTime}, lowTime0={self.lowTime0}, lowTime1={self.lowTime1}, lowTime2={self.lowTime2}, lowTime3={self.lowTime3}, lowTime4={self.lowTime4}, lowTime5={self.lowTime5}, lowTime6={self.lowTime6}, lowTime7={self.lowTime7}, lowTime8={self.lowTime8}, lowTime9={self.lowTime9}, lowTime10={self.lowTime10}, lowTime11={self.lowTime11}, lowTime12={self.lowTime12}, lowTime13={self.lowTime13}, lowTime14={self.lowTime14}, lowTime15={self.lowTime15}, pulsWidth0={self.pulsWidth0}, pulsWidth1={self.pulsWidth1}, pulsWidth2={self.pulsWidth2}, pulsWidth3={self.pulsWidth3}, pulsWidth4={self.pulsWidth4}, pulsWidth5={self.pulsWidth5}, pulsWidth6={self.pulsWidth6}, pulsWidth7={self.pulsWidth7}, pulsWidth8={self.pulsWidth8}, pulsWidth9={self.pulsWidth9}, pulsWidth10={self.pulsWidth10}, pulsWidth11={self.pulsWidth11}, pulsWidth12={self.pulsWidth12}, pulsWidth13={self.pulsWidth13}, pulsWidth14={self.pulsWidth14}, pulsWidth15={self.pulsWidth15})"
 
   '''
   @param channel PWM-Kanal.
   '''
   def getChannel(self):
     return self.channel
+
+  '''
+  @param pulseCount Anzahl der guten Pulse innerhalb der letzten Messperiode 1s.
+  '''
+  def getPulseCount(self):
+    return self.pulseCount
+
+  '''
+  @param deltaTime Falls Messperiode l?nger als 1s ist.
+  '''
+  def getDeltaTime(self):
+    return self.deltaTime
 
   '''
   @param lowTime0 .

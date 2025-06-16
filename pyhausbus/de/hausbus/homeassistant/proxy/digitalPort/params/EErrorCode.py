@@ -18,6 +18,7 @@ class EErrorCode(Enum):
   PIN5_FUNCTION_NOT_ACTIVATED=29
   PIN6_FUNCTION_NOT_ACTIVATED=30
   PIN7_FUNCTION_NOT_ACTIVATED=31
+  CONFIGURATION_OUT_OF_MEMORY=128
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -28,6 +29,14 @@ class EErrorCode(Enum):
         return act
 
     return EErrorCode.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

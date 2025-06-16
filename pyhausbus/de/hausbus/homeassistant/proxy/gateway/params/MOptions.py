@@ -3,49 +3,49 @@ class MOptions:
 
   def setEnabled(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 0, self.value)
-    return self
+    return self;
 
   def isEnabled(self):
     return HausBusUtils.isBitSet(0, self.value)
   def setPreferLoxone(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 1, self.value)
-    return self
+    return self;
 
   def isPreferLoxone(self):
     return HausBusUtils.isBitSet(1, self.value)
   def setEnableConsole(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 2, self.value)
-    return self
+    return self;
 
   def isEnableConsole(self):
     return HausBusUtils.isBitSet(2, self.value)
-  def setReserved3(self, setValue:bool):
+  def setMaster(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 3, self.value)
-    return self
+    return self;
 
-  def isReserved3(self):
+  def isMaster(self):
     return HausBusUtils.isBitSet(3, self.value)
   def setReserved4(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 4, self.value)
-    return self
+    return self;
 
   def isReserved4(self):
     return HausBusUtils.isBitSet(4, self.value)
   def setReserved5(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 5, self.value)
-    return self
+    return self;
 
   def isReserved5(self):
     return HausBusUtils.isBitSet(5, self.value)
   def setReserved6(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 6, self.value)
-    return self
+    return self;
 
   def isReserved6(self):
     return HausBusUtils.isBitSet(6, self.value)
   def setReserved7(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 7, self.value)
-    return self
+    return self;
 
   def isReserved7(self):
     return HausBusUtils.isBitSet(7, self.value)
@@ -65,7 +65,7 @@ class MOptions:
     result.append("Enabled")
     result.append("PreferLoxone")
     result.append("EnableConsole")
-    result.append("Reserved3")
+    result.append("Master")
     result.append("Reserved4")
     result.append("Reserved5")
     result.append("Reserved6")
@@ -78,8 +78,8 @@ class MOptions:
       self.setPreferLoxone(setValue)
     if (name == "EnableConsole"):
       self.setEnableConsole(setValue)
-    if (name == "Reserved3"):
-      self.setReserved3(setValue)
+    if (name == "Master"):
+      self.setMaster(setValue)
     if (name == "Reserved4"):
       self.setReserved4(setValue)
     if (name == "Reserved5"):
@@ -90,7 +90,7 @@ class MOptions:
       self.setReserved7(setValue)
 
   def __str__(self):
-    return f"MOptions(Enabled = {self.isEnabled()}, PreferLoxone = {self.isPreferLoxone()}, EnableConsole = {self.isEnableConsole()}, Reserved3 = {self.isReserved3()}, Reserved4 = {self.isReserved4()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()}, Reserved7 = {self.isReserved7()})"
+    return f"MOptions(Enabled = {self.isEnabled()}, PreferLoxone = {self.isPreferLoxone()}, EnableConsole = {self.isEnableConsole()}, Master = {self.isMaster()}, Reserved4 = {self.isReserved4()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()}, Reserved7 = {self.isReserved7()})"
 
 
 

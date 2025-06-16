@@ -3,49 +3,49 @@ class MLogicalButtonMask:
 
   def setLogicalButton0(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 0, self.value)
-    return self
+    return self;
 
   def isLogicalButton0(self):
     return HausBusUtils.isBitSet(0, self.value)
   def setLogicalButton1(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 1, self.value)
-    return self
+    return self;
 
   def isLogicalButton1(self):
     return HausBusUtils.isBitSet(1, self.value)
   def setLogicalButton2(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 2, self.value)
-    return self
+    return self;
 
   def isLogicalButton2(self):
     return HausBusUtils.isBitSet(2, self.value)
   def setLogicalButton3(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 3, self.value)
-    return self
+    return self;
 
   def isLogicalButton3(self):
     return HausBusUtils.isBitSet(3, self.value)
   def setLogicalButton4(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 4, self.value)
-    return self
+    return self;
 
   def isLogicalButton4(self):
     return HausBusUtils.isBitSet(4, self.value)
   def setLogicalButton5(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 5, self.value)
-    return self
+    return self;
 
   def isLogicalButton5(self):
     return HausBusUtils.isBitSet(5, self.value)
   def setLogicalButton6(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 6, self.value)
-    return self
+    return self;
 
   def isLogicalButton6(self):
     return HausBusUtils.isBitSet(6, self.value)
   def setLogicalButton7(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 7, self.value)
-    return self
+    return self;
 
   def isLogicalButton7(self):
     return HausBusUtils.isBitSet(7, self.value)

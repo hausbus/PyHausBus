@@ -31,6 +31,8 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.taster.data.Enabled"
   if (classId==16 and functionId==4):
     return "pyhausbus.de.hausbus.homeassistant.proxy.taster.commands.GetEnabled"
+  if (classId==16 and functionId==5):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.taster.commands.TriggerStatusEvent"
   if (classId==32 and functionId==200):
     return "pyhausbus.de.hausbus.homeassistant.proxy.temperatursensor.data.EvCold"
   if (classId==32 and functionId==201):
@@ -79,6 +81,8 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.schalter.data.EvCmdDelay"
   if (classId==19 and functionId==204):
     return "pyhausbus.de.hausbus.homeassistant.proxy.schalter.data.EvDisabled"
+  if (classId==19 and functionId==6):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.schalter.commands.ToggleByDuty"
   if (classId==17 and functionId==201):
     return "pyhausbus.de.hausbus.homeassistant.proxy.dimmer.data.EvOn"
   if (classId==17 and functionId==1):
@@ -205,6 +209,8 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.controller.commands.EnableFeature"
   if (classId==0 and functionId==210):
     return "pyhausbus.de.hausbus.homeassistant.proxy.controller.data.EvSystemVariableChanged"
+  if (classId==0 and functionId==20):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.controller.commands.ResetOneWireManager"
   if (classId==18 and functionId==0):
     return "pyhausbus.de.hausbus.homeassistant.proxy.rollladen.commands.GetConfiguration"
   if (classId==18 and functionId==2):
@@ -399,22 +405,22 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.GetConfiguration"
   if (classId==176 and functionId==1):
     return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.SetConfiguration"
-  if (classId==176 and functionId==2):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.CheckBusTiming"
   if (classId==176 and functionId==3):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.GetBusTiming"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.GetMinIdleTime"
   if (classId==176 and functionId==129):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.data.BusTiming"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.data.MinIdleTime"
   if (classId==176 and functionId==128):
     return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.data.Configuration"
   if (classId==176 and functionId==4):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.ResetBusTiming"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.SetMinIdleTime"
   if (classId==176 and functionId==5):
     return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.GetConnectedDevices"
   if (classId==176 and functionId==130):
     return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.data.ConnectedDevices"
   if (classId==176 and functionId==200):
     return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.data.EvGatewayLoad"
+  if (classId==176 and functionId==2):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.commands.SetPreferLoxone"
   if (classId==35 and functionId==0):
     return "pyhausbus.de.hausbus.homeassistant.proxy.counter.commands.GetConfiguration"
   if (classId==35 and functionId==1):
@@ -473,6 +479,8 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.currentReader.data.EvDebug"
   if (classId==90 and functionId==211):
     return "pyhausbus.de.hausbus.homeassistant.proxy.currentReader.data.EvInterrupt"
+  if (classId==90 and functionId==255):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.currentReader.data.EvError"
   if (classId==91 and functionId==1):
     return "pyhausbus.de.hausbus.homeassistant.proxy.tcpClient.commands.AnnounceServer"
   if (classId==91 and functionId==2):
@@ -613,6 +621,64 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.SetConfiguration"
   if (classId==45 and functionId==128):
     return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.Configuration"
+  if (classId==36 and functionId==200):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.EvLow"
+  if (classId==36 and functionId==201):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.EvInRange"
+  if (classId==36 and functionId==202):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.EvHigh"
+  if (classId==36 and functionId==203):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.EvStatus"
+  if (classId==36 and functionId==0):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.commands.GetConfiguration"
+  if (classId==36 and functionId==1):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.commands.SetConfiguration"
+  if (classId==36 and functionId==2):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.commands.GetStatus"
+  if (classId==36 and functionId==128):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.Configuration"
+  if (classId==36 and functionId==129):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.Status"
+  if (classId==165 and functionId==255):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pCA9555.data.EvError"
+  if (classId==48 and functionId==200):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.data.EvLow"
+  if (classId==48 and functionId==201):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.data.EvInRange"
+  if (classId==48 and functionId==202):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.data.EvHigh"
+  if (classId==48 and functionId==203):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.data.EvStatus"
+  if (classId==48 and functionId==0):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.commands.GetConfiguration"
+  if (classId==48 and functionId==1):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.commands.SetConfiguration"
+  if (classId==48 and functionId==2):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.commands.GetStatus"
+  if (classId==48 and functionId==128):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.data.Configuration"
+  if (classId==48 and functionId==129):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.drucksensor.data.Status"
+  if (classId==49 and functionId==200):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.EvLow"
+  if (classId==49 and functionId==201):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.EvInRange"
+  if (classId==49 and functionId==202):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.EvHigh"
+  if (classId==49 and functionId==203):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.EvStatus"
+  if (classId==49 and functionId==255):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.EvError"
+  if (classId==49 and functionId==0):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.commands.GetConfiguration"
+  if (classId==49 and functionId==1):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.commands.SetConfiguration"
+  if (classId==49 and functionId==2):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.commands.GetStatus"
+  if (classId==49 and functionId==128):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.Configuration"
+  if (classId==49 and functionId==129):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.Status"
 
   return "de.hausbus.com.GenericBusData"
 
@@ -677,6 +743,14 @@ def getBusClassNameForClass(classId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.PIDController"
   if (classId==45):
     return "pyhausbus.de.hausbus.homeassistant.proxy.ModBusMaster"
+  if (classId==36):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.AnalogEingang"
+  if (classId==165):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.PCA9555"
+  if (classId==48):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.Drucksensor"
+  if (classId==49):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.PT1000"
 
   return "de.hausbus.com.GenericBusData"
 

@@ -1,10 +1,11 @@
+from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.params.MOptions import MOptions
 import pyhausbus.HausBusUtils as HausBusUtils
 
 class SetConfiguration:
   CLASS_ID = 44
   FUNCTION_ID = 1
 
-  def __init__(self,P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int):
+  def __init__(self,P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int, options:MOptions):
     self.P=P
     self.I=I
     self.D=D
@@ -13,14 +14,15 @@ class SetConfiguration:
     self.actorObjectId=actorObjectId
     self.timeout=timeout
     self.hysteresis=hysteresis
+    self.options=options
 
 
   @staticmethod
   def _fromBytes(dataIn:bytearray, offset):
-    return SetConfiguration(HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToDWord(dataIn, offset), HausBusUtils.bytesToDWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset))
+    return SetConfiguration(HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToDWord(dataIn, offset), HausBusUtils.bytesToDWord(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset), MOptions._fromBytes(dataIn, offset))
 
   def __str__(self):
-    return f"SetConfiguration(P={self.P}, I={self.I}, D={self.D}, targetValue={self.targetValue}, sensorObjectId={self.sensorObjectId}, actorObjectId={self.actorObjectId}, timeout={self.timeout}, hysteresis={self.hysteresis})"
+    return f"SetConfiguration(P={self.P}, I={self.I}, D={self.D}, targetValue={self.targetValue}, sensorObjectId={self.sensorObjectId}, actorObjectId={self.actorObjectId}, timeout={self.timeout}, hysteresis={self.hysteresis}, options={self.options})"
 
   '''
   @param P P-Anteil des Reglers.
@@ -69,6 +71,12 @@ class SetConfiguration:
   '''
   def getHysteresis(self):
     return self.hysteresis
+
+  '''
+  @param options additional: erzeugt einen weiteren PIDController.
+  '''
+  def getOptions(self) -> MOptions:
+    return self.options
 
 
 

@@ -6,6 +6,7 @@ class EFeatureId(Enum):
   PID=1
   MOD_BUS=2
   WIFI=3
+  AIR_QUALITY_SGP30=4
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -16,6 +17,14 @@ class EFeatureId(Enum):
         return act
 
     return EFeatureId.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

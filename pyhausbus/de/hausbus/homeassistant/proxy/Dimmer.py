@@ -1,4 +1,4 @@
-from pyhausbus.HausBusUtils import LOGGER
+import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -24,13 +24,13 @@ class Dimmer(ABusFeature):
   @param duration Einschaltdauer: Wert in Sekunden\r\n0=Endlos.
   """
   def evOn(self, brightness:int, duration:int):
-    LOGGER.debug("evOn"+" brightness = "+str(brightness)+" duration = "+str(duration))
+    logging.info("evOn"+" brightness = "+str(brightness)+" duration = "+str(duration))
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param mode DIMM_CR: dieser Mode ist zu Verwenden.
@@ -40,7 +40,7 @@ class Dimmer(ABusFeature):
   @param dimmingRangeEnd Endwert des Helligkeitbereiches in dem gedimmt werden soll. 0-100%.
   """
   def setConfiguration(self, mode:EMode, fadingTime:int, dimmingTime:int, dimmingRangeStart:int, dimmingRangeEnd:int):
-    LOGGER.debug("setConfiguration"+" mode = "+str(mode)+" fadingTime = "+str(fadingTime)+" dimmingTime = "+str(dimmingTime)+" dimmingRangeStart = "+str(dimmingRangeStart)+" dimmingRangeEnd = "+str(dimmingRangeEnd))
+    logging.info("setConfiguration"+" mode = "+str(mode)+" fadingTime = "+str(fadingTime)+" dimmingTime = "+str(dimmingTime)+" dimmingRangeStart = "+str(dimmingRangeStart)+" dimmingRangeEnd = "+str(dimmingRangeEnd))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addByte(mode.value)
     hbCommand.addByte(fadingTime)
@@ -49,29 +49,29 @@ class Dimmer(ABusFeature):
     hbCommand.addByte(dimmingRangeEnd)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getConfiguration(self):
-    LOGGER.debug("getConfiguration")
+    logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param brightness Helligkeit in Prozent.
   @param duration Einschaltdauer in Sekunden.
   """
   def setBrightness(self, brightness:int, duration:int):
-    LOGGER.debug("setBrightness"+" brightness = "+str(brightness)+" duration = "+str(duration))
+    logging.info("setBrightness"+" brightness = "+str(brightness)+" duration = "+str(duration))
     hbCommand = HausBusCommand(self.objectId, 2, "setBrightness")
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param mode DIMM_CR: Dimmer arbeitet mit Phasenabschnitt\r\nDIMM_L: Dimmer arbeitet mit Phasenanschnitt\r\nSWITCH: Dimmer schaltet nur keine Dimmfunktion\r\n\r\nACHTUNG: EIN FALSCHER MODE.
@@ -81,7 +81,7 @@ class Dimmer(ABusFeature):
   @param dimmingRangeEnd Endwert des Helligkeitbereiches in dem gedimmt werden soll. 0-100%.
   """
   def Configuration(self, mode:EMode, fadingTime:int, dimmingTime:int, dimmingRangeStart:int, dimmingRangeEnd:int):
-    LOGGER.debug("Configuration"+" mode = "+str(mode)+" fadingTime = "+str(fadingTime)+" dimmingTime = "+str(dimmingTime)+" dimmingRangeStart = "+str(dimmingRangeStart)+" dimmingRangeEnd = "+str(dimmingRangeEnd))
+    logging.info("Configuration"+" mode = "+str(mode)+" fadingTime = "+str(fadingTime)+" dimmingTime = "+str(dimmingTime)+" dimmingRangeStart = "+str(dimmingRangeStart)+" dimmingRangeEnd = "+str(dimmingRangeEnd))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addByte(mode.value)
     hbCommand.addByte(fadingTime)
@@ -90,79 +90,79 @@ class Dimmer(ABusFeature):
     hbCommand.addByte(dimmingRangeEnd)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOff(self):
-    LOGGER.debug("evOff")
+    logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param direction .
   """
   def evStart(self, direction:EDirection):
-    LOGGER.debug("evStart"+" direction = "+str(direction))
+    logging.info("evStart"+" direction = "+str(direction))
     hbCommand = HausBusCommand(self.objectId, 202, "evStart")
     hbCommand.addByte(direction.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param direction .
   """
   def start(self, direction:EDirection):
-    LOGGER.debug("start"+" direction = "+str(direction))
+    logging.info("start"+" direction = "+str(direction))
     hbCommand = HausBusCommand(self.objectId, 3, "start")
     hbCommand.addByte(direction.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def stop(self):
-    LOGGER.debug("stop")
+    logging.info("stop")
     hbCommand = HausBusCommand(self.objectId, 4, "stop")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getStatus(self):
-    LOGGER.debug("getStatus")
+    logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param brightness aktuelle Helligkeit 0-100%.
   @param duration Einschaltdauer: Wert in Sekunden\r\n0=Endlos.
   """
   def Status(self, brightness:int, duration:int):
-    LOGGER.debug("Status"+" brightness = "+str(brightness)+" duration = "+str(duration))
+    logging.info("Status"+" brightness = "+str(brightness)+" duration = "+str(duration))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(brightness)
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param errorCode NO_ZERO_CROSS_DETECTED: Nulldurchgaenge koennen nicht detektiert werde.
   """
   def evError(self, errorCode:EErrorCode):
-    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
+    logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
 

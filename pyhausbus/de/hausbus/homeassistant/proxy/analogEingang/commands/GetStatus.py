@@ -1,15 +1,15 @@
 import pyhausbus.HausBusUtils as HausBusUtils
 
-class GetBusTiming:
-  CLASS_ID = 176
-  FUNCTION_ID = 3
+class GetStatus:
+  CLASS_ID = 36
+  FUNCTION_ID = 2
 
   @staticmethod
   def _fromBytes(dataIn:bytearray, offset):
-    return GetBusTiming()
+    return GetStatus()
 
   def __str__(self):
-    return f"GetBusTiming()"
+    return f"GetStatus()"
 
 
 

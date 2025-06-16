@@ -7,6 +7,7 @@ class EErrorCode(Enum):
   TWI_READ_FAILED=2
   TWI_WRITE_FAILED=3
   CLOCK_HALTED=4
+  ANY_ERROR=255
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -17,6 +18,14 @@ class EErrorCode(Enum):
         return act
 
     return EErrorCode.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

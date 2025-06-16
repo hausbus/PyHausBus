@@ -20,42 +20,42 @@ class Configuration:
   def _fromBytes(dataIn:bytearray, offset):
     return Configuration(EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset))
 
-def getPin(self, id: int):
+def getPin(self, id:int):
   if id==0:
-    return self.pin0
+    return pin0
   if id==1:
-    return self.pin1
+    return pin1
   if id==2:
-    return self.pin2
+    return pin2
   if id==3:
-    return self.pin3
+    return pin3
   if id==4:
-    return self.pin4
+    return pin4
   if id==5:
-    return self.pin5
+    return pin5
   if id==6:
-    return self.pin6
+    return pin6
   if id==7:
-    return self.pin7
-  return None
+    return pin7
+  return null
 
-def setPin(self, id: int, pin: EPin):
+def setPin(self, id:int, pin:EPin):
   if id==0:
-    self.pin0 = pin
+    pin0 = pin
   if id==1:
-    self.pin1 = pin
+    pin1 = pin
   if id==2:
-    self.pin2 = pin
+    pin2 = pin
   if id==3:
-    self.pin3 = pin
+    pin3 = pin
   if id==4:
-    self.pin4 = pin
+    pin4 = pin
   if id==5:
-    self.pin5 = pin
+    pin5 = pin
   if id==6:
-    self.pin6 = pin
+    pin6 = pin
   if id==7:
-    self.pin7 = pin
+    pin7 = pin
 
 
   def __str__(self):

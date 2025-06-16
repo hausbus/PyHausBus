@@ -34,7 +34,7 @@ class SetConfiguration:
     return self.Password
 
   '''
-  @param Server_Port Zusaetzlicher Port fuer die Homeserverfunktionen z.B 15557 f?r Loxone oder 5855 f?r IOBroker.
+  @param Server_Port Zusaetzlicher Port fuer die Homeserverfunktionen z.B 15557 fuer Loxone oder 5855 f?r IOBroker.
   '''
   def getServer_Port(self):
     return self.Server_Port

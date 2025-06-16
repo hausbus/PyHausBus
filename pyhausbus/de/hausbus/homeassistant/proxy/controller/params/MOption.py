@@ -3,49 +3,49 @@ class MOption:
 
   def setSEND_TRIGGERED_RULE_EVENT(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 0, self.value)
-    return self
+    return self;
 
   def isSEND_TRIGGERED_RULE_EVENT(self):
     return HausBusUtils.isBitSet(0, self.value)
   def setREAD_ONLY_GATEWAYS(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 1, self.value)
-    return self
+    return self;
 
   def isREAD_ONLY_GATEWAYS(self):
     return HausBusUtils.isBitSet(1, self.value)
   def setREPORT_GATEWAY_LOAD(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 2, self.value)
-    return self
+    return self;
 
   def isREPORT_GATEWAY_LOAD(self):
     return HausBusUtils.isBitSet(2, self.value)
   def setREPORT_INTERNAL_TEMPERATURE(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 3, self.value)
-    return self
+    return self;
 
   def isREPORT_INTERNAL_TEMPERATURE(self):
     return HausBusUtils.isBitSet(3, self.value)
   def setSEND_ZERO_CROSS_DATA(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 4, self.value)
-    return self
+    return self;
 
   def isSEND_ZERO_CROSS_DATA(self):
     return HausBusUtils.isBitSet(4, self.value)
   def setReserved1(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 5, self.value)
-    return self
+    return self;
 
   def isReserved1(self):
     return HausBusUtils.isBitSet(5, self.value)
   def setReserved2(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 6, self.value)
-    return self
+    return self;
 
   def isReserved2(self):
     return HausBusUtils.isBitSet(6, self.value)
   def setReserved3(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 7, self.value)
-    return self
+    return self;
 
   def isReserved3(self):
     return HausBusUtils.isBitSet(7, self.value)

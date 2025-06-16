@@ -1,4 +1,4 @@
-from pyhausbus.HausBusUtils import LOGGER
+import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -25,100 +25,110 @@ class Schalter(ABusFeature):
   @param quantity Anzahl der Zustandswechsel.
   """
   def toggle(self, offTime:int, onTime:int, quantity:int):
-    LOGGER.debug("toggle"+" offTime = "+str(offTime)+" onTime = "+str(onTime)+" quantity = "+str(quantity))
+    logging.info("toggle"+" offTime = "+str(offTime)+" onTime = "+str(onTime)+" quantity = "+str(quantity))
     hbCommand = HausBusCommand(self.objectId, 4, "toggle")
     hbCommand.addByte(offTime)
     hbCommand.addByte(onTime)
     hbCommand.addByte(quantity)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param duration Einschaltdauer: \r\nWert * Zeitbasis [ms]\r\n0=nicht mehr ausschalten.
   @param onDelay Einschaltverzoegerung: Wert * Zeitbasis [ms]\r\n0=Keine.
   """
   def on(self, duration:int, onDelay:int):
-    LOGGER.debug("on"+" duration = "+str(duration)+" onDelay = "+str(onDelay))
+    logging.info("on"+" duration = "+str(duration)+" onDelay = "+str(onDelay))
     hbCommand = HausBusCommand(self.objectId, 3, "on")
     hbCommand.addWord(duration)
     hbCommand.addWord(onDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param offDelay Ausschaltverzoegerung: Wert * Zeitbasis [ms]\r\n0=Keine.
   """
   def off(self, offDelay:int):
-    LOGGER.debug("off"+" offDelay = "+str(offDelay))
+    logging.info("off"+" offDelay = "+str(offDelay))
     hbCommand = HausBusCommand(self.objectId, 2, "off")
     hbCommand.addWord(offDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param duration Dauer.
   """
   def evOn(self, duration:int):
-    LOGGER.debug("evOn"+" duration = "+str(duration))
+    logging.info("evOn"+" duration = "+str(duration))
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOff(self):
-    LOGGER.debug("evOff")
+    logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getStatus(self):
-    LOGGER.debug("getStatus")
+    logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param state .
-  @param duration Einschaltdauer: Wert * Zeitbasis [ms]\r\n0=Endlos.
+  @param duration Einschaltdauer: Wert * Zeitbasis [ms]\r\n0=Endlos\r\nWenn state TOGGLE.
+  @param offTime Dauer der Aus-Phase beim Togglen: \r\nWert * Zeitbasis [ms].
+  @param onTime Dauer der An-Phase beim Togglen: \r\nWert * Zeitbasis [ms].
   """
-  def Status(self, state:EState, duration:int):
-    LOGGER.debug("Status"+" state = "+str(state)+" duration = "+str(duration))
+  def Status(self, state:EState, duration:int, offTime:int, onTime:int):
+    logging.info("Status"+" state = "+str(state)+" duration = "+str(duration)+" offTime = "+str(offTime)+" onTime = "+str(onTime))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addByte(state.value)
     hbCommand.addWord(duration)
+    hbCommand.addByte(offTime)
+    hbCommand.addByte(onTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
+    logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
+  @param offTime Dauer der Aus-Phase beim Togglen: \r\nWert * Zeitbasis [ms].
+  @param onTime Dauer der An-Phase beim Togglen: \r\nWert * Zeitbasis [ms].
+  @param quantity Anzahl der Schaltvorgaenge.
   """
-  def evToggle(self):
-    LOGGER.debug("evToggle")
+  def evToggle(self, offTime:int, onTime:int, quantity:int):
+    logging.info("evToggle"+" offTime = "+str(offTime)+" onTime = "+str(onTime)+" quantity = "+str(quantity))
     hbCommand = HausBusCommand(self.objectId, 202, "evToggle")
+    hbCommand.addByte(offTime)
+    hbCommand.addByte(onTime)
+    hbCommand.addByte(quantity)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param maxOnTime Maximale Zeit.
@@ -128,7 +138,7 @@ class Schalter(ABusFeature):
   @param disableBitIndex Bit Index0-31 Systemvariable.
   """
   def Configuration(self, maxOnTime:int, offDelayTime:int, timeBase:int, options:MOptions, disableBitIndex:int):
-    LOGGER.debug("Configuration"+" maxOnTime = "+str(maxOnTime)+" offDelayTime = "+str(offDelayTime)+" timeBase = "+str(timeBase)+" options = "+str(options)+" disableBitIndex = "+str(disableBitIndex))
+    logging.info("Configuration"+" maxOnTime = "+str(maxOnTime)+" offDelayTime = "+str(offDelayTime)+" timeBase = "+str(timeBase)+" options = "+str(options)+" disableBitIndex = "+str(disableBitIndex))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addByte(maxOnTime)
     hbCommand.addByte(offDelayTime)
@@ -137,16 +147,16 @@ class Schalter(ABusFeature):
     hbCommand.addByte(disableBitIndex)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getConfiguration(self):
-    LOGGER.debug("getConfiguration")
+    logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param maxOnTime Maximale Zeit.
@@ -156,7 +166,7 @@ class Schalter(ABusFeature):
   @param disableBitIndex Bit Index0-31 Systemvariable.
   """
   def setConfiguration(self, maxOnTime:int, offDelayTime:int, timeBase:int, options:MOptions, disableBitIndex:int):
-    LOGGER.debug("setConfiguration"+" maxOnTime = "+str(maxOnTime)+" offDelayTime = "+str(offDelayTime)+" timeBase = "+str(timeBase)+" options = "+str(options)+" disableBitIndex = "+str(disableBitIndex))
+    logging.info("setConfiguration"+" maxOnTime = "+str(maxOnTime)+" offDelayTime = "+str(offDelayTime)+" timeBase = "+str(timeBase)+" options = "+str(options)+" disableBitIndex = "+str(disableBitIndex))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addByte(maxOnTime)
     hbCommand.addByte(offDelayTime)
@@ -165,26 +175,39 @@ class Schalter(ABusFeature):
     hbCommand.addByte(disableBitIndex)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param cmdDelay Dauer Wert * Zeitbasis [ms].
   """
   def evCmdDelay(self, cmdDelay:int):
-    LOGGER.debug("evCmdDelay"+" cmdDelay = "+str(cmdDelay))
+    logging.info("evCmdDelay"+" cmdDelay = "+str(cmdDelay))
     hbCommand = HausBusCommand(self.objectId, 203, "evCmdDelay")
     hbCommand.addWord(cmdDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evDisabled(self):
-    LOGGER.debug("evDisabled")
+    logging.info("evDisabled")
     hbCommand = HausBusCommand(self.objectId, 204, "evDisabled")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
+
+  """
+  @param duty 0-100% Pulsverh?ltnis.
+  @param quantity Anzahl der Zustandswechsel.
+  """
+  def toggleByDuty(self, duty:int, quantity:int):
+    logging.info("toggleByDuty"+" duty = "+str(duty)+" quantity = "+str(quantity))
+    hbCommand = HausBusCommand(self.objectId, 6, "toggleByDuty")
+    hbCommand.addByte(duty)
+    hbCommand.addByte(quantity)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
+    hbCommand.send()
+    logging.info("returns")
 
 

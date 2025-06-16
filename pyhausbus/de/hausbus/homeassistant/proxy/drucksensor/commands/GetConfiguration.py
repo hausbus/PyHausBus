@@ -1,15 +1,15 @@
 import pyhausbus.HausBusUtils as HausBusUtils
 
-class ResetBusTiming:
-  CLASS_ID = 176
-  FUNCTION_ID = 4
+class GetConfiguration:
+  CLASS_ID = 48
+  FUNCTION_ID = 0
 
   @staticmethod
   def _fromBytes(dataIn:bytearray, offset):
-    return ResetBusTiming()
+    return GetConfiguration()
 
   def __str__(self):
-    return f"ResetBusTiming()"
+    return f"GetConfiguration()"
 
 
 

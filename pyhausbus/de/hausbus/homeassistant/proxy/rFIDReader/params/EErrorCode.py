@@ -9,6 +9,7 @@ class EErrorCode(Enum):
   DATA_CORRUPT=4
   DISCONNECTED=16
   NOT_CONNECTED=17
+  ANY_ERROR=255
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -19,6 +20,14 @@ class EErrorCode(Enum):
         return act
 
     return EErrorCode.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

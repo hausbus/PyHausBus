@@ -20,7 +20,7 @@ class SetConfiguration:
   def _fromBytes(dataIn:bytearray, offset):
     return SetConfiguration(EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset), EPin._fromBytes(dataIn, offset))
 
-def getPin(int id):
+def getPin(self, id:int):
   if id==0:
     return pin0
   if id==1:
@@ -39,7 +39,7 @@ def getPin(int id):
     return pin7
   return null
 
-def setPin(int id, EPin pin):
+def setPin(self, id:int, pin:EPin):
   if id==0:
     pin0 = pin
   if id==1:

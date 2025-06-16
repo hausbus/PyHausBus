@@ -1,4 +1,5 @@
 from pyhausbus.BusHandler import BusHandler
+from pyhausbus.Templates import Templates
 from pyhausbus.IBusDataListener import IBusDataListener
 from pyhausbus.de.hausbus.homeassistant.proxy.Controller import Controller
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
@@ -9,6 +10,7 @@ from pyhausbus.HausBusUtils import LOGGER
 import pyhausbus.de.hausbus.homeassistant.proxy.ProxyFactory as ProxyFactory
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Configuration import Configuration
 import importlib
 import traceback
 import time
@@ -19,6 +21,8 @@ from pyhausbus.ResultWorker import ResultWorker
 class HomeServer(IBusDataListener):
     _instance = None
     bushandler = None
+    modulesIds = {}
+    configurations = {}
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
@@ -44,6 +48,8 @@ class HomeServer(IBusDataListener):
     def getDeviceInstances(self, senderObjectId: int, remoteObjects: RemoteObjects):
         deviceId = HausBusUtils.getDeviceId(senderObjectId)
         objectList = remoteObjects.getObjectList()
+        moduleId = self.modulesIds[deviceId];
+        configuration = self.configurations[deviceId];
 
         result = []
         for i in range(0, len(objectList), 2):
@@ -51,12 +57,15 @@ class HomeServer(IBusDataListener):
             classId = objectList[i + 1]
             className = ProxyFactory.getBusClassNameForClass(classId)
             objectId = HausBusUtils.getObjectId(deviceId, classId, instanceId)
-
+            featureName = Templates.get_instance().get_feature_name_from_template(moduleId.getFirmwareId(), configuration.getFCKE(), classId, instanceId);
+            
             try:
                 module_name, class_name = className.rsplit(".", 1)
                 module = importlib.import_module(className)
                 cls = getattr(module, class_name)
                 obj = cls(objectId)
+                if featureName!=None:
+                  obj.setName(featureName)
                 result.append(obj)
             except Exception as err:
                 LOGGER.error(err,exc_info=True, stack_info=True)
@@ -64,5 +73,14 @@ class HomeServer(IBusDataListener):
 
     def busDataReceived(self, busDataMessage):
         """if a device restarts during runtime, we automatically read moduleId"""
+        if isinstance(busDataMessage.getData(), ModuleId):
+            self.modulesIds[HausBusUtils.getDeviceId(busDataMessage.getSenderObjectId())]=busDataMessage.getData();
+            Controller(busDataMessage.getSenderObjectId()).getConfiguration()
+
+        if isinstance(busDataMessage.getData(), Configuration):
+            self.configurations[HausBusUtils.getDeviceId(busDataMessage.getSenderObjectId())]=busDataMessage.getData();
+            Controller(busDataMessage.getSenderObjectId()).getRemoteObjects()
+
+        """ if a device restarts during runtime, we automatically read moduleId"""
         if isinstance(busDataMessage.getData(), EvStarted):
             Controller(busDataMessage.getSenderObjectId()).getModuleId(EIndex.RUNNING)

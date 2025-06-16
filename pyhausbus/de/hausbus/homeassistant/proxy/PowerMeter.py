@@ -1,4 +1,4 @@
-from pyhausbus.HausBusUtils import LOGGER
+import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -21,49 +21,49 @@ class PowerMeter(ABusFeature):
   """
   """
   def evLowPower(self):
-    LOGGER.debug("evLowPower")
+    logging.info("evLowPower")
     hbCommand = HausBusCommand(self.objectId, 200, "evLowPower")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evMediumPower(self):
-    LOGGER.debug("evMediumPower")
+    logging.info("evMediumPower")
     hbCommand = HausBusCommand(self.objectId, 201, "evMediumPower")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evHighPower(self):
-    LOGGER.debug("evHighPower")
+    logging.info("evHighPower")
     hbCommand = HausBusCommand(self.objectId, 202, "evHighPower")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
+    logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getConfiguration(self):
-    LOGGER.debug("getConfiguration")
+    logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param lowerThreshold untere Leistungsschwelle[kWh].
@@ -78,7 +78,7 @@ class PowerMeter(ABusFeature):
   @param deltaSensorID Die InstanceID des Sensors auf diesem Controller.
   """
   def setConfiguration(self, lowerThreshold:int, lowerThresholdFraction:int, upperThreshold:int, upperThresholdFraction:int, reportTimeBase:int, minReportTime:int, maxReportTime:int, hysteresis:int, calibration:int, deltaSensorID:int):
-    LOGGER.debug("setConfiguration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
+    logging.info("setConfiguration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addSByte(lowerThreshold)
     hbCommand.addSByte(lowerThresholdFraction)
@@ -92,16 +92,16 @@ class PowerMeter(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def getStatus(self):
-    LOGGER.debug("getStatus")
+    logging.info("getStatus")
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param lowerThreshold untere Leistungsschwelle[kWh].
@@ -116,7 +116,7 @@ class PowerMeter(ABusFeature):
   @param deltaSensorID Die InstanceID des Sensors auf diesem Controller.
   """
   def Configuration(self, lowerThreshold:int, lowerThresholdFraction:int, upperThreshold:int, upperThresholdFraction:int, reportTimeBase:int, minReportTime:int, maxReportTime:int, hysteresis:int, calibration:int, deltaSensorID:int):
-    LOGGER.debug("Configuration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
+    logging.info("Configuration"+" lowerThreshold = "+str(lowerThreshold)+" lowerThresholdFraction = "+str(lowerThresholdFraction)+" upperThreshold = "+str(upperThreshold)+" upperThresholdFraction = "+str(upperThresholdFraction)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addSByte(lowerThreshold)
     hbCommand.addSByte(lowerThresholdFraction)
@@ -130,7 +130,7 @@ class PowerMeter(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param power Aktueller Stromverbrauch.
@@ -138,14 +138,14 @@ class PowerMeter(ABusFeature):
   @param lastEvent .
   """
   def Status(self, power:int, centiPower:int, lastEvent:ELastEvent):
-    LOGGER.debug("Status"+" power = "+str(power)+" centiPower = "+str(centiPower)+" lastEvent = "+str(lastEvent))
+    logging.info("Status"+" power = "+str(power)+" centiPower = "+str(centiPower)+" lastEvent = "+str(lastEvent))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addSByte(power)
     hbCommand.addSByte(centiPower)
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param power Stromverbrauch [kWh].
@@ -153,13 +153,13 @@ class PowerMeter(ABusFeature):
   @param lastEvent .
   """
   def evStatus(self, power:int, centiPower:int, lastEvent:ELastEvent):
-    LOGGER.debug("evStatus"+" power = "+str(power)+" centiPower = "+str(centiPower)+" lastEvent = "+str(lastEvent))
+    logging.info("evStatus"+" power = "+str(power)+" centiPower = "+str(centiPower)+" lastEvent = "+str(lastEvent))
     hbCommand = HausBusCommand(self.objectId, 203, "evStatus")
     hbCommand.addSByte(power)
     hbCommand.addSByte(centiPower)
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
 

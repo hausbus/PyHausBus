@@ -8,6 +8,7 @@ class EErrorCode(Enum):
   MSG_QUEUE_OVERRUN=3
   BUSY_BUS=4
   MSG_POOL_LEVEL_TOO_HIGH=5
+  ANY_ERROR=255
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -18,6 +19,14 @@ class EErrorCode(Enum):
         return act
 
     return EErrorCode.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

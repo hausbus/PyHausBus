@@ -1,0 +1,11 @@
+Order=Miniserver,RGBW Dimmer Tree,Relais Extension,Nano 2 Relay Tree,Stellantrieb Tree,Touch Pure Tree,Eingangsmodul Air,Nano DI Tree,Präsenzmelder Tree,Präsenzmelder Air
+Miniserver=12-fach Relais,16-fach Relais
+RGBW Dimmer Tree=2-fach RGB Dimmer
+Präsenzmelder Tree=6-fach Taster,4-fach Taster,2-fach Taster,1-fach Taster
+Präsenzmelder Air=6-fach Taster,4-fach Taster,2-fach Taster,1-fach Taster
+Touch Pure Tree=6-fach Taster,4-fach Taster,2-fach Taster,1-fach Taster
+Stellantrieb Tree=32-fach IO Modul,16-fach Relais,12-fach Relais
+Relais Extension=16-fach Relais,12-fach Relais
+Nano 2 Relay Tree=12-fach Relais,16-fach Relais
+Eingangsmodul Air=22-fach UP-IO,32-fach IO Modul,12-fach Relais,16-fach Relais,2-fach RGB Dimmer,4-fach 0-10V Dimmer,4-fach 1-10V Dimmer
+Nano DI Tree=22-fach UP-IO,32-fach IO Modul,12-fach Relais,16-fach Relais,2-fach RGB Dimmer,4-fach 0-10V Dimmer,4-fach 1-10V Dimmer

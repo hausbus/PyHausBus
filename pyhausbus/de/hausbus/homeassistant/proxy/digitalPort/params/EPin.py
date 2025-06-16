@@ -15,6 +15,7 @@ class EPin(Enum):
   S0_READER=40
   RFID_D0=43
   RFID_D1=130
+  ANALOG_IN=36
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -25,6 +26,14 @@ class EPin(Enum):
         return act
 
     return EPin.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

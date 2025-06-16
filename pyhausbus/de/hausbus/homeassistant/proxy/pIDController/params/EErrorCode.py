@@ -6,6 +6,9 @@ class EErrorCode(Enum):
   TIMEOUT=1
   NOT_SUPPORTED_SENSOR_OBJECT=2
   NOT_SUPPORTED_ACTOR_OBJECT=3
+  MAX_INSTANCES_REACHED=4
+  CONFIGURATION_OUT_OF_MEMORY=128
+  ANY_ERROR=255
   SER_UNKNOWN=-1
 
   @staticmethod
@@ -16,6 +19,14 @@ class EErrorCode(Enum):
         return act
 
     return EErrorCode.SER_UNKNOWN
+
+  @staticmethod
+  def value_of(name: str) -> 'EFirmwareId':
+    try:
+      return EFirmwareId[name]
+    except KeyError:
+      return EFirmwareId.SER_UNKNOWN 
+
 
 
 

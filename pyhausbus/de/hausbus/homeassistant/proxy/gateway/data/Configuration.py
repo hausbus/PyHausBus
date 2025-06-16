@@ -17,7 +17,7 @@ class Configuration:
     return f"Configuration(options={self.options})"
 
   '''
-  @param options enabled: Dies Gateway ist aktiv und leitet Nachrichten weiter\r\npreferLoxone: Gateway kommuniziert bevorzugt im Loxone-Protokoll.
+  @param options enabled: Dies Gateway ist aktiv und leitet Nachrichten weiter\r\npreferLoxone: Gateway kommuniziert bevorzugt im Loxone-Protokoll\r\nenableConsole: aktiviert das senden von Debugausgaben\r\nmaster: dieses Gateway soll das Bus-Timing verwalten.
   '''
   def getOptions(self) -> MOptions:
     return self.options

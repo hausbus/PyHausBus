@@ -1,9 +1,10 @@
-from pyhausbus.HausBusUtils import LOGGER
+import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.params.MOptions import MOptions
 from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.params.EEnable import EEnable
 from pyhausbus.de.hausbus.homeassistant.proxy.pIDController.params.EErrorCode import EErrorCode
 
@@ -20,11 +21,11 @@ class PIDController(ABusFeature):
   """
   """
   def getConfiguration(self):
-    LOGGER.debug("getConfiguration")
+    logging.info("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param P P-Anteil des Reglers.
@@ -35,9 +36,10 @@ class PIDController(ABusFeature):
   @param actorObjectId Komplette Objekt-ID des Stellers.
   @param timeout Zeit.
   @param hysteresis Erweitert den Regelzielwert in einen Bereich\r\n0: Regelzielwert wird versucht exakt zu erreichen\r\n>0: Regelzielwert +/- hysteresis wird versucht zu erreichen.
+  @param options additional: erzeugt einen weiteren PIDController.
   """
-  def setConfiguration(self, P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int):
-    LOGGER.debug("setConfiguration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis))
+  def setConfiguration(self, P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int, options:MOptions):
+    logging.info("setConfiguration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis)+" options = "+str(options))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addWord(P)
     hbCommand.addWord(I)
@@ -47,9 +49,10 @@ class PIDController(ABusFeature):
     hbCommand.addDWord(actorObjectId)
     hbCommand.addWord(timeout)
     hbCommand.addByte(hysteresis)
+    hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param P P-Anteil des Reglers.
@@ -60,9 +63,10 @@ class PIDController(ABusFeature):
   @param actorObjectId Komplette Objekt-ID des Stellers.
   @param timeout Zeit.
   @param hysteresis Erweitert den Regelzielwert in einen Bereich\r\n0: Regelzielwert wird versucht exakt zu erreichen\r\n>0: Regelzielwert +/- hysteresis wird versucht zu erreichen.
+  @param options additional: erzeugt einen weiteren PIDController.
   """
-  def Configuration(self, P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int):
-    LOGGER.debug("Configuration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis))
+  def Configuration(self, P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int, options:MOptions):
+    logging.info("Configuration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis)+" options = "+str(options))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addWord(P)
     hbCommand.addWord(I)
@@ -72,59 +76,60 @@ class PIDController(ABusFeature):
     hbCommand.addDWord(actorObjectId)
     hbCommand.addWord(timeout)
     hbCommand.addByte(hysteresis)
+    hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param targetValue Regelungszielwert z.B. targetValue*0.
   """
   def setTargetValue(self, targetValue:int):
-    LOGGER.debug("setTargetValue"+" targetValue = "+str(targetValue))
+    logging.info("setTargetValue"+" targetValue = "+str(targetValue))
     hbCommand = HausBusCommand(self.objectId, 2, "setTargetValue")
     hbCommand.addWord(targetValue)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param enable Reglerverhalten ein/ausschalten.
   """
   def enable(self, enable:EEnable):
-    LOGGER.debug("enable"+" enable = "+str(enable))
+    logging.info("enable"+" enable = "+str(enable))
     hbCommand = HausBusCommand(self.objectId, 3, "enable")
     hbCommand.addByte(enable.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOn(self):
-    LOGGER.debug("evOn")
+    logging.info("evOn")
     hbCommand = HausBusCommand(self.objectId, 200, "evOn")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
+    logging.info("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOff(self):
-    LOGGER.debug("evOff")
+    logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 201, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
 

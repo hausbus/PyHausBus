@@ -1,4 +1,4 @@
-from pyhausbus.HausBusUtils import LOGGER
+import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -17,76 +17,76 @@ class IRSensor(ABusFeature):
   """
   """
   def off(self):
-    LOGGER.debug("off")
+    logging.info("off")
     hbCommand = HausBusCommand(self.objectId, 0, "off")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def on(self):
-    LOGGER.debug("on")
+    logging.info("on")
     hbCommand = HausBusCommand(self.objectId, 1, "on")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param address IR Adresse.
   @param command IR Kommando.
   """
   def evClicked(self, address:int, command:int):
-    LOGGER.debug("evClicked"+" address = "+str(address)+" command = "+str(command))
+    logging.info("evClicked"+" address = "+str(address)+" command = "+str(command))
     hbCommand = HausBusCommand(self.objectId, 202, "evClicked")
     hbCommand.addWord(address)
     hbCommand.addWord(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOff(self):
-    LOGGER.debug("evOff")
+    logging.info("evOff")
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOn(self):
-    LOGGER.debug("evOn")
+    logging.info("evOn")
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param address IR Adresse.
   @param command IR Kommando.
   """
   def evHoldStart(self, address:int, command:int):
-    LOGGER.debug("evHoldStart"+" address = "+str(address)+" command = "+str(command))
+    logging.info("evHoldStart"+" address = "+str(address)+" command = "+str(command))
     hbCommand = HausBusCommand(self.objectId, 203, "evHoldStart")
     hbCommand.addWord(address)
     hbCommand.addWord(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param address IR Adresse.
   @param command IR Kommando.
   """
   def evHoldEnd(self, address:int, command:int):
-    LOGGER.debug("evHoldEnd"+" address = "+str(address)+" command = "+str(command))
+    logging.info("evHoldEnd"+" address = "+str(address)+" command = "+str(command))
     hbCommand = HausBusCommand(self.objectId, 204, "evHoldEnd")
     hbCommand.addWord(address)
     hbCommand.addWord(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
 

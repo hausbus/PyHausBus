@@ -1,4 +1,4 @@
-from pyhausbus.HausBusUtils import LOGGER
+import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -18,87 +18,87 @@ class PCServer(ABusFeature):
   @param command .
   """
   def exec(self, command:str):
-    LOGGER.debug("exec"+" command = "+str(command))
+    logging.info("exec"+" command = "+str(command))
     hbCommand = HausBusCommand(self.objectId, 0, "exec")
     hbCommand.addString(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   @param varId .
   @param varValue .
   """
   def setVariable(self, varId:int, varValue:int):
-    LOGGER.debug("setVariable"+" varId = "+str(varId)+" varValue = "+str(varValue))
+    logging.info("setVariable"+" varId = "+str(varId)+" varValue = "+str(varValue))
     hbCommand = HausBusCommand(self.objectId, 126, "setVariable")
     hbCommand.addByte(varId)
     hbCommand.addByte(varValue)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def shutdown(self):
-    LOGGER.debug("shutdown")
+    logging.info("shutdown")
     hbCommand = HausBusCommand(self.objectId, 11, "shutdown")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def restart(self):
-    LOGGER.debug("restart")
+    logging.info("restart")
     hbCommand = HausBusCommand(self.objectId, 12, "restart")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def quit(self):
-    LOGGER.debug("quit")
+    logging.info("quit")
     hbCommand = HausBusCommand(self.objectId, 20, "quit")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOnline(self):
-    LOGGER.debug("evOnline")
+    logging.info("evOnline")
     hbCommand = HausBusCommand(self.objectId, 200, "evOnline")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def evOffline(self):
-    LOGGER.debug("evOffline")
+    logging.info("evOffline")
     hbCommand = HausBusCommand(self.objectId, 201, "evOffline")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def standby(self):
-    LOGGER.debug("standby")
+    logging.info("standby")
     hbCommand = HausBusCommand(self.objectId, 10, "standby")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
   """
   """
   def reloadUserPlugin(self):
-    LOGGER.debug("reloadUserPlugin")
+    logging.info("reloadUserPlugin")
     hbCommand = HausBusCommand(self.objectId, 13, "reloadUserPlugin")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+    logging.info("returns")
 
 

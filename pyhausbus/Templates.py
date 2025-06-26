@@ -76,8 +76,7 @@ class Templates:
         return cls._instance
 
     def get_feature_name_from_template(self, firmware_id, fcke, class_id, instance_id) -> Optional[str]:
-        if fcke != -1 & (firmware_id == EFirmwareId.ESP):
-        
+        if fcke != -1:
             ''' print("get_feature_name_from_template firmware_id = ",firmware_id," fcke = ",fcke," class_id = ",class_id," instance_id = ",instance_id)'''
             features = self.get_features(firmware_id, fcke)
 
@@ -87,6 +86,12 @@ class Templates:
                         return entry.name
         return None
 
+    def getModuleName(self, firmwareId: EFirmwareId, fcke: int):
+        for entry in self.module_types:
+          if entry.suits(firmwareId, fcke):
+            return entry.name
+        return None
+    
     def get_features(self, firmware_id, fcke) -> Optional[List['FeatureEntry']]:
         for module_type, features in self.feature_names.items():
             if module_type.suits(firmware_id, fcke):

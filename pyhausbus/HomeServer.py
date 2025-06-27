@@ -46,7 +46,6 @@ class HomeServer(IBusDataListener):
     def getDeviceInstances(self, senderObjectId: int, remoteObjects: RemoteObjects):
         deviceId = HausBusUtils.getDeviceId(senderObjectId)
         objectList = remoteObjects.getObjectList()
-        configuration = self.configurations[deviceId];
 
         result = []
         for i in range(0, len(objectList), 2):

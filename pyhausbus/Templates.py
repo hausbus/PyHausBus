@@ -9,10 +9,10 @@ def load_file(path: str) -> list[str]:
         with open(path, "r", encoding="latin1") as file:
             return [line.strip() for line in file if line.strip()]
     except FileNotFoundError:
-        print(f"Datei nicht gefunden: {path}")
+        LOGGER.error(f"Datei nicht gefunden: {path}")
         return []
     except Exception as e:
-        print(f"Fehler beim Laden der Datei {path}: {e}")
+        LOGGER.error(f"Fehler beim Laden der Datei {path}: {e}")
         return []
 
 class Templates:
@@ -90,10 +90,10 @@ class Templates:
         return None
 
     def getModuleName(self, firmwareId: EFirmwareId, fcke: int):
-        for entry in self.module_types:
-          if entry.suits(firmwareId, fcke):
-            return entry.name
-        return None
+      for entry, name in self.module_types.items():
+        if entry.suits(firmwareId, fcke):
+            return name
+      return None
     
     def get_features(self, firmware_id, fcke) -> Optional[List['FeatureEntry']]:
         for module_type, features in self.feature_names.items():

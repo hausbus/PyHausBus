@@ -2,6 +2,7 @@ import os
 from collections import defaultdict
 from typing import List, Dict, Optional
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EFirmwareId import EFirmwareId
+from pyhausbus.HausBusUtils import LOGGER
 
 def load_file(path: str) -> list[str]:
     try:
@@ -15,7 +16,8 @@ def load_file(path: str) -> list[str]:
         return []
 
 class Templates:
-    template_root_dir = "pyhausbus/templates/"
+    template_root_dir = os.path.join(os.path.dirname(__file__), "templates")
+    LOGGER.debug(f"templateRootDir = {self.template_root_dir}")
     filter_non_existing = True
     _instance = None
     class_mappings: Dict[str, str] = {}
@@ -25,7 +27,7 @@ class Templates:
         self.feature_names: Dict['ModuleType', List['FeatureEntry']] = {}
 
         try:
-            lines = load_file(self.template_root_dir + "deviceTypes.def")
+            lines = load_file(os.path.join(self.template_root_dir, "deviceTypes.def"))
             for line in lines:
                 tokens = line.split(",")
                 firmware_id = EFirmwareId.value_of(tokens[0])
@@ -58,16 +60,17 @@ class Templates:
               
             quit()'''
 
-            lines = load_file(self.template_root_dir + "classMapping.def")
+            lines = load_file(os.path.join(self.template_root_dir, "classMapping.def"))
             if lines:
                 for line in lines:
                     tokens = line.split(",")
                     orig_name = tokens[0]
                     mapped_name = tokens[1]
                     Templates.class_mappings[orig_name] = mapped_name
-
+            LOGGER.debug(f"module types = {len(self.module_types)}")
+            LOGGER.debug(f"feature names = {len(self.feature_names)}")
         except Exception as e:
-            print(f"Fehler beim Initialisieren der Templates: {e}")
+            LOGGER.error(f"Fehler beim Initialisieren der Templates: {e}")
 
     @classmethod
     def get_instance(cls):

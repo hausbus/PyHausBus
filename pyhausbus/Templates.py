@@ -16,7 +16,7 @@ def load_file(path: str) -> list[str]:
         return []
 
 class Templates:
-    template_root_dir = os.path.join(os.path.dirname(__file__), "templates")
+    self.template_root_dir = os.path.join(os.path.dirname(__file__), "templates")
     LOGGER.debug(f"templateRootDir = {self.template_root_dir}")
     filter_non_existing = True
     _instance = None

@@ -1,4 +1,3 @@
-import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -22,11 +21,11 @@ class SystemTime(ABusFeature):
   """
   """
   def getTime(self):
-    logging.info("getTime")
+    LOGGER.debug("getTime")
     hbCommand = HausBusCommand(self.objectId, 0, "getTime")
     ResultWorker()._setResultInfo(Time,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param weekDay .
@@ -38,7 +37,7 @@ class SystemTime(ABusFeature):
   @param seconds .
   """
   def setTime(self, weekDay:EWeekDay, date:EDate, month:EMonth, year:int, hours:int, minutes:int, seconds:int):
-    logging.info("setTime"+" weekDay = "+str(weekDay)+" date = "+str(date)+" month = "+str(month)+" year = "+str(year)+" hours = "+str(hours)+" minutes = "+str(minutes)+" seconds = "+str(seconds))
+    LOGGER.debug("setTime"+" weekDay = "+str(weekDay)+" date = "+str(date)+" month = "+str(month)+" year = "+str(year)+" hours = "+str(hours)+" minutes = "+str(minutes)+" seconds = "+str(seconds))
     hbCommand = HausBusCommand(self.objectId, 1, "setTime")
     hbCommand.addByte(weekDay.value)
     hbCommand.addByte(date.value)
@@ -49,7 +48,7 @@ class SystemTime(ABusFeature):
     hbCommand.addByte(seconds)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param weekday .
@@ -61,7 +60,7 @@ class SystemTime(ABusFeature):
   @param seconds .
   """
   def Time(self, weekday:int, date:int, month:int, year:int, hours:int, minutes:int, seconds:int):
-    logging.info("Time"+" weekday = "+str(weekday)+" date = "+str(date)+" month = "+str(month)+" year = "+str(year)+" hours = "+str(hours)+" minutes = "+str(minutes)+" seconds = "+str(seconds))
+    LOGGER.debug("Time"+" weekday = "+str(weekday)+" date = "+str(date)+" month = "+str(month)+" year = "+str(year)+" hours = "+str(hours)+" minutes = "+str(minutes)+" seconds = "+str(seconds))
     hbCommand = HausBusCommand(self.objectId, 128, "Time")
     hbCommand.addByte(weekday)
     hbCommand.addByte(date)
@@ -72,17 +71,17 @@ class SystemTime(ABusFeature):
     hbCommand.addByte(seconds)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    logging.info("evError"+" errorCode = "+str(errorCode))
+    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

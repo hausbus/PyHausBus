@@ -1,4 +1,3 @@
-import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -22,99 +21,99 @@ class RFIDReader(ABusFeature):
   """
   """
   def evConnected(self):
-    logging.info("evConnected")
+    LOGGER.debug("evConnected")
     hbCommand = HausBusCommand(self.objectId, 200, "evConnected")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    logging.info("evError"+" errorCode = "+str(errorCode))
+    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getConfiguration(self):
-    logging.info("getConfiguration")
+    LOGGER.debug("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def setConfiguration(self):
-    logging.info("setConfiguration")
+    LOGGER.debug("setConfiguration")
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param state State of the RFID-Reader hardware.
   """
   def State(self, state:EState):
-    logging.info("State"+" state = "+str(state))
+    LOGGER.debug("State"+" state = "+str(state))
     hbCommand = HausBusCommand(self.objectId, 129, "State")
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param tagID ID of the detected RFID tag.
   """
   def evData(self, tagID:int):
-    logging.info("evData"+" tagID = "+str(tagID))
+    LOGGER.debug("evData"+" tagID = "+str(tagID))
     hbCommand = HausBusCommand(self.objectId, 201, "evData")
     hbCommand.addDWord(tagID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getLastData(self):
-    logging.info("getLastData")
+    LOGGER.debug("getLastData")
     hbCommand = HausBusCommand(self.objectId, 3, "getLastData")
     ResultWorker()._setResultInfo(LastData,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param tagID last tagID read successfully.
   """
   def LastData(self, tagID:int):
-    logging.info("LastData"+" tagID = "+str(tagID))
+    LOGGER.debug("LastData"+" tagID = "+str(tagID))
     hbCommand = HausBusCommand(self.objectId, 130, "LastData")
     hbCommand.addDWord(tagID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def Configuration(self):
-    logging.info("Configuration")
+    LOGGER.debug("Configuration")
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getState(self):
-    logging.info("getState")
+    LOGGER.debug("getState")
     hbCommand = HausBusCommand(self.objectId, 2, "getState")
     ResultWorker()._setResultInfo(State,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

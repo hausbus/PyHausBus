@@ -1,4 +1,3 @@
-import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -19,11 +18,11 @@ class PCA9555(ABusFeature):
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    logging.info("evError"+" errorCode = "+str(errorCode))
+    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

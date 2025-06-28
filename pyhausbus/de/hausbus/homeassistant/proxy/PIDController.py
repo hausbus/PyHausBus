@@ -1,4 +1,3 @@
-import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -21,11 +20,11 @@ class PIDController(ABusFeature):
   """
   """
   def getConfiguration(self):
-    logging.info("getConfiguration")
+    LOGGER.debug("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param P P-Anteil des Reglers.
@@ -39,7 +38,7 @@ class PIDController(ABusFeature):
   @param options additional: erzeugt einen weiteren PIDController.
   """
   def setConfiguration(self, P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int, options:MOptions):
-    logging.info("setConfiguration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis)+" options = "+str(options))
+    LOGGER.debug("setConfiguration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis)+" options = "+str(options))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addWord(P)
     hbCommand.addWord(I)
@@ -52,7 +51,7 @@ class PIDController(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param P P-Anteil des Reglers.
@@ -66,7 +65,7 @@ class PIDController(ABusFeature):
   @param options additional: erzeugt einen weiteren PIDController.
   """
   def Configuration(self, P:int, I:int, D:int, targetValue:int, sensorObjectId:int, actorObjectId:int, timeout:int, hysteresis:int, options:MOptions):
-    logging.info("Configuration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis)+" options = "+str(options))
+    LOGGER.debug("Configuration"+" P = "+str(P)+" I = "+str(I)+" D = "+str(D)+" targetValue = "+str(targetValue)+" sensorObjectId = "+str(sensorObjectId)+" actorObjectId = "+str(actorObjectId)+" timeout = "+str(timeout)+" hysteresis = "+str(hysteresis)+" options = "+str(options))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addWord(P)
     hbCommand.addWord(I)
@@ -79,57 +78,57 @@ class PIDController(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param targetValue Regelungszielwert z.B. targetValue*0.
   """
   def setTargetValue(self, targetValue:int):
-    logging.info("setTargetValue"+" targetValue = "+str(targetValue))
+    LOGGER.debug("setTargetValue"+" targetValue = "+str(targetValue))
     hbCommand = HausBusCommand(self.objectId, 2, "setTargetValue")
     hbCommand.addWord(targetValue)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param enable Reglerverhalten ein/ausschalten.
   """
   def enable(self, enable:EEnable):
-    logging.info("enable"+" enable = "+str(enable))
+    LOGGER.debug("enable"+" enable = "+str(enable))
     hbCommand = HausBusCommand(self.objectId, 3, "enable")
     hbCommand.addByte(enable.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def evOn(self):
-    logging.info("evOn")
+    LOGGER.debug("evOn")
     hbCommand = HausBusCommand(self.objectId, 200, "evOn")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    logging.info("evError"+" errorCode = "+str(errorCode))
+    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def evOff(self):
-    logging.info("evOff")
+    LOGGER.debug("evOff")
     hbCommand = HausBusCommand(self.objectId, 201, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

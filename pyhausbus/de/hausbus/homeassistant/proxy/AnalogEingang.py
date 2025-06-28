@@ -1,4 +1,3 @@
-import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -20,51 +19,51 @@ class AnalogEingang(ABusFeature):
   """
   """
   def evLow(self):
-    logging.info("evLow")
+    LOGGER.debug("evLow")
     hbCommand = HausBusCommand(self.objectId, 200, "evLow")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def evInRange(self):
-    logging.info("evInRange")
+    LOGGER.debug("evInRange")
     hbCommand = HausBusCommand(self.objectId, 201, "evInRange")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def evHigh(self):
-    logging.info("evHigh")
+    LOGGER.debug("evHigh")
     hbCommand = HausBusCommand(self.objectId, 202, "evHigh")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param value .
   @param lastEvent .
   """
   def evStatus(self, value:int, lastEvent:ELastEvent):
-    logging.info("evStatus"+" value = "+str(value)+" lastEvent = "+str(lastEvent))
+    LOGGER.debug("evStatus"+" value = "+str(value)+" lastEvent = "+str(lastEvent))
     hbCommand = HausBusCommand(self.objectId, 203, "evStatus")
     hbCommand.addWord(value)
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getConfiguration(self):
-    logging.info("getConfiguration")
+    LOGGER.debug("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param lowerThreshold untere Schwelle.
@@ -77,7 +76,7 @@ class AnalogEingang(ABusFeature):
   @param deltaSensorID Die InstanceID des Sensors auf diesem Controller.
   """
   def setConfiguration(self, lowerThreshold:int, upperThreshold:int, reportTimeBase:int, minReportTime:int, maxReportTime:int, hysteresis:int, calibration:int, deltaSensorID:int):
-    logging.info("setConfiguration"+" lowerThreshold = "+str(lowerThreshold)+" upperThreshold = "+str(upperThreshold)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
+    LOGGER.debug("setConfiguration"+" lowerThreshold = "+str(lowerThreshold)+" upperThreshold = "+str(upperThreshold)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addWord(lowerThreshold)
     hbCommand.addWord(upperThreshold)
@@ -89,16 +88,16 @@ class AnalogEingang(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getStatus(self):
-    logging.info("getStatus")
+    LOGGER.debug("getStatus")
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param lowerThreshold untere Schwelle.
@@ -111,7 +110,7 @@ class AnalogEingang(ABusFeature):
   @param deltaSensorID Die InstanceID des Sensors auf diesem Controller.
   """
   def Configuration(self, lowerThreshold:int, upperThreshold:int, reportTimeBase:int, minReportTime:int, maxReportTime:int, hysteresis:int, calibration:int, deltaSensorID:int):
-    logging.info("Configuration"+" lowerThreshold = "+str(lowerThreshold)+" upperThreshold = "+str(upperThreshold)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
+    LOGGER.debug("Configuration"+" lowerThreshold = "+str(lowerThreshold)+" upperThreshold = "+str(upperThreshold)+" reportTimeBase = "+str(reportTimeBase)+" minReportTime = "+str(minReportTime)+" maxReportTime = "+str(maxReportTime)+" hysteresis = "+str(hysteresis)+" calibration = "+str(calibration)+" deltaSensorID = "+str(deltaSensorID))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addWord(lowerThreshold)
     hbCommand.addWord(upperThreshold)
@@ -123,17 +122,17 @@ class AnalogEingang(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param value .
   """
   def Status(self, value:int):
-    logging.info("Status"+" value = "+str(value))
+    LOGGER.debug("Status"+" value = "+str(value))
     hbCommand = HausBusCommand(self.objectId, 129, "Status")
     hbCommand.addWord(value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

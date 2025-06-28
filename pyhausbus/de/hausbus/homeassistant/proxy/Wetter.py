@@ -1,4 +1,3 @@
-import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -18,11 +17,11 @@ class Wetter(ABusFeature):
   """
   """
   def getWeather(self):
-    logging.info("getWeather")
+    LOGGER.debug("getWeather")
     hbCommand = HausBusCommand(self.objectId, 5, "getWeather")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param humidity Luftfeuchtigkeit.
@@ -35,7 +34,7 @@ class Wetter(ABusFeature):
   def weather(self, humidity:int, pressure:int, temp:int, sunrise:WeekTime=None
 , sunset:WeekTime=None
 , text:str):
-    logging.info("weather"+" humidity = "+str(humidity)+" pressure = "+str(pressure)+" temp = "+str(temp)+" sunrise = "+str(sunrise)+" sunset = "+str(sunset)+" text = "+str(text))
+    LOGGER.debug("weather"+" humidity = "+str(humidity)+" pressure = "+str(pressure)+" temp = "+str(temp)+" sunrise = "+str(sunrise)+" sunset = "+str(sunset)+" text = "+str(text))
     hbCommand = HausBusCommand(self.objectId, 128, "weather")
     hbCommand.addByte(humidity)
     hbCommand.addWord(pressure)
@@ -45,6 +44,6 @@ class Wetter(ABusFeature):
     hbCommand.addString(text)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

@@ -1,4 +1,3 @@
-import logging
 from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
@@ -21,21 +20,21 @@ class WiFi(ABusFeature):
   @param errorCode .
   """
   def evError(self, errorCode:EErrorCode):
-    logging.info("evError"+" errorCode = "+str(errorCode))
+    LOGGER.debug("evError"+" errorCode = "+str(errorCode))
     hbCommand = HausBusCommand(self.objectId, 255, "evError")
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getConfiguration(self):
-    logging.info("getConfiguration")
+    LOGGER.debug("getConfiguration")
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param mac1 .
@@ -46,7 +45,7 @@ class WiFi(ABusFeature):
   @param mac6 .
   """
   def wakeUpDevice(self, mac1:int, mac2:int, mac3:int, mac4:int, mac5:int, mac6:int):
-    logging.info("wakeUpDevice"+" mac1 = "+str(mac1)+" mac2 = "+str(mac2)+" mac3 = "+str(mac3)+" mac4 = "+str(mac4)+" mac5 = "+str(mac5)+" mac6 = "+str(mac6))
+    LOGGER.debug("wakeUpDevice"+" mac1 = "+str(mac1)+" mac2 = "+str(mac2)+" mac3 = "+str(mac3)+" mac4 = "+str(mac4)+" mac5 = "+str(mac5)+" mac6 = "+str(mac6))
     hbCommand = HausBusCommand(self.objectId, 2, "wakeUpDevice")
     hbCommand.addByte(mac1)
     hbCommand.addByte(mac2)
@@ -56,7 +55,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(mac6)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param SSID .
@@ -68,7 +67,7 @@ class WiFi(ABusFeature):
   @param Server_IP3 Server IP-Adresse im Format IP0.IP1.IP2.IP3 0.0.0.0 deaktiviert das Gateway 13 und 14.
   """
   def setConfiguration(self, SSID:str, Password:str, Server_Port:int, Server_IP0:int, Server_IP1:int, Server_IP2:int, Server_IP3:int):
-    logging.info("setConfiguration"+" SSID = "+str(SSID)+" Password = "+str(Password)+" Server_Port = "+str(Server_Port)+" Server_IP0 = "+str(Server_IP0)+" Server_IP1 = "+str(Server_IP1)+" Server_IP2 = "+str(Server_IP2)+" Server_IP3 = "+str(Server_IP3))
+    LOGGER.debug("setConfiguration"+" SSID = "+str(SSID)+" Password = "+str(Password)+" Server_Port = "+str(Server_Port)+" Server_IP0 = "+str(Server_IP0)+" Server_IP1 = "+str(Server_IP1)+" Server_IP2 = "+str(Server_IP2)+" Server_IP3 = "+str(Server_IP3))
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     hbCommand.addString(SSID)
     hbCommand.addString(Password)
@@ -79,7 +78,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(Server_IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param SSID .
@@ -91,7 +90,7 @@ class WiFi(ABusFeature):
   @param Server_IP3 Server IP-Adresse im Format IP0.IP1.IP2.IP3 0.0.0.0 deaktiviert das Gateway 13 und 14.
   """
   def Configuration(self, SSID:str, Password:str, Server_Port:int, Server_IP0:int, Server_IP1:int, Server_IP2:int, Server_IP3:int):
-    logging.info("Configuration"+" SSID = "+str(SSID)+" Password = "+str(Password)+" Server_Port = "+str(Server_Port)+" Server_IP0 = "+str(Server_IP0)+" Server_IP1 = "+str(Server_IP1)+" Server_IP2 = "+str(Server_IP2)+" Server_IP3 = "+str(Server_IP3))
+    LOGGER.debug("Configuration"+" SSID = "+str(SSID)+" Password = "+str(Password)+" Server_Port = "+str(Server_Port)+" Server_IP0 = "+str(Server_IP0)+" Server_IP1 = "+str(Server_IP1)+" Server_IP2 = "+str(Server_IP2)+" Server_IP3 = "+str(Server_IP3))
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     hbCommand.addString(SSID)
     hbCommand.addString(Password)
@@ -102,16 +101,16 @@ class WiFi(ABusFeature):
     hbCommand.addByte(Server_IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   """
   def getCurrentIp(self):
-    logging.info("getCurrentIp")
+    LOGGER.debug("getCurrentIp")
     hbCommand = HausBusCommand(self.objectId, 3, "getCurrentIp")
     ResultWorker()._setResultInfo(CurrentIp,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
   """
   @param IP0 .
@@ -120,7 +119,7 @@ class WiFi(ABusFeature):
   @param IP3 .
   """
   def CurrentIp(self, IP0:int, IP1:int, IP2:int, IP3:int):
-    logging.info("CurrentIp"+" IP0 = "+str(IP0)+" IP1 = "+str(IP1)+" IP2 = "+str(IP2)+" IP3 = "+str(IP3))
+    LOGGER.debug("CurrentIp"+" IP0 = "+str(IP0)+" IP1 = "+str(IP1)+" IP2 = "+str(IP2)+" IP3 = "+str(IP3))
     hbCommand = HausBusCommand(self.objectId, 129, "CurrentIp")
     hbCommand.addByte(IP0)
     hbCommand.addByte(IP1)
@@ -128,6 +127,6 @@ class WiFi(ABusFeature):
     hbCommand.addByte(IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    logging.info("returns")
+    LOGGER.debug("returns")
 
 

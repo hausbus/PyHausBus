@@ -16,8 +16,8 @@ def load_file(path: str) -> list[str]:
         return []
 
 class Templates:
-    self.template_root_dir = os.path.join(os.path.dirname(__file__), "templates")
-    LOGGER.debug(f"templateRootDir = {self.template_root_dir}")
+    template_root_dir = os.path.join(os.path.dirname(__file__), "templates")
+    LOGGER.debug(f"templateRootDir = {template_root_dir}")
     filter_non_existing = True
     _instance = None
     class_mappings: Dict[str, str] = {}

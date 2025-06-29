@@ -45,11 +45,11 @@ class EDate(Enum):
     return EDate.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EDate':
     try:
-      return EFirmwareId[name]
+      return EDate[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EDate.SER_UNKNOWN 
 
 
 

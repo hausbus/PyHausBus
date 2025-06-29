@@ -21,11 +21,11 @@ class EReason(Enum):
     return EReason.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EReason':
     try:
-      return EFirmwareId[name]
+      return EReason[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EReason.SER_UNKNOWN 
 
 
 

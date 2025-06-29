@@ -17,11 +17,11 @@ class ELastEvent(Enum):
     return ELastEvent.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'ELastEvent':
     try:
-      return EFirmwareId[name]
+      return ELastEvent[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return ELastEvent.SER_UNKNOWN 
 
 
 

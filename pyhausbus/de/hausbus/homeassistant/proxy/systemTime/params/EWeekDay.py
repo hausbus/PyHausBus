@@ -21,11 +21,11 @@ class EWeekDay(Enum):
     return EWeekDay.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EWeekDay':
     try:
-      return EFirmwareId[name]
+      return EWeekDay[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EWeekDay.SER_UNKNOWN 
 
 
 

@@ -20,11 +20,11 @@ class ENewState(Enum):
     return ENewState.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'ENewState':
     try:
-      return EFirmwareId[name]
+      return ENewState[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return ENewState.SER_UNKNOWN 
 
 
 

@@ -17,11 +17,11 @@ class EMode(Enum):
     return EMode.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EMode':
     try:
-      return EFirmwareId[name]
+      return EMode[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EMode.SER_UNKNOWN 
 
 
 

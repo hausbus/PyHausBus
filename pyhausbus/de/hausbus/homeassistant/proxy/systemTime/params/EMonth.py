@@ -26,11 +26,11 @@ class EMonth(Enum):
     return EMonth.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EMonth':
     try:
-      return EFirmwareId[name]
+      return EMonth[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EMonth.SER_UNKNOWN 
 
 
 

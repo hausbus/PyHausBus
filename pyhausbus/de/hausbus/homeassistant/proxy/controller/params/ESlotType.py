@@ -22,11 +22,11 @@ class ESlotType(Enum):
     return ESlotType.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'ESlotType':
     try:
-      return EFirmwareId[name]
+      return ESlotType[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return ESlotType.SER_UNKNOWN 
 
 
 

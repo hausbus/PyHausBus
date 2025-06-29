@@ -17,11 +17,11 @@ class EType(Enum):
     return EType.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EType':
     try:
-      return EFirmwareId[name]
+      return EType[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EType.SER_UNKNOWN 
 
 
 

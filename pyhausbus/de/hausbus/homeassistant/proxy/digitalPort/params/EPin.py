@@ -28,11 +28,11 @@ class EPin(Enum):
     return EPin.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EPin':
     try:
-      return EFirmwareId[name]
+      return EPin[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EPin.SER_UNKNOWN 
 
 
 

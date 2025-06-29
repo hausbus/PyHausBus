@@ -24,11 +24,11 @@ class ESensorType(Enum):
     return ESensorType.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'ESensorType':
     try:
-      return EFirmwareId[name]
+      return ESensorType[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return ESensorType.SER_UNKNOWN 
 
 
 

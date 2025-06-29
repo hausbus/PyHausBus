@@ -17,11 +17,11 @@ class EDirection(Enum):
     return EDirection.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EDirection':
     try:
-      return EFirmwareId[name]
+      return EDirection[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EDirection.SER_UNKNOWN 
 
 
 

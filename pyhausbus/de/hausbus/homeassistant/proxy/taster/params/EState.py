@@ -17,11 +17,11 @@ class EState(Enum):
     return EState.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EState':
     try:
-      return EFirmwareId[name]
+      return EState[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EState.SER_UNKNOWN 
 
 
 

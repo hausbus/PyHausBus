@@ -16,11 +16,11 @@ class EValue(Enum):
     return EValue.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EValue':
     try:
-      return EFirmwareId[name]
+      return EValue[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EValue.SER_UNKNOWN 
 
 
 

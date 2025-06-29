@@ -19,11 +19,11 @@ class EFeatureId(Enum):
     return EFeatureId.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EFeatureId':
     try:
-      return EFirmwareId[name]
+      return EFeatureId[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EFeatureId.SER_UNKNOWN 
 
 
 

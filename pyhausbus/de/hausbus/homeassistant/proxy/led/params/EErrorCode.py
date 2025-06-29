@@ -15,11 +15,11 @@ class EErrorCode(Enum):
     return EErrorCode.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EErrorCode':
     try:
-      return EFirmwareId[name]
+      return EErrorCode[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EErrorCode.SER_UNKNOWN 
 
 
 

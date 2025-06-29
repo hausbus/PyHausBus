@@ -16,11 +16,11 @@ class EIndex(Enum):
     return EIndex.SER_UNKNOWN
 
   @staticmethod
-  def value_of(name: str) -> 'EFirmwareId':
+  def value_of(name: str) -> 'EIndex':
     try:
-      return EFirmwareId[name]
+      return EIndex[name]
     except KeyError:
-      return EFirmwareId.SER_UNKNOWN 
+      return EIndex.SER_UNKNOWN 
 
 
 

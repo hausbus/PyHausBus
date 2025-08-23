@@ -8,7 +8,7 @@ class WeekTime:
     self.minute = minute
 
   @staticmethod
-  def fromBytes(data: bytearray, offset: int) -> 'WeekTime':
+  def _fromBytes(data: bytearray, offset: int) -> 'WeekTime':
     value = HausBusUtils.bytesToWord(data, offset)
 
     minute = value & 0xff
@@ -25,7 +25,7 @@ class WeekTime:
     return value
 
   @staticmethod
-  def fromValue(value:int) -> 'WeekTime':
+  def _fromValue(value:int) -> 'WeekTime':
     result = WeekTime(0,0,0)
     result.setMinute(value & 0xff)
 

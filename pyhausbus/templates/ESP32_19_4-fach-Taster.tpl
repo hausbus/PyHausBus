@@ -21,6 +21,10 @@
 21,69,Extern Led 5
 21,70,Extern Led 6
 32,1,Temperatursensor
+32,2,Temperatursensor
+32,3,Temperatursensor
+32,4,Temperatursensor
+32,5,Temperatursensor
 34,1,Feuchtesensor
 39,1,Helligkeitssensor
 43,65,RFID Leser

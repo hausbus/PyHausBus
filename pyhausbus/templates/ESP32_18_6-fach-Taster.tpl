@@ -27,6 +27,10 @@
 34,1,Feuchtesensor
 39,1,Helligkeitssensor
 32,1,Temperatursensor
+32,2,Temperatursensor
+32,3,Temperatursensor
+32,4,Temperatursensor
+32,5,Temperatursensor
 43,65,RFID Leser
 43,67,RFID Leser
 43,69,RFID Leser

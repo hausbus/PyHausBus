@@ -680,7 +680,7 @@ def getBusClassNameFor(classId, functionId):
   if (classId==49 and functionId==129):
     return "pyhausbus.de.hausbus.homeassistant.proxy.pT1000.data.Status"
 
-  return "pyhausbus.de.hausbus.com.GenericBusData"
+  return "pyhausbus.GenericBusData"
 
 def getBusClassNameForClass(classId):
   if (classId==16):
@@ -752,5 +752,5 @@ def getBusClassNameForClass(classId):
   if (classId==49):
     return "pyhausbus.de.hausbus.homeassistant.proxy.PT1000"
 
-  return "pyhausbus.de.hausbus.com.GenericBusData"
+  return "pyhausbus.GenericBusData"
 

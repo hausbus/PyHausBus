@@ -244,10 +244,12 @@ class Controller(ABusFeature):
     LOGGER.debug("returns")
 
   """
+  @param watchDogTime Wenn 0.
   """
-  def pong(self):
-    LOGGER.debug("pong")
+  def pong(self, watchDogTime:int):
+    LOGGER.debug("pong"+" watchDogTime = "+str(watchDogTime))
     hbCommand = HausBusCommand(self.objectId, 199, "pong")
+    hbCommand.addWord(watchDogTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     LOGGER.debug("returns")
@@ -770,6 +772,17 @@ class Controller(ABusFeature):
     LOGGER.debug("resetOneWireManager"+" index = "+str(index))
     hbCommand = HausBusCommand(self.objectId, 20, "resetOneWireManager")
     hbCommand.addByte(index)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
+    hbCommand.send()
+    LOGGER.debug("returns")
+
+  """
+  @param time Anzahl Minuten nach denen der Controller reseten soll.
+  """
+  def setWatchDogTime(self, time:int):
+    LOGGER.debug("setWatchDogTime"+" time = "+str(time))
+    hbCommand = HausBusCommand(self.objectId, 21, "setWatchDogTime")
+    hbCommand.addWord(time)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
     LOGGER.debug("returns")

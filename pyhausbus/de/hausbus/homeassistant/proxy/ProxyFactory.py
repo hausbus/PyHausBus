@@ -83,6 +83,8 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.schalter.data.EvDisabled"
   if (classId==19 and functionId==6):
     return "pyhausbus.de.hausbus.homeassistant.proxy.schalter.commands.ToggleByDuty"
+  if (classId==19 and functionId==205):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.schalter.data.EvToggleByDuty"
   if (classId==17 and functionId==201):
     return "pyhausbus.de.hausbus.homeassistant.proxy.dimmer.data.EvOn"
   if (classId==17 and functionId==1):
@@ -211,6 +213,8 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.controller.data.EvSystemVariableChanged"
   if (classId==0 and functionId==20):
     return "pyhausbus.de.hausbus.homeassistant.proxy.controller.commands.ResetOneWireManager"
+  if (classId==0 and functionId==21):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.controller.commands.SetWatchDogTime"
   if (classId==18 and functionId==0):
     return "pyhausbus.de.hausbus.homeassistant.proxy.rollladen.commands.GetConfiguration"
   if (classId==18 and functionId==2):

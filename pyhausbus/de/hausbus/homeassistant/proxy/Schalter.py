@@ -209,4 +209,17 @@ class Schalter(ABusFeature):
     hbCommand.send()
     LOGGER.debug("returns")
 
+  """
+  @param duty 0-100% Pulsverhaeltnis.
+  @param durationSeconds Dauer in Sekunden.
+  """
+  def evToggleByDuty(self, duty:int, durationSeconds:int):
+    LOGGER.debug("evToggleByDuty"+" duty = "+str(duty)+" durationSeconds = "+str(durationSeconds))
+    hbCommand = HausBusCommand(self.objectId, 205, "evToggleByDuty")
+    hbCommand.addByte(duty)
+    hbCommand.addWord(durationSeconds)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
+    hbCommand.send()
+    LOGGER.debug("returns")
+
 

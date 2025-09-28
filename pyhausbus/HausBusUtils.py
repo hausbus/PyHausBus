@@ -31,7 +31,7 @@ def bytesToDWord(data: bytearray, offset) -> int:
 
         return result
     except Exception as err:
-        LOGGER.error(err, exc_info=True, stack_info=True)
+        LOGGER.debug(f"error: {err}", exc_info=True, stack_info=True)
         return 0
 
 
@@ -46,7 +46,7 @@ def bytesToWord(data: bytearray, offset) -> int:
 
         return result
     except Exception as err:
-        LOGGER.error(err, exc_info=True, stack_info=True)
+        LOGGER.debug(f"error: {err}", exc_info=True, stack_info=True)
         return 0
 
 
@@ -58,7 +58,7 @@ def bytesToInt(data: bytearray, offset) -> int:
         offset[0] += 1
         return result
     except Exception as err:
-        LOGGER.error(err, exc_info=True, stack_info=True)
+        LOGGER.debug(f"error: {err}", exc_info=True, stack_info=True)
         return 0
 
 
@@ -73,7 +73,7 @@ def bytesToString(data: bytearray, offset) -> str:
             result += chr(data[i])
         return result
     except Exception as err:
-        LOGGER.error(err, exc_info=True, stack_info=True)
+        LOGGER.debug(f"error: {err}", exc_info=True, stack_info=True)
         return ""
 
 
@@ -128,7 +128,7 @@ def bytesToBlob(data: bytearray, offset) -> bytearray:
         offset[0] = offset[0] + len(data)
         return result
     except Exception as err:
-        LOGGER.error(err, exc_info=True, stack_info=True)
+        LOGGER.debug(f"error: {err}", exc_info=True, stack_info=True)
         return 0
 
 
@@ -199,5 +199,5 @@ def bytesToList(data: bytearray, offset):
             offset[0] += 2
         return result
     except Exception as err:
-        LOGGER.error(err, exc_info=True, stack_info=True)
+        LOGGER.debug(f"error: {err}", exc_info=True, stack_info=True)
         return bytearray()

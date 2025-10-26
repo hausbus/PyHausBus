@@ -16,7 +16,7 @@ class Pong:
     return f"Pong(watchDogTime={self.watchDogTime})"
 
   '''
-  @param watchDogTime Wenn 0.
+  @param watchDogTime Verbleibende Zeit in Sekunden bis zum Watchdog Reset.
   '''
   def getWatchDogTime(self):
     return self.watchDogTime

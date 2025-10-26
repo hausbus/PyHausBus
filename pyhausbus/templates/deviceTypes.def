@@ -43,5 +43,6 @@ SD485,0x2A,2-fach Taster
 SD485,0x29,1-fach Taster
 AR8,0x28,LAN Brückenmodul
 AR8,0x30,8-fach Relais
+AR8,0x20,8-fach Modul
 SD6,0x14,Multitaster
 SD6,0x1E,Multitaster

@@ -17,13 +17,13 @@ class EvToggleByDuty:
     return f"EvToggleByDuty(duty={self.duty}, durationSeconds={self.durationSeconds})"
 
   '''
-  @param duty 0-100% Pulsverhaeltnis.
+  @param duty 0-100% Pulsverh?ltnis.
   '''
   def getDuty(self):
     return self.duty
 
   '''
-  @param durationSeconds Dauer in Sekunden.
+  @param durationSeconds Einschaltdauer in Sekunden.
   '''
   def getDurationSeconds(self):
     return self.durationSeconds

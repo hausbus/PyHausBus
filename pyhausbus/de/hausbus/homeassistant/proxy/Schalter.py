@@ -210,8 +210,8 @@ class Schalter(ABusFeature):
     LOGGER.debug("returns")
 
   """
-  @param duty 0-100% Pulsverhaeltnis.
-  @param durationSeconds Dauer in Sekunden.
+  @param duty 0-100% Pulsverh?ltnis.
+  @param durationSeconds Einschaltdauer in Sekunden.
   """
   def evToggleByDuty(self, duty:int, durationSeconds:int):
     LOGGER.debug("evToggleByDuty"+" duty = "+str(duty)+" durationSeconds = "+str(durationSeconds))

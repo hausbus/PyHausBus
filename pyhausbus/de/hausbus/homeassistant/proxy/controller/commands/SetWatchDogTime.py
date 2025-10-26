@@ -16,7 +16,7 @@ class SetWatchDogTime:
     return f"SetWatchDogTime(time={self.time})"
 
   '''
-  @param time Anzahl Minuten nach denen der Controller reseten soll.
+  @param time Zeit in Sekunden bis zum Reset wenn kein Ping empfangen wird. 0 deativiert den WatchDog.
   '''
   def getTime(self):
     return self.time

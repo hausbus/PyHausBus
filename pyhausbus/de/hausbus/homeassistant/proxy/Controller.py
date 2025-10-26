@@ -244,7 +244,7 @@ class Controller(ABusFeature):
     LOGGER.debug("returns")
 
   """
-  @param watchDogTime Wenn 0.
+  @param watchDogTime Verbleibende Zeit in Sekunden bis zum Watchdog Reset.
   """
   def pong(self, watchDogTime:int):
     LOGGER.debug("pong"+" watchDogTime = "+str(watchDogTime))
@@ -777,7 +777,7 @@ class Controller(ABusFeature):
     LOGGER.debug("returns")
 
   """
-  @param time Anzahl Minuten nach denen der Controller reseten soll.
+  @param time Zeit in Sekunden bis zum Reset wenn kein Ping empfangen wird. 0 deativiert den WatchDog.
   """
   def setWatchDogTime(self, time:int):
     LOGGER.debug("setWatchDogTime"+" time = "+str(time))

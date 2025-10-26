@@ -625,6 +625,10 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.SetConfiguration"
   if (classId==45 and functionId==128):
     return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.Configuration"
+  if (classId==45 and functionId==129):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.GenericResponse"
+  if (classId==45 and functionId==3):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.GenericCommand"
   if (classId==36 and functionId==200):
     return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.EvLow"
   if (classId==36 and functionId==201):

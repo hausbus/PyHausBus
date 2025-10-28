@@ -181,7 +181,7 @@ def formatBytes(
 
         for i in range(offset, length):
             if asHex:
-                result += "0x" + hex(data[i])
+                result += hex(data[i])
             else:
                 result += data[i] & 0xFF
         return result

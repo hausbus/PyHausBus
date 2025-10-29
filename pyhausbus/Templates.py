@@ -127,7 +127,7 @@ class ModuleType:
             return False
         if check_firmware_id == self.firmware_id:
             return True
-        if str(check_firmware_id).startswith("HB") and str(self.firmware_id).startswith("HB"):
+        if check_firmware_id.name.startswith("HB") and self.firmware_id.name.startswith("HB"):
             return True
         return False
 

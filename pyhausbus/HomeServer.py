@@ -34,8 +34,8 @@ class HomeServer(IBusDataListener):
         self.bushandler.addBusEventListener(self)
 
     def searchDevices(self):
-        controler = Controller(0)
-        controler.getModuleId(EIndex.RUNNING)
+        controller = Controller(0)
+        controller.getModuleId(EIndex.RUNNING)
 
     def addBusEventListener(self, listener: IBusDataListener):
         self.bushandler.addBusEventListener(listener)

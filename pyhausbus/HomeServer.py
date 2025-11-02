@@ -4,11 +4,15 @@ from pyhausbus.IBusDataListener import IBusDataListener
 from pyhausbus.de.hausbus.homeassistant.proxy.Controller import Controller
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import (
-    RemoteObjects,
+    RemoteObjects,  
 )
 from pyhausbus.HausBusUtils import LOGGER
 import pyhausbus.de.hausbus.homeassistant.proxy.ProxyFactory as ProxyFactory
 import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.ABusFeature import ABusFeature
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EFirmwareId import EFirmwareId
+from pyhausbus.ObjectId import ObjectId
+from pyhausbus.Templates import Templates
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Configuration import Configuration
 import importlib
@@ -64,14 +68,53 @@ class HomeServer(IBusDataListener):
                 LOGGER.error(err,exc_info=True, stack_info=True)
         return result
 
+    def getHomeassistantChannels(self, senderObjectId: int, remoteObjects: RemoteObjects, firmware_id: EFirmwareId, fcke: int):
+
+        instances: list[ABusFeature] = self.getDeviceInstances(senderObjectId, remoteObjects)
+
+        templates = Templates.get_instance()
+        
+        for instance in instances:
+            instanceObjectId = ObjectId(instance.getObjectId())
+            name = templates.get_feature_name_from_template(
+                firmware_id,
+                fcke,
+                instanceObjectId.getClassId(),
+                instanceObjectId.getInstanceId(),
+            )
+
+            LOGGER.debug(
+                "name for firmwareId %s, fcke: %s, classId %s, instanceId %s is %s",
+                firmware_id,
+                fcke,
+                instanceObjectId.getClassId(),
+                instanceObjectId.getInstanceId(),
+                name,
+            )
+
+            if name is None:
+                className = ProxyFactory.getBusClassNameForClass(
+                    instanceObjectId.getClassId()
+                ).rsplit(".", 1)[-1]
+                name = f"{className} {instanceObjectId.getInstanceId()}"
+                LOGGER.debug("generic name %s", name)
+
+            instance.setName(name)
+            
+        return instances
+
     def busDataReceived(self, busDataMessage):
         """if a device restarts during runtime, we automatically read moduleId"""
         if isinstance(busDataMessage.getData(), ModuleId):
+            LOGGER.debug("auto calling getConfiguration")
             Controller(busDataMessage.getSenderObjectId()).getConfiguration()
+            
 
         if isinstance(busDataMessage.getData(), Configuration):
+            LOGGER.debug("auto calling getRemoteObjects")
             Controller(busDataMessage.getSenderObjectId()).getRemoteObjects()
 
         """ if a device restarts during runtime, we automatically read moduleId"""
         if isinstance(busDataMessage.getData(), EvStarted):
+            LOGGER.debug("auto calling getModuleId")
             Controller(busDataMessage.getSenderObjectId()).getModuleId(EIndex.RUNNING)

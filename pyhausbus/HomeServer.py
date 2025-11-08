@@ -1,26 +1,22 @@
-from pyhausbus.BusHandler import BusHandler
-from pyhausbus.Templates import Templates
-from pyhausbus.IBusDataListener import IBusDataListener
-from pyhausbus.de.hausbus.homeassistant.proxy.Controller import Controller
-from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
-from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import (
-    RemoteObjects,  
-)
-from pyhausbus.HausBusUtils import LOGGER
-import pyhausbus.de.hausbus.homeassistant.proxy.ProxyFactory as ProxyFactory
-import pyhausbus.HausBusUtils as HausBusUtils
-from pyhausbus.ABusFeature import ABusFeature
-from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EFirmwareId import EFirmwareId
-from pyhausbus.ObjectId import ObjectId
-from pyhausbus.Templates import Templates
-from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
-from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Configuration import Configuration
 import importlib
-import traceback
-import time
-import threading
-from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.EvStarted import EvStarted
+
+from pyhausbus.ABusFeature import ABusFeature
+from pyhausbus.BusHandler import BusHandler
+from pyhausbus.HausBusUtils import HOMESERVER_DEVICE_ID
+from pyhausbus.HausBusUtils import LOGGER
+import pyhausbus.HausBusUtils as HausBusUtils
+from pyhausbus.IBusDataListener import IBusDataListener
+from pyhausbus.ObjectId import ObjectId
 from pyhausbus.ResultWorker import ResultWorker
+from pyhausbus.Templates import Templates
+from pyhausbus.de.hausbus.homeassistant.proxy.Controller import Controller
+import pyhausbus.de.hausbus.homeassistant.proxy.ProxyFactory as ProxyFactory
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.EvStarted import EvStarted
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.RemoteObjects import  RemoteObjects
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
+
 
 class HomeServer(IBusDataListener):
     _instance = None
@@ -36,6 +32,9 @@ class HomeServer(IBusDataListener):
         self.bushandler = BusHandler.getInstance()
         self.bushandler.addBusEventListener(ResultWorker())
         self.bushandler.addBusEventListener(self)
+        self._receivedSomething = False
+        self.module_ids: dict[int, ModuleId] = {}
+        self.configurations: dict[int, Configuration] = {}
 
     def searchDevices(self):
         controller = Controller(0)
@@ -47,8 +46,7 @@ class HomeServer(IBusDataListener):
     def removeBusEventListener(self, listener: IBusDataListener):
         self.bushandler.removeBusEventListener(listener)
 
-    def getDeviceInstances(self, senderObjectId: int, remoteObjects: RemoteObjects):
-        deviceId = HausBusUtils.getDeviceId(senderObjectId)
+    def getDeviceInstances(self, device_id: int, remoteObjects: RemoteObjects):
         objectList = remoteObjects.getObjectList()
 
         result = []
@@ -56,8 +54,8 @@ class HomeServer(IBusDataListener):
             instanceId = objectList[i]
             classId = objectList[i + 1]
             className = ProxyFactory.getBusClassNameForClass(classId)
-            objectId = HausBusUtils.getObjectId(deviceId, classId, instanceId)
-            
+            objectId = HausBusUtils.getObjectId(device_id, classId, instanceId)
+
             try:
                 module_name, class_name = className.rsplit(".", 1)
                 module = importlib.import_module(className)
@@ -65,15 +63,17 @@ class HomeServer(IBusDataListener):
                 obj = cls(objectId)
                 result.append(obj)
             except Exception as err:
-                LOGGER.error(err,exc_info=True, stack_info=True)
+                LOGGER.error(err, exc_info=True, stack_info=True)
         return result
 
-    def getHomeassistantChannels(self, senderObjectId: int, remoteObjects: RemoteObjects, firmware_id: EFirmwareId, fcke: int):
+    def getHomeassistantChannels(self, device_id: int, remoteObjects: RemoteObjects):
 
-        instances: list[ABusFeature] = self.getDeviceInstances(senderObjectId, remoteObjects)
+        firmware_id = self.get_module_id_from_cache(device_id).getFirmwareId()
+        fcke = self.get_configuration_from_cache(device_id).getFCKE()
+        instances: list[ABusFeature] = self.getDeviceInstances(device_id, remoteObjects)
 
         templates = Templates.get_instance()
-        
+
         for instance in instances:
             instanceObjectId = ObjectId(instance.getObjectId())
             name = templates.get_feature_name_from_template(
@@ -100,17 +100,64 @@ class HomeServer(IBusDataListener):
                 LOGGER.debug("generic name %s", name)
 
             instance.setName(name)
-            
+
         return instances
+
+    def is_any_device_found(self) -> bool:
+        return self._receivedSomething
+
+    def is_internal_device(self, deviceId:int) -> bool:
+        return deviceId in {HOMESERVER_DEVICE_ID, 9999, 12222}
+
+    def get_configuration_from_cache(self, device_id: int) -> Configuration:
+
+        configuration = self.configurations.get(device_id)
+
+        if configuration is None:
+          LOGGER.debug("reading configuration for cache for {device_id}")
+          configuration = Controller.create(device_id, 1).getConfiguration()
+
+        return configuration
+
+    def get_module_id_from_cache(self, device_id: int) -> Configuration:
+
+        module_id = self.module_ids.get(device_id)
+
+        if module_id is None:
+          LOGGER.debug("reading module_id for cache for {device_id}")
+          module_id = Controller.create(device_id, 1).getModuleId()
+
+        return module_id
+
+    def get_model(self, device_id: int) -> str:
+
+        configuration = self.get_configuration_from_cache(device_id)
+        fcke = configuration.getFCKE()
+        # special_type = configuration.getStartupDelay()
+
+        firmware_id = self.get_module_id_from_cache(device_id).getFirmwareId()
+
+        model = Templates.get_instance().getModuleName(firmware_id, fcke)
+
+        LOGGER.debug(f"device_id {device_id} fcke {self.fcke} firmwareId {firmware_id} is model {model}")
+        return model
 
     def busDataReceived(self, busDataMessage):
         """if a device restarts during runtime, we automatically read moduleId"""
+
+        device_id = ObjectId(busDataMessage.getSenderObjectId()).getDeviceId()
+
+        # ignore own messages
+        if not device_id == HOMESERVER_DEVICE_ID:
+          self._receivedSomething = True
+
         if isinstance(busDataMessage.getData(), ModuleId):
+            self.module_ids[device_id] = busDataMessage.getData()
             LOGGER.debug("auto calling getConfiguration")
             Controller(busDataMessage.getSenderObjectId()).getConfiguration()
-            
 
         if isinstance(busDataMessage.getData(), Configuration):
+            self.configurations[device_id] = busDataMessage.getData()
             LOGGER.debug("auto calling getRemoteObjects")
             Controller(busDataMessage.getSenderObjectId()).getRemoteObjects()
 

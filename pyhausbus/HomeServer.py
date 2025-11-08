@@ -129,7 +129,7 @@ class HomeServer(IBusDataListener):
 
         return module_id
 
-    def get_model(self, device_id: int) -> str:
+    async def get_model(self, device_id: int) -> str:
 
         configuration = self.get_configuration_from_cache(device_id)
         fcke = configuration.getFCKE()

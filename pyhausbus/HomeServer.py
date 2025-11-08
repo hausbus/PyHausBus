@@ -35,6 +35,7 @@ class HomeServer(IBusDataListener):
         self._receivedSomething = False
         self.module_ids: dict[int, ModuleId] = {}
         self.configurations: dict[int, Configuration] = {}
+        self.templates = Templates.get_instance()
 
     def searchDevices(self):
         controller = Controller(0)
@@ -129,7 +130,7 @@ class HomeServer(IBusDataListener):
 
         return module_id
 
-    async def get_model(self, device_id: int) -> str:
+    def get_model(self, device_id: int) -> str:
 
         configuration = self.get_configuration_from_cache(device_id)
         fcke = configuration.getFCKE()

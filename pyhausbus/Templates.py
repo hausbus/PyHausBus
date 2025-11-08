@@ -3,6 +3,7 @@ from collections import defaultdict
 from typing import List, Dict, Optional
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EFirmwareId import EFirmwareId
 from pyhausbus.HausBusUtils import LOGGER
+import threading
 
 def load_file(path: str) -> list[str]:
     try:
@@ -26,6 +27,10 @@ class Templates:
         self.module_types: Dict['ModuleType', str] = {}
         self.feature_names: Dict['ModuleType', List['FeatureEntry']] = {}
 
+        thread = threading.Thread(target=self._load_templates, daemon=True)
+        thread.start()
+     
+    def _load_templates(self):   
         try:
             lines = load_file(os.path.join(self.template_root_dir, "deviceTypes.def"))
             for line in lines:

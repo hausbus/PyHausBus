@@ -1,40 +1,41 @@
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.ESensorType import ESensorType
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EBaudrate import EBaudrate
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EDataSetting import EDataSetting
 import pyhausbus.HausBusUtils as HausBusUtils
 
 class SetConfiguration:
   CLASS_ID = 45
   FUNCTION_ID = 1
 
-  def __init__(self,idx:int, node:int, sensorType:ESensorType):
-    self.idx=idx
-    self.node=node
-    self.sensorType=sensorType
+  def __init__(self,baudrate:EBaudrate, dataSetting:EDataSetting, responseTimeout:int):
+    self.baudrate=baudrate
+    self.dataSetting=dataSetting
+    self.responseTimeout=responseTimeout
 
 
   @staticmethod
   def _fromBytes(dataIn:bytearray, offset):
-    return SetConfiguration(HausBusUtils.bytesToInt(dataIn, offset), HausBusUtils.bytesToInt(dataIn, offset), ESensorType._fromBytes(dataIn, offset))
+    return SetConfiguration(EBaudrate._fromBytes(dataIn, offset), EDataSetting._fromBytes(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset))
 
   def __str__(self):
-    return f"SetConfiguration(idx={self.idx}, node={self.node}, sensorType={self.sensorType})"
+    return f"SetConfiguration(baudrate={self.baudrate}, dataSetting={self.dataSetting}, responseTimeout={self.responseTimeout})"
 
   '''
-  @param idx index of the configuration slot.
+  @param baudrate Verbindungsgeschwindigkeit.
   '''
-  def getIdx(self):
-    return self.idx
+  def getBaudrate(self):
+    return self.baudrate
 
   '''
-  @param node Geraeteadresse im ModBus.
+  @param dataSetting Anzahl Daten-Bits.
   '''
-  def getNode(self):
-    return self.node
+  def getDataSetting(self):
+    return self.dataSetting
 
   '''
-  @param sensorType Supported Power-Meter SDM630 / SDM72D / SDM72V2 / ORWE517.
+  @param responseTimeout Zeit in [ms] um auf eine Antwort zu warten.
   '''
-  def getSensorType(self):
-    return self.sensorType
+  def getResponseTimeout(self):
+    return self.responseTimeout
 
 
 

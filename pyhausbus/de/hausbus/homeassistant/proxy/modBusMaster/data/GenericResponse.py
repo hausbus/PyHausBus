@@ -3,7 +3,7 @@ import pyhausbus.HausBusUtils as HausBusUtils
 
 class GenericResponse:
   CLASS_ID = 45
-  FUNCTION_ID = 129
+  FUNCTION_ID = 130
 
   def __init__(self,node:int, function:EFunction, address:int, data:bytearray):
     self.node=node

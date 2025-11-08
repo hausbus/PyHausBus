@@ -3,7 +3,7 @@ import pyhausbus.HausBusUtils as HausBusUtils
 
 class GenericCommand:
   CLASS_ID = 45
-  FUNCTION_ID = 3
+  FUNCTION_ID = 4
 
   def __init__(self,node:int, function:EFunction, address:int, data:bytearray):
     self.node=node

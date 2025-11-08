@@ -51,7 +51,7 @@ class Main(IBusDataListener):
     print("got: " + str(busDataMessage.getData()) + " from " + str(ObjectId(busDataMessage.getSenderObjectId())) + " to " + str(ObjectId(busDataMessage.getReceiverObjectId())))
 
     if (isinstance(busDataMessage.getData(), RemoteObjects)):
-      instances = self.server.getDeviceInstances(busDataMessage.getSenderObjectId(), busDataMessage.getData())
+      instances = self.server.getDeviceInstances(ObjectId(busDataMessage.getSenderObjectId()).getDeviceId(), busDataMessage.getData())
       for actInstance in instances:
         print (actInstance)
 

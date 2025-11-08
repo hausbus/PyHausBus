@@ -108,6 +108,9 @@ class HomeServer(IBusDataListener):
         return self._receivedSomething
 
     def is_internal_device(self, deviceId:int) -> bool:
+        if deviceId in [110, 503, 1000, 1541, 3422, 4000, 4001, 4002, 4003, 4004, 4005, 4009, 4096, 5068, 8192, 8270, 11581, 12223, 12622, 13976, 14896, 18343, 19075, 20043, 21336, 22909, 24261, 25661, 25874, 28900, 3423, 4006, 4008]:
+            return True
+
         return deviceId in {HOMESERVER_DEVICE_ID, 9999, 12222}
 
     def get_configuration_from_cache(self, device_id: int) -> Configuration:
@@ -147,6 +150,9 @@ class HomeServer(IBusDataListener):
         """if a device restarts during runtime, we automatically read moduleId"""
 
         device_id = ObjectId(busDataMessage.getSenderObjectId()).getDeviceId()
+        
+        if self.is_internal_device(device_id):
+          return
 
         # ignore own messages
         if not device_id == HOMESERVER_DEVICE_ID:

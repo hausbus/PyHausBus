@@ -140,7 +140,7 @@ class HomeServer(IBusDataListener):
 
         model = Templates.get_instance().getModuleName(firmware_id, fcke)
 
-        LOGGER.debug(f"device_id {device_id} fcke {self.fcke} firmwareId {firmware_id} is model {model}")
+        LOGGER.debug(f"device_id {device_id} fcke {fcke} firmwareId {firmware_id} is model {model}")
         return model
 
     def busDataReceived(self, busDataMessage):

@@ -1,6 +1,7 @@
 from pyhausbus.HomeServer import HomeServer
 from pyhausbus.ResultWorker import ResultWorker
 from pyhausbus.IBusDataListener import IBusDataListener
+from pyhausbus.IBusDeviceListener import IBusDeviceListener
 from pyhausbus.de.hausbus.homeassistant.proxy.Controller import Controller
 from pyhausbus.de.hausbus.homeassistant.proxy.Taster import Taster
 from pyhausbus.de.hausbus.homeassistant.proxy.Led import Led
@@ -15,46 +16,55 @@ from pyhausbus.de.hausbus.homeassistant.proxy.dimmer.params.EDirection import ED
 from pyhausbus.de.hausbus.homeassistant.proxy.dimmer.data.EvOn import EvOn
 from pyhausbus.de.hausbus.homeassistant.proxy.dimmer.data.EvOff import EvOff
 from pyhausbus.de.hausbus.homeassistant.proxy.Feuchtesensor import Feuchtesensor
+from pyhausbus.ABusFeature import ABusFeature
 import pyhausbus.HausBusUtils
+import logging
 from pyhausbus.ObjectId import ObjectId
 import time
+LOGGER = logging.getLogger("pyhausbus")
 
-class Main(IBusDataListener):
+class Main(IBusDataListener, IBusDeviceListener):
 
   def __init__(self):
-
+    
+    logging.basicConfig(
+      level=logging.DEBUG,  # alle Meldungen ab DEBUG
+      format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+      datefmt="%Y-%m-%d %H:%M:%S:%S",  # Format fuer den Timestamp
+      filename="mein_log.log",                    # Name der Log-Datei
+      filemode="w"                                # 'a' = anhaengen, 'w' = ueberschreiben
+    )
+    
     '''
     Instantiate Homeserver, add as Lister and search Devices
     Afterwards all devices respond with their moduleId. See method busDataReceived
     '''
     self.server = HomeServer()
-    self.server.addBusEventListener(self)
-    '''self.server.searchDevices()'''
+    self.server.addBusDeviceListener(self)
+    #self.server.addBusEventListener(self)
+    self.server.searchDevices()
 
     ''' Example how to directly create a feature with given class and instance id'''
-    Dimmer.create(22784, 5).setBrightness(100, 0)
+    #Dimmer.create(22784, 5).setBrightness(100, 0)
 
     ''' Example how to directly create a feature with given ObjectId and wait for the result '''
-    taster = Taster(1313542180)
+    #taster = Taster(1313542180)
     ''' Then we call the method'''
-    taster.getConfiguration()
+    #taster.getConfiguration()
     ''' And then wait for the Result with a timeout of 2 seconds'''
-    configuration = ResultWorker().waitForResult(2)
-    print("configuration = "+str(configuration))
+    #configuration = ResultWorker().waitForResult(2)
+    #print("configuration = "+str(configuration))
 
-    self.doTests()
-
-
+    #self.doTests()
 
 
   def busDataReceived(self, busDataMessage):
-    print("got: " + str(busDataMessage.getData()) + " from " + str(ObjectId(busDataMessage.getSenderObjectId())) + " to " + str(ObjectId(busDataMessage.getReceiverObjectId())))
+      LOGGER.debug("got: " + str(busDataMessage.getData()) + " from " + str(ObjectId(busDataMessage.getSenderObjectId())) + " to " + str(ObjectId(busDataMessage.getReceiverObjectId())))
 
-    if (isinstance(busDataMessage.getData(), RemoteObjects)):
-      instances = self.server.getDeviceInstances(ObjectId(busDataMessage.getSenderObjectId()).getDeviceId(), busDataMessage.getData())
-      for actInstance in instances:
-        print (actInstance)
-
+  def newDeviceDetected(self,device_id:int, model_type: str, module_id: ModuleId, configuration: Configuration, channels: list[ABusFeature]):
+      LOGGER.info(f"newDeviceDetected {device_id} model_type {model_type} module_id {module_id} configuration {configuration}")
+      for actFeature in channels:
+        LOGGER.info(f"channel {actFeature}")
 
   def doTests(self):
 

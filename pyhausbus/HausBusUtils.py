@@ -7,7 +7,7 @@ LOGGER = logging.getLogger("pyhausbus")
 HOMESERVER_DEVICE_ID: int = 9998
 HOMESERVER_OBJECT_ID: int = (HOMESERVER_DEVICE_ID << 16) + (0 << 8) + 1
 
-UDP_PORT = 5855
+UDP_PORT = 9 #5855
 
 
 def getObjectId(deviceId: int, classId: int, instanceId: int) -> int:

@@ -20,7 +20,8 @@ from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EI
 import threading
 import queue
 import time
-
+import logging
+import traceback
 
 class HomeServer(IBusDataListener):
     _instance = None
@@ -199,7 +200,7 @@ class DeviceWorker(threading.Thread):
                         actListener.newDeviceDetected(device_id, self.homeserver.get_model(device_id), module_Id, configuration, instances)
 
             except Exception as e:
-                LOGGER.debug(f"[DeviceWorker] error for {device_id}: {e}")
+                logging.error("[DeviceWorker] error for %s %s\n%s", e, device_id, traceback.format_exc())
             finally:
                 self.queue.task_done()
 

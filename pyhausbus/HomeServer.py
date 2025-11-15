@@ -166,7 +166,7 @@ class DeviceWorker(threading.Thread):
             try:
                 module_Id = self.homeserver.module_ids[device_id]
                 if module_Id is not None:
-                  LOGGER.debug(f"[DeviceWorker] Working on {device_id} with module_id {module_Id}")
+                  LOGGER.debug(f"[DeviceWorker {device_id}] Working with module_id {module_Id}")
                   self.homeserver.configurations[device_id] = None
                   Controller.create(device_id, 1).getConfiguration()
 
@@ -174,14 +174,14 @@ class DeviceWorker(threading.Thread):
                       start_time = time.time()
                       while self.homeserver.configurations.get(device_id) is None:
                           if time.time() - start_time > timeout:
-                              LOGGER.debug(f"[DeviceWorker] Timeout for configuration for {device_id}")
+                              LOGGER.debug(f"[DeviceWorker {device_id}] Timeout for configuration")
                               break
 
                           time.sleep(0.1)  # kurze Pause, um CPU nicht zu blockieren
 
                   configuration = self.homeserver.configurations.get(device_id)
                   if configuration is not None:
-                    LOGGER.debug(f"[DeviceWorker] got configuration. reading remoteobjects for {device_id}")
+                    LOGGER.debug(f"[DeviceWorker {device_id}] got configuration. reading remoteobjects")
                     self.homeserver.remote_objects[device_id] = None
                     Controller.create(device_id, 1).getRemoteObjects()
                     
@@ -189,20 +189,20 @@ class DeviceWorker(threading.Thread):
                         start_time = time.time()
                         while self.homeserver.remote_objects.get(device_id) is None:
                           if time.time() - start_time > timeout:
-                            LOGGER.debug(f"[DeviceWorker] Timeout for remote objects for {device_id}")
+                            LOGGER.debug(f"[DeviceWorker {device_id}] Timeout for remote objects")
                             break
 
                           time.sleep(0.1)  # kurze Pause, um CPU nicht zu blockieren
 
                     remote_objects = self.homeserver.remote_objects.get(device_id)
                     if remote_objects is not None:
-                      LOGGER.debug(f"[DeviceWorker] discovery ok for {device_id}")
+                      LOGGER.debug(f"[DeviceWorker {device_id}] discovery ok")
                       instances = self.getHomeassistantChannels(device_id, remote_objects)
                       for actListener in self.homeserver.device_listeners:
                         actListener.newDeviceDetected(device_id, self.homeserver.get_model(device_id), module_Id, configuration, instances)
 
             except Exception as e:
-                logging.error("[DeviceWorker] error for %s %s\n%s", e, device_id, traceback.format_exc())
+                logging.error("[DeviceWorker {device_id}] error for %s %s\n%s", e, device_id, traceback.format_exc())
             finally:
                 self.queue.task_done()
 

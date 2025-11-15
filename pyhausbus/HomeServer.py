@@ -265,7 +265,7 @@ class DeviceWorker(threading.Thread):
                 if module_name in _module_cache:
                   module = _module_cache[module_name]
                 else:
-                  module = importlib.import_module(className)
+                  module = importlib.import_module(module_name)
                 _module_cache[module_name] = module
 
                 # Klasse aus Cache laden
@@ -278,6 +278,7 @@ class DeviceWorker(threading.Thread):
 
                 obj = cls(objectId)
                 result.append(obj)
+                
             except Exception as err:
                 LOGGER.error(err, exc_info=True, stack_info=True)
         return result

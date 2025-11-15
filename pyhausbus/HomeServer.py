@@ -23,6 +23,10 @@ import time
 import logging
 import traceback
 
+_module_cache = {}
+_class_cache = {}
+
+
 class HomeServer(IBusDataListener):
     _instance = None
     bushandler = None
@@ -46,8 +50,8 @@ class HomeServer(IBusDataListener):
         self.worker.start()
         self.collector = DeviceCollector(self.worker, timeout=1.0)
         self.collector.start()
-        self.known_devices =  set()
-        
+        self.known_devices = set()
+
     def searchDevices(self):
         controller = Controller(0)
         controller.getModuleId(EIndex.RUNNING)
@@ -69,7 +73,7 @@ class HomeServer(IBusDataListener):
         return self._receivedSomething
 
     def is_internal_device(self, deviceId:int) -> bool:
-        #if deviceId in [110, 503, 1000, 1541, 3422, 4000, 4001, 4002, 4003, 4004, 4005, 4009, 4096, 5068, 8192, 8270, 11581, 12223, 12622, 13976, 14896, 18343, 19075, 20043, 21336, 22909, 24261, 25661, 25874, 28900, 3423, 4006, 4008]:
+        # if deviceId in [110, 503, 1000, 1541, 3422, 4000, 4001, 4002, 4003, 4004, 4005, 4009, 4096, 5068, 8192, 8270, 11581, 12223, 12622, 13976, 14896, 18343, 19075, 20043, 21336, 22909, 24261, 25661, 25874, 28900, 3423, 4006, 4008]:
          #   return True
         return deviceId in {HOMESERVER_DEVICE_ID, 9999, 12222}
 
@@ -129,7 +133,6 @@ class HomeServer(IBusDataListener):
           LOGGER.debug(f"got message from unknown device {device_id}. reading module_id");
           Controller.create(device_id, 1).getModuleId(EIndex.RUNNING)
 
-
         if isinstance(busDataMessage.getData(), Configuration):
             self.configurations[device_id] = busDataMessage.getData()
             # LOGGER.debug("auto calling getRemoteObjects")
@@ -184,7 +187,7 @@ class DeviceWorker(threading.Thread):
                     LOGGER.debug(f"[DeviceWorker {device_id}] got configuration. reading remoteobjects")
                     self.homeserver.remote_objects[device_id] = None
                     Controller.create(device_id, 1).getRemoteObjects()
-                    
+
                     for _ in range(2):
                         start_time = time.time()
                         while self.homeserver.remote_objects.get(device_id) is None:
@@ -257,8 +260,22 @@ class DeviceWorker(threading.Thread):
 
             try:
                 module_name, class_name = className.rsplit(".", 1)
-                module = importlib.import_module(className)
-                cls = getattr(module, class_name)
+                
+                # Modul aus Cache laden
+                if module_name in _module_cache:
+                  module = _module_cache[module_name]
+                else:
+                  module = importlib.import_module(className)
+                _module_cache[module_name] = module
+
+                # Klasse aus Cache laden
+                key = (module_name, class_name)
+                if key in _class_cache:
+                  cls = _class_cache[key]
+                else:
+                  cls = getattr(module, class_name)
+                _class_cache[key] = cls
+
                 obj = cls(objectId)
                 result.append(obj)
             except Exception as err:

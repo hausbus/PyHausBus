@@ -170,27 +170,29 @@ class DeviceWorker(threading.Thread):
                   self.homeserver.configurations[device_id] = None
                   Controller.create(device_id, 1).getConfiguration()
 
-                  start_time = time.time()
-                  while self.homeserver.configurations.get(device_id) is None:
-                    if time.time() - start_time > timeout:
-                      LOGGER.debug(f"[DeviceWorker] Timeout for configuration for {device_id}")
-                      break
+                  for _ in range(2):
+                      start_time = time.time()
+                      while self.homeserver.configurations.get(device_id) is None:
+                          if time.time() - start_time > timeout:
+                              LOGGER.debug(f"[DeviceWorker] Timeout for configuration for {device_id}")
+                              break
 
-                    time.sleep(0.1)  # kurze Pause, um CPU nicht zu blockieren
+                          time.sleep(0.1)  # kurze Pause, um CPU nicht zu blockieren
 
                   configuration = self.homeserver.configurations.get(device_id)
                   if configuration is not None:
                     LOGGER.debug(f"[DeviceWorker] got configuration. reading remoteobjects for {device_id}")
                     self.homeserver.remote_objects[device_id] = None
                     Controller.create(device_id, 1).getRemoteObjects()
+                    
+                    for _ in range(2):
+                        start_time = time.time()
+                        while self.homeserver.remote_objects.get(device_id) is None:
+                          if time.time() - start_time > timeout:
+                            LOGGER.debug(f"[DeviceWorker] Timeout for remote objects for {device_id}")
+                            break
 
-                    start_time = time.time()
-                    while self.homeserver.remote_objects.get(device_id) is None:
-                      if time.time() - start_time > timeout:
-                        LOGGER.debug(f"[DeviceWorker] Timeout for remote objects for {device_id}")
-                        break
-
-                      time.sleep(0.1)  # kurze Pause, um CPU nicht zu blockieren
+                          time.sleep(0.1)  # kurze Pause, um CPU nicht zu blockieren
 
                     remote_objects = self.homeserver.remote_objects.get(device_id)
                     if remote_objects is not None:

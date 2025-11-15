@@ -259,7 +259,7 @@ class DeviceWorker(threading.Thread):
             objectId = HausBusUtils.getObjectId(device_id, classId, instanceId)
 
             try:
-                class_name = className.rsplit(".", 1)
+                class_name = className.rsplit(".", 1)[-1]
                 
                 full_module_path = className
 

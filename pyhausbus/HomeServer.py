@@ -259,21 +259,23 @@ class DeviceWorker(threading.Thread):
             objectId = HausBusUtils.getObjectId(device_id, classId, instanceId)
 
             try:
-                module_name, class_name = className.rsplit(".", 1)
+                class_name = className.rsplit(".", 1)
                 
-                # Modul aus Cache laden
-                if module_name in _module_cache:
-                  module = _module_cache[module_name]
-                else:
-                  module = importlib.import_module(module_name)
-                _module_cache[module_name] = module
+                full_module_path = className
 
-                # Klasse aus Cache laden
-                key = (module_name, class_name)
-                if key in _class_cache:
-                  cls = _class_cache[key]
+                # Modul aus Cache
+                if full_module_path in _module_cache:
+                    module = _module_cache[full_module_path]
                 else:
-                  cls = getattr(module, class_name)
+                    module = importlib.import_module(full_module_path)
+                _module_cache[full_module_path] = module
+
+                # Klasse aus Cache
+                key = (full_module_path, class_name)
+                if key in _class_cache:
+                    cls = _class_cache[key]
+                else:
+                    cls = getattr(module, class_name)
                 _class_cache[key] = cls
 
                 obj = cls(objectId)

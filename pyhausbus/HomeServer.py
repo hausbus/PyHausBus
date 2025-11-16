@@ -202,7 +202,6 @@ class DeviceWorker(threading.Thread):
                     if remote_objects is not None:
                       instances = self.getHomeassistantChannels(device_id, remote_objects)
                        
-                      LOGGER.debug("test")
                       end = time.perf_counter()
                       LOGGER.debug(f"[DeviceWorker {device_id}] discovery finished after {end - start:.6f} seconds")
         
@@ -218,7 +217,6 @@ class DeviceWorker(threading.Thread):
 
     def getHomeassistantChannels(self, device_id: int, remoteObjects: RemoteObjects):
 
-        start = time.perf_counter()
         firmware_id = self.homeserver.get_module_id_from_cache(device_id).getFirmwareId()
         fcke = self.homeserver.get_configuration_from_cache(device_id).getFCKE()
         instances: list[ABusFeature] = self.getDeviceInstances(device_id, remoteObjects)
@@ -251,13 +249,9 @@ class DeviceWorker(threading.Thread):
 
             instance.setName(name)
 
-        end = time.perf_counter()
-        LOGGER.debug(f"getHomeassistantChannels dauerte {end - start:.6f} Sekunden")
-
         return instances
 
     def getDeviceInstances(self, device_id: int, remoteObjects: RemoteObjects):
-        start = time.perf_counter()
 
         objectList = remoteObjects.getObjectList()
         result = []
@@ -292,9 +286,6 @@ class DeviceWorker(threading.Thread):
                 
             except Exception as err:
                 LOGGER.error(err, exc_info=True, stack_info=True)
-
-        end = time.perf_counter()
-        LOGGER.debug(f"getDeviceInstances dauerte {end - start:.6f} Sekunden")
                 
         return result
 

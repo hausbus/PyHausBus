@@ -169,6 +169,7 @@ class DeviceWorker(threading.Thread):
             try:
                 module_Id = self.homeserver.module_ids[device_id]
                 if module_Id is not None:
+                  start = time.perf_counter()
                   LOGGER.debug(f"[DeviceWorker {device_id}] Working with module_id {module_Id}")
                   self.homeserver.configurations[device_id] = None
                   Controller.create(device_id, 1).getConfiguration()
@@ -199,9 +200,12 @@ class DeviceWorker(threading.Thread):
 
                     remote_objects = self.homeserver.remote_objects.get(device_id)
                     if remote_objects is not None:
-                      LOGGER.debug(f"[DeviceWorker {device_id}] discovery ok")
                       instances = self.getHomeassistantChannels(device_id, remote_objects)
-                      LOGGER.debug(f"[DeviceWorker {device_id}] channels created")
+                       
+                      LOGGER.debug("test")
+                      end = time.perf_counter()
+                      LOGGER.debug(f"[DeviceWorker {device_id}] discovery finished after {end - start:.6f} seconds")
+        
                       for actListener in self.homeserver.device_listeners:
                         actListener.newDeviceDetected(device_id, self.homeserver.get_model(device_id), module_Id, configuration, instances)
 

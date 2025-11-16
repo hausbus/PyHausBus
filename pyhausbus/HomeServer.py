@@ -74,7 +74,7 @@ class HomeServer(IBusDataListener):
 
     def is_internal_device(self, deviceId:int) -> bool:
         # if deviceId in [110, 503, 1000, 1541, 3422, 4000, 4001, 4002, 4003, 4004, 4005, 4009, 4096, 5068, 8192, 8270, 11581, 12223, 12622, 13976, 14896, 18343, 19075, 20043, 21336, 22909, 24261, 25661, 25874, 28900, 3423, 4006, 4008]:
-         #   return True
+        #   return True
         return deviceId in {HOMESERVER_DEVICE_ID, 9999, 12222}
 
     def get_configuration_from_cache(self, device_id: int) -> Configuration:
@@ -201,6 +201,7 @@ class DeviceWorker(threading.Thread):
                     if remote_objects is not None:
                       LOGGER.debug(f"[DeviceWorker {device_id}] discovery ok")
                       instances = self.getHomeassistantChannels(device_id, remote_objects)
+                      LOGGER.debug(f"[DeviceWorker {device_id}] channels created")
                       for actListener in self.homeserver.device_listeners:
                         actListener.newDeviceDetected(device_id, self.homeserver.get_model(device_id), module_Id, configuration, instances)
 
@@ -213,10 +214,10 @@ class DeviceWorker(threading.Thread):
 
     def getHomeassistantChannels(self, device_id: int, remoteObjects: RemoteObjects):
 
+        start = time.perf_counter()
         firmware_id = self.homeserver.get_module_id_from_cache(device_id).getFirmwareId()
         fcke = self.homeserver.get_configuration_from_cache(device_id).getFCKE()
         instances: list[ABusFeature] = self.getDeviceInstances(device_id, remoteObjects)
-
         templates = Templates.get_instance()
 
         for instance in instances:
@@ -246,11 +247,15 @@ class DeviceWorker(threading.Thread):
 
             instance.setName(name)
 
+        end = time.perf_counter()
+        LOGGER.debug(f"getHomeassistantChannels dauerte {end - start:.6f} Sekunden")
+
         return instances
 
     def getDeviceInstances(self, device_id: int, remoteObjects: RemoteObjects):
-        objectList = remoteObjects.getObjectList()
+        start = time.perf_counter()
 
+        objectList = remoteObjects.getObjectList()
         result = []
         for i in range(0, len(objectList), 2):
             instanceId = objectList[i]
@@ -283,6 +288,10 @@ class DeviceWorker(threading.Thread):
                 
             except Exception as err:
                 LOGGER.error(err, exc_info=True, stack_info=True)
+
+        end = time.perf_counter()
+        LOGGER.debug(f"getDeviceInstances dauerte {end - start:.6f} Sekunden")
+                
         return result
 
     def enqueue(self, device_id):

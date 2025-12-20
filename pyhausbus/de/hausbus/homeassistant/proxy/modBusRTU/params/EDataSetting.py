@@ -2,9 +2,9 @@ import pyhausbus.HausBusUtils as HausBusUtils
 from enum import Enum
 
 class EDataSetting(Enum):
-  8N1=128
-  8E1=132
-  8O1=136
+  _8N1=128
+  _8E1=132
+  _8O1=136
   SER_UNKNOWN=-1
 
   @staticmethod

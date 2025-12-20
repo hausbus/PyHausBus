@@ -28,7 +28,7 @@ class Gateway(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -37,7 +37,7 @@ class Gateway(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param options enabled: Dies Gateway ist aktiv und leitet Nachrichten weiter\r\npreferLoxone: Gateway kommuniziert bevorzugt im Loxone-Protokoll\r\nenableConsole: aktiviert das senden von Debugausgaben\r\nmaster: dieses Gateway soll das Bus-Timing verwalten\r\n\r\nReservierte Bits muessen immer deaktiviert sein. Das Aktivieren eines reservierten Bits fuehrt nach dem Neustart des Controllers zu den Standart-Einstellungen..
@@ -48,7 +48,7 @@ class Gateway(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -57,7 +57,7 @@ class Gateway(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "getMinIdleTime")
     ResultWorker()._setResultInfo(MinIdleTime,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param time_ms Mindestwartezeit [ms].
@@ -68,7 +68,7 @@ class Gateway(ABusFeature):
     hbCommand.addByte(time_ms)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param options enabled: Dies Gateway ist aktiv und leitet Nachrichten weiter\r\npreferLoxone: Gateway kommuniziert bevorzugt im Loxone-Protokoll\r\nenableConsole: aktiviert das senden von Debugausgaben\r\nmaster: dieses Gateway soll das Bus-Timing verwalten.
@@ -79,7 +79,7 @@ class Gateway(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param time_ms Mindestwartezeit [ms].
@@ -90,7 +90,7 @@ class Gateway(ABusFeature):
     hbCommand.addByte(time_ms)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -99,7 +99,7 @@ class Gateway(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getConnectedDevices")
     ResultWorker()._setResultInfo(ConnectedDevices,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param deviceIds .
@@ -110,7 +110,7 @@ class Gateway(ABusFeature):
     hbCommand.addMap(deviceIds)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param inMessagesPerMinute Anzahl der eingehenden Nachrichten pro Minute.
@@ -129,7 +129,7 @@ class Gateway(ABusFeature):
     hbCommand.addByte(messageQueueHighWater)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param value Diese Funktion setzt das Flag \"preferLoxone\" in der Konfiguration entsprechend Persistent..
@@ -140,6 +140,6 @@ class Gateway(ABusFeature):
     hbCommand.addByte(value.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

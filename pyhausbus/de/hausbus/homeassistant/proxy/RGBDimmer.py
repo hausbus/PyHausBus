@@ -22,7 +22,7 @@ class RGBDimmer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightnessRed Helligkeit ROT-Anteil. \r\n0: AUS\r\n100: MAX.
@@ -39,7 +39,7 @@ class RGBDimmer(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightnessRed Helligkeit ROT-Anteil. \r\n0: AUS\r\n100: MAX.
@@ -56,7 +56,7 @@ class RGBDimmer(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -65,7 +65,7 @@ class RGBDimmer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param fadingTime Zeit a 50ms um 0-100% zu dimmen.
@@ -76,7 +76,7 @@ class RGBDimmer(ABusFeature):
     hbCommand.addByte(fadingTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -85,7 +85,7 @@ class RGBDimmer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param fadingTime Zeit a 50ms um zwischen den unterschiedlichen Helligkeitsstufen zu schalten.
@@ -96,7 +96,7 @@ class RGBDimmer(ABusFeature):
     hbCommand.addByte(fadingTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightnessRed Helligkeit ROT-Anteil. \r\n0: AUS\r\n100: MAX.
@@ -113,6 +113,6 @@ class RGBDimmer(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

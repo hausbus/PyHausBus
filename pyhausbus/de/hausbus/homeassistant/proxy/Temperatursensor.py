@@ -24,7 +24,7 @@ class Temperatursensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evCold")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -33,7 +33,7 @@ class Temperatursensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 201, "evWarm")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -42,7 +42,7 @@ class Temperatursensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 202, "evHot")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -51,7 +51,7 @@ class Temperatursensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param lowerThreshold untere Temperaturschwelle.
@@ -80,7 +80,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param lowerThreshold untere Temperaturschwelle.
@@ -109,7 +109,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -118,7 +118,7 @@ class Temperatursensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param celsius Grad Celsius.
@@ -133,7 +133,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -144,7 +144,7 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param celsius Grad Celsius.
@@ -159,6 +159,6 @@ class Temperatursensor(ABusFeature):
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

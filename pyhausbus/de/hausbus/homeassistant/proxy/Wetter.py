@@ -21,7 +21,7 @@ class Wetter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getWeather")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param humidity Luftfeuchtigkeit.
@@ -44,6 +44,6 @@ class Wetter(ABusFeature):
     hbCommand.addString(text)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

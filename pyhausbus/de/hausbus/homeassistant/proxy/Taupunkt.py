@@ -24,7 +24,7 @@ class Taupunkt(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evLow")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -33,7 +33,7 @@ class Taupunkt(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 201, "evInRange")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -42,7 +42,7 @@ class Taupunkt(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 202, "evAbove")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -53,7 +53,7 @@ class Taupunkt(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -62,7 +62,7 @@ class Taupunkt(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param lowerThreshold untere Taupunktschwelle.
@@ -91,7 +91,7 @@ class Taupunkt(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -100,7 +100,7 @@ class Taupunkt(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param lowerThreshold untere Taupunktschwelle.
@@ -129,7 +129,7 @@ class Taupunkt(ABusFeature):
     hbCommand.addByte(deltaSensorID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param celsius Grad Celsius.
@@ -144,7 +144,7 @@ class Taupunkt(ABusFeature):
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param celsius Grad Celsius.
@@ -159,6 +159,6 @@ class Taupunkt(ABusFeature):
     hbCommand.addByte(lastEvent.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

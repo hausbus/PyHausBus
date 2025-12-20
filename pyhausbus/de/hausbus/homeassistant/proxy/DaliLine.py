@@ -30,7 +30,7 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(address3)
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address0 .
@@ -47,7 +47,7 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(address3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -56,7 +56,7 @@ class DaliLine(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 2, "allOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -65,7 +65,7 @@ class DaliLine(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "allOn")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param command Dali Kommando s.Spezifikation.
@@ -78,7 +78,7 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(address)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address0 .
@@ -95,7 +95,7 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(address3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param status .
@@ -106,7 +106,7 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(status)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -117,6 +117,6 @@ class DaliLine(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

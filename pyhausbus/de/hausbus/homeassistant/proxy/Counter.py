@@ -24,7 +24,7 @@ class Counter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param mode increment: 1 = Zaehler inkrementieren.
@@ -41,7 +41,7 @@ class Counter(ABusFeature):
     hbCommand.addWord(scaleFaktor)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -50,7 +50,7 @@ class Counter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 2, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param counter Zaehler ganze Einheiten.
@@ -63,7 +63,7 @@ class Counter(ABusFeature):
     hbCommand.addWord(fraction)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param mode increment: 1 = Zaehler inkrementieren.
@@ -80,7 +80,7 @@ class Counter(ABusFeature):
     hbCommand.addWord(scaleFaktor)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -91,7 +91,7 @@ class Counter(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param counter Zaehler ganze Einheiten.
@@ -104,7 +104,7 @@ class Counter(ABusFeature):
     hbCommand.addWord(fraction)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param counter Zaehler ganze Einheiten.
@@ -117,6 +117,6 @@ class Counter(ABusFeature):
     hbCommand.addWord(fraction)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

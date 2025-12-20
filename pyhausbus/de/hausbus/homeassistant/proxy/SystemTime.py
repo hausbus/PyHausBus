@@ -25,7 +25,7 @@ class SystemTime(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getTime")
     ResultWorker()._setResultInfo(Time,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param weekDay .
@@ -48,7 +48,7 @@ class SystemTime(ABusFeature):
     hbCommand.addByte(seconds)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param weekday .
@@ -71,7 +71,7 @@ class SystemTime(ABusFeature):
     hbCommand.addByte(seconds)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -82,6 +82,6 @@ class SystemTime(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

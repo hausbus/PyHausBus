@@ -1,10 +1,10 @@
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EBaudrate import EBaudrate
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EDataSetting import EDataSetting
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EBaudrate import EBaudrate
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EDataSetting import EDataSetting
 import pyhausbus.HausBusUtils as HausBusUtils
 
-class Configuration:
+class SetConfiguration:
   CLASS_ID = 45
-  FUNCTION_ID = 128
+  FUNCTION_ID = 1
 
   def __init__(self,baudrate:EBaudrate, dataSetting:EDataSetting, responseTimeout:int):
     self.baudrate=baudrate
@@ -14,10 +14,10 @@ class Configuration:
 
   @staticmethod
   def _fromBytes(dataIn:bytearray, offset):
-    return Configuration(EBaudrate._fromBytes(dataIn, offset), EDataSetting._fromBytes(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset))
+    return SetConfiguration(EBaudrate._fromBytes(dataIn, offset), EDataSetting._fromBytes(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset))
 
   def __str__(self):
-    return f"Configuration(baudrate={self.baudrate}, dataSetting={self.dataSetting}, responseTimeout={self.responseTimeout})"
+    return f"SetConfiguration(baudrate={self.baudrate}, dataSetting={self.dataSetting}, responseTimeout={self.responseTimeout})"
 
   '''
   @param baudrate Verbindungsgeschwindigkeit.

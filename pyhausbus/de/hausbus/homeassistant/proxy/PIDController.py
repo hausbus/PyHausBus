@@ -24,7 +24,7 @@ class PIDController(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param P P-Anteil des Reglers.
@@ -51,7 +51,7 @@ class PIDController(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param P P-Anteil des Reglers.
@@ -78,7 +78,7 @@ class PIDController(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param targetValue Regelungszielwert z.B. targetValue*0.
@@ -89,7 +89,7 @@ class PIDController(ABusFeature):
     hbCommand.addWord(targetValue)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param enable Reglerverhalten ein/ausschalten.
@@ -100,7 +100,7 @@ class PIDController(ABusFeature):
     hbCommand.addByte(enable.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -109,7 +109,7 @@ class PIDController(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evOn")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -120,7 +120,7 @@ class PIDController(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -129,6 +129,6 @@ class PIDController(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 201, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

@@ -44,7 +44,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(index.value)
     ResultWorker()._setResultInfo(ModuleId,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -53,7 +53,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param name Modulname.
@@ -72,7 +72,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(firmwareId.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param startupDelay a 250ms.
@@ -113,7 +113,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(FCKE)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -122,7 +122,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "getRemoteObjects")
     ResultWorker()._setResultInfo(RemoteObjects,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param objectList Eine Liste der Verfuegbaren Objekte im Geraete.
@@ -133,7 +133,7 @@ class Controller(ABusFeature):
     hbCommand.addMap(objectList)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -142,7 +142,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "generateRandomDeviceId")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -151,7 +151,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 1, "reset")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -160,7 +160,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 4, "getUnusedMemory")
     ResultWorker()._setResultInfo(UnusedMemory,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param startupDelay a 10ms.
@@ -193,7 +193,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(slotType7.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param freeStack Anzahl des nicht genutzten Stacks in Bytes..
@@ -206,7 +206,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(freeHeap)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address .
@@ -219,7 +219,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(length)
     ResultWorker()._setResultInfo(MemoryData,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address .
@@ -232,7 +232,7 @@ class Controller(ABusFeature):
     hbCommand.addBlob(data)
     ResultWorker()._setResultInfo(MemoryStatus,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -241,7 +241,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 127, "ping")
     ResultWorker()._setResultInfo(Pong,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param watchDogTime Verbleibende Zeit in Sekunden bis zum Watchdog Reset.
@@ -252,7 +252,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(watchDogTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address Adresse des gemeldeten Speicherinhaltes.
@@ -265,7 +265,7 @@ class Controller(ABusFeature):
     hbCommand.addBlob(data)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param status Status des letzten Speicherzugriffs.
@@ -278,7 +278,7 @@ class Controller(ABusFeature):
     hbCommand.addDWord(address)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param offset aktueller Offset im Gesamtregelblock.
@@ -291,7 +291,7 @@ class Controller(ABusFeature):
     hbCommand.addBlob(data)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param offset Offset im Gesamtregelblock.
@@ -304,7 +304,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(length)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param offset offset im Gesamtregelblock.
@@ -317,7 +317,7 @@ class Controller(ABusFeature):
     hbCommand.addBlob(data)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param weektime .
@@ -329,7 +329,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(weektime.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param deviceId neue ID.
@@ -340,7 +340,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(deviceId)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param reason Grund fuer dieses Event.
@@ -351,7 +351,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(reason.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -362,7 +362,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -371,7 +371,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 126, "getTime")
     ResultWorker()._setResultInfo(Time,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param weekTime .
@@ -383,7 +383,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(weekTime.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param weekTime .
@@ -395,7 +395,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(weekTime.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Index des abzufragenden Regelzustandes auf dem Controller.
@@ -406,7 +406,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(index)
     ResultWorker()._setResultInfo(RuleState,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Index des zu setzenden Regelzustandes auf dem Controller..
@@ -419,7 +419,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(state)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param indexRule Index der Regel im Controller..
@@ -432,7 +432,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(indexElement)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Index der abgefragten Regel.
@@ -445,7 +445,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(state)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Gruppenindex.
@@ -462,7 +462,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(triggerBits)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Gruppenindex.
@@ -475,7 +475,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(status)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Gruppenindex.
@@ -488,7 +488,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(status)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Gruppenindex.
@@ -501,7 +501,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(status)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param ruleIndex .
@@ -514,7 +514,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(elementIndex)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param option SEND_TRIGGERED_RULE_EVENT: generiert ein Event zu einer aktivierten Regel\r\nREAD_ONLY_GATEWAYS: schaltet das Versenden saemtlicher Nachrichten ab. Eingehende Nachrichten werden verarbeitet\r\nREPORT_INTERNAL_TEMPERATURE: aktiviert den internen TemperaturSensor des Prozessors ungenau\r\nSEND_ZERO_CROSS_DATA: sendet im Sekundentakt aufgezeichnete Daten zur Nulldurchganserkennung bei Dimmer-Modulen.
@@ -525,7 +525,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(option.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param timeDifference Abweichung der internen Wochenzeit in Minuten Achtung: Vorzeichenbehaftetes Byte. 255 entspricht -1.
@@ -536,7 +536,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(timeDifference)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -545,7 +545,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 206, "evDay")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -554,7 +554,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 207, "evNight")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param sunriseTime Zeit fuer den Sonnenaufgang..
@@ -569,7 +569,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(sunsetTime.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param type Hier wird der Typ der Variable.
@@ -584,7 +584,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param type Hier wird der Typ der Variable.
@@ -597,7 +597,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(index)
     ResultWorker()._setResultInfo(SystemVariable,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param type Gibt den Typ der Variable an.
@@ -612,7 +612,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Index der logischen Gruppe in diesem Controller.
@@ -623,7 +623,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(index)
     ResultWorker()._setResultInfo(UnitGroupStatus,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index Index der logischen Gruppe in diesem Controller.
@@ -636,7 +636,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(status)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param consoleString Debug Ausgaben bei spezieller Firmware zur Fehlersuche.
@@ -647,7 +647,7 @@ class Controller(ABusFeature):
     hbCommand.addString(consoleString)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -656,7 +656,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 208, "evResetWifi")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param channel PWM-Kanal.
@@ -735,7 +735,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(pulsWidth15)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param featureId Zusatzfunktion.
@@ -748,7 +748,7 @@ class Controller(ABusFeature):
     hbCommand.addString(key)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param type Hier wird der Typ der Variable.
@@ -763,7 +763,7 @@ class Controller(ABusFeature):
     hbCommand.addWord(value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param index 0: loescht alle OneWire Sensor Positionen\r\n1-32: loescht nur den Sensor auf der Position.
@@ -774,7 +774,7 @@ class Controller(ABusFeature):
     hbCommand.addByte(index)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param time Zeit in Sekunden bis zum Reset wenn kein Ping empfangen wird. 0 deativiert den WatchDog.
@@ -785,6 +785,6 @@ class Controller(ABusFeature):
     hbCommand.addWord(time)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

@@ -25,7 +25,7 @@ class RFIDReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evConnected")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -36,7 +36,7 @@ class RFIDReader(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -45,7 +45,7 @@ class RFIDReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -54,7 +54,7 @@ class RFIDReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 1, "setConfiguration")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state State of the RFID-Reader hardware.
@@ -65,7 +65,7 @@ class RFIDReader(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param tagID ID of the detected RFID tag.
@@ -76,7 +76,7 @@ class RFIDReader(ABusFeature):
     hbCommand.addDWord(tagID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -85,7 +85,7 @@ class RFIDReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "getLastData")
     ResultWorker()._setResultInfo(LastData,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param tagID last tagID read successfully.
@@ -96,7 +96,7 @@ class RFIDReader(ABusFeature):
     hbCommand.addDWord(tagID)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -105,7 +105,7 @@ class RFIDReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 128, "Configuration")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -114,6 +114,6 @@ class RFIDReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 2, "getState")
     ResultWorker()._setResultInfo(State,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

@@ -25,7 +25,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -34,7 +34,7 @@ class WiFi(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param mac1 .
@@ -55,7 +55,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(mac6)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param SSID .
@@ -78,7 +78,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(Server_IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param SSID .
@@ -101,7 +101,7 @@ class WiFi(ABusFeature):
     hbCommand.addByte(Server_IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -110,7 +110,7 @@ class WiFi(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "getCurrentIp")
     ResultWorker()._setResultInfo(CurrentIp,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param IP0 .
@@ -127,6 +127,6 @@ class WiFi(ABusFeature):
     hbCommand.addByte(IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

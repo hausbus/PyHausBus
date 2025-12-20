@@ -1,4 +1,4 @@
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EErrorCode import EErrorCode
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EErrorCode import EErrorCode
 import pyhausbus.HausBusUtils as HausBusUtils
 
 class EvError:

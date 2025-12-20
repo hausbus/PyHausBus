@@ -403,6 +403,12 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.wetter.commands.GetWeather"
   if (classId==2 and functionId==128):
     return "pyhausbus.de.hausbus.homeassistant.proxy.wetter.data.Weather"
+  if (classId==14 and functionId==0):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modbusSlave.commands.GetConfiguration"
+  if (classId==14 and functionId==1):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modbusSlave.commands.SetConfiguration"
+  if (classId==14 and functionId==128):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modbusSlave.data.Configuration"
   if (classId==176 and functionId==255):
     return "pyhausbus.de.hausbus.homeassistant.proxy.gateway.data.EvError"
   if (classId==176 and functionId==0):
@@ -620,23 +626,23 @@ def getBusClassNameFor(classId, functionId):
   if (classId==44 and functionId==201):
     return "pyhausbus.de.hausbus.homeassistant.proxy.pIDController.data.EvOff"
   if (classId==45 and functionId==2):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.GetRegisterConfiguration"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.commands.GetRegisterConfiguration"
   if (classId==45 and functionId==3):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.SetRegisterConfiguration"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.commands.SetRegisterConfiguration"
   if (classId==45 and functionId==129):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.RegisterConfiguration"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.data.RegisterConfiguration"
   if (classId==45 and functionId==130):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.GenericResponse"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.data.Response"
   if (classId==45 and functionId==4):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.GenericCommand"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.commands.SendRequest"
   if (classId==45 and functionId==0):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.GetConfiguration"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.commands.GetConfiguration"
   if (classId==45 and functionId==1):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.commands.SetConfiguration"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.commands.SetConfiguration"
   if (classId==45 and functionId==128):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.Configuration"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.data.Configuration"
   if (classId==45 and functionId==255):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.EvError"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.data.EvError"
   if (classId==36 and functionId==200):
     return "pyhausbus.de.hausbus.homeassistant.proxy.analogEingang.data.EvLow"
   if (classId==36 and functionId==201):
@@ -758,7 +764,7 @@ def getBusClassNameForClass(classId):
   if (classId==44):
     return "pyhausbus.de.hausbus.homeassistant.proxy.PIDController"
   if (classId==45):
-    return "pyhausbus.de.hausbus.homeassistant.proxy.ModBusMaster"
+    return "pyhausbus.de.hausbus.homeassistant.proxy.ModBusRTU"
   if (classId==36):
     return "pyhausbus.de.hausbus.homeassistant.proxy.AnalogEingang"
   if (classId==165):

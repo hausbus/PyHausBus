@@ -34,7 +34,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addWord(currentReportInterval)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -43,7 +43,7 @@ class CurrentReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 4, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param config .
@@ -60,7 +60,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addWord(currentReportInterval)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param time Systemzeit des ESP zu Debugzwecken.
@@ -77,7 +77,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addDWord(signalDuration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -86,7 +86,7 @@ class CurrentReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 1, "getCurrent")
     ResultWorker()._setResultInfo(Current,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param current Verbrauchter Strom in Wattstunden.
@@ -97,7 +97,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addDWord(current)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param power Aktuelle Leistung in Watt.
@@ -108,7 +108,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addWord(power)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param current verbrauchter Strom in Wattstunden.
@@ -119,7 +119,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addDWord(current)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -128,7 +128,7 @@ class CurrentReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 6, "getSignalCount")
     ResultWorker()._setResultInfo(SignalCount,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param signalCount Anzahl gez?hlter S0 Signale seit dem letzten Zur?cksetzen.
@@ -139,7 +139,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addDWord(signalCount)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -148,7 +148,7 @@ class CurrentReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 7, "clearSignalCount")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param signalCount .
@@ -159,7 +159,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addDWord(signalCount)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -168,7 +168,7 @@ class CurrentReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getPower")
     ResultWorker()._setResultInfo(Power,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -177,7 +177,7 @@ class CurrentReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 9, "incSignalCount")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -186,7 +186,7 @@ class CurrentReader(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 10, "decSignalCount")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param data .
@@ -199,7 +199,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addByte(type.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param value .
@@ -212,7 +212,7 @@ class CurrentReader(ABusFeature):
     hbCommand.addDWord(stamp)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -223,6 +223,6 @@ class CurrentReader(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

@@ -36,7 +36,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(mac0)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param IP0 Eigene IP-Adresse im Format IP0.IP1.IP2.IP3.
@@ -65,7 +65,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(Server_IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param IP0 .
@@ -94,7 +94,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(Server_IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -103,7 +103,7 @@ class Ethernet(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -114,7 +114,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param IP0 .
@@ -131,7 +131,7 @@ class Ethernet(ABusFeature):
     hbCommand.addByte(IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -140,6 +140,6 @@ class Ethernet(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "getCurrentIp")
     ResultWorker()._setResultInfo(CurrentIp,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

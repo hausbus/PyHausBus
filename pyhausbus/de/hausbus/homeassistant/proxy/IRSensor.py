@@ -20,7 +20,7 @@ class IRSensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "off")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -29,7 +29,7 @@ class IRSensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 1, "on")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address IR Adresse.
@@ -42,7 +42,7 @@ class IRSensor(ABusFeature):
     hbCommand.addWord(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -51,7 +51,7 @@ class IRSensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -60,7 +60,7 @@ class IRSensor(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 201, "evOn")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address IR Adresse.
@@ -73,7 +73,7 @@ class IRSensor(ABusFeature):
     hbCommand.addWord(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param address IR Adresse.
@@ -86,6 +86,6 @@ class IRSensor(ABusFeature):
     hbCommand.addWord(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

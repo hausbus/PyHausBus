@@ -26,7 +26,7 @@ class Rollladen(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param position in Prozent.
@@ -37,7 +37,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(position)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param direction .
@@ -48,7 +48,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(direction.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -57,7 +57,7 @@ class Rollladen(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 4, "stop")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param closeTime Zeit.
@@ -72,7 +72,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param position in Prozent.
@@ -83,7 +83,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(position)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param direction .
@@ -94,7 +94,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(direction.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -103,7 +103,7 @@ class Rollladen(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param position .
@@ -114,7 +114,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(position)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param closeTime Zeit.
@@ -129,7 +129,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -140,7 +140,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param position Aktuelle Position setzen 0-100% geschlossen.
@@ -151,7 +151,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(position)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -160,7 +160,7 @@ class Rollladen(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 202, "evOpen")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param newState State.
@@ -173,7 +173,7 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(preState.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param newState State.
@@ -186,6 +186,6 @@ class Rollladen(ABusFeature):
     hbCommand.addByte(preState.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

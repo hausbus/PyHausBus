@@ -25,7 +25,7 @@ class Led(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param dimmOffset 0-100% offset auf den im Kommando angegebenen Helligkeitswert.
@@ -42,7 +42,7 @@ class Led(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightness 0-100% Helligkeit.
@@ -57,7 +57,7 @@ class Led(ABusFeature):
     hbCommand.addWord(onDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightness 0-100% Helligkeit.
@@ -74,7 +74,7 @@ class Led(ABusFeature):
     hbCommand.addByte(quantity)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -83,7 +83,7 @@ class Led(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param dimmOffset 0-100% offset auf den im Kommando angegebenen Helligkeitswert.
@@ -100,7 +100,7 @@ class Led(ABusFeature):
     hbCommand.addByte(options.getValue())
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightness Helligkeit der LED.
@@ -113,7 +113,7 @@ class Led(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -122,7 +122,7 @@ class Led(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightness 0-100% Helligkeit.
@@ -135,7 +135,7 @@ class Led(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -144,7 +144,7 @@ class Led(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 202, "evBlink")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -155,7 +155,7 @@ class Led(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param offDelay Ausschaltverzoegerung: Wert * Zeitbasis [ms]\r\n0=Keine.
@@ -166,7 +166,7 @@ class Led(ABusFeature):
     hbCommand.addWord(offDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param minBrightness Eine ausgeschaltete LED leuchtet immer noch mit dieser Helligkeit 0-100%.
@@ -177,7 +177,7 @@ class Led(ABusFeature):
     hbCommand.addByte(minBrightness)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param cmdDelay Dauer Wert * Zeitbasis [ms].
@@ -188,7 +188,7 @@ class Led(ABusFeature):
     hbCommand.addWord(cmdDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -197,7 +197,7 @@ class Led(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 7, "getMinBrightness")
     ResultWorker()._setResultInfo(MinBrightness,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param minBrightness Eine ausgeschaltete LED leuchtet immer noch mit dieser Helligkeit 0-100%.
@@ -208,6 +208,6 @@ class Led(ABusFeature):
     hbCommand.addByte(minBrightness)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

@@ -22,7 +22,7 @@ class PCServer(ABusFeature):
     hbCommand.addString(command)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param varId .
@@ -35,7 +35,7 @@ class PCServer(ABusFeature):
     hbCommand.addByte(varValue)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -44,7 +44,7 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 11, "shutdown")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -53,7 +53,7 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 12, "restart")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -62,7 +62,7 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 20, "quit")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -71,7 +71,7 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evOnline")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -80,7 +80,7 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 201, "evOffline")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -89,7 +89,7 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 10, "standby")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -98,6 +98,6 @@ class PCServer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 13, "reloadUserPlugin")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

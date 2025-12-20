@@ -31,7 +31,7 @@ class TcpClient(ABusFeature):
     hbCommand.addWord(port)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -40,7 +40,7 @@ class TcpClient(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 2, "getCurrentIp")
     ResultWorker()._setResultInfo(CurrentIp,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param IP0 .
@@ -57,7 +57,7 @@ class TcpClient(ABusFeature):
     hbCommand.addByte(IP3)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -66,6 +66,6 @@ class TcpClient(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evWhoIsServer")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

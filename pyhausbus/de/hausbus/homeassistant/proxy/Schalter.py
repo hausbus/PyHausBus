@@ -31,7 +31,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(quantity)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param duration Einschaltdauer: \r\nWert * Zeitbasis [ms]\r\n0=nicht mehr ausschalten.
@@ -44,7 +44,7 @@ class Schalter(ABusFeature):
     hbCommand.addWord(onDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param offDelay Ausschaltverzoegerung: Wert * Zeitbasis [ms]\r\n0=Keine.
@@ -55,7 +55,7 @@ class Schalter(ABusFeature):
     hbCommand.addWord(offDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param duration Dauer.
@@ -66,7 +66,7 @@ class Schalter(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -75,7 +75,7 @@ class Schalter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -84,7 +84,7 @@ class Schalter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state .
@@ -101,7 +101,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(onTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -112,7 +112,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param offTime Dauer der Aus-Phase beim Togglen: \r\nWert * Zeitbasis [ms].
@@ -127,7 +127,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(quantity)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param maxOnTime Maximale Zeit.
@@ -146,7 +146,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(disableBitIndex)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -155,7 +155,7 @@ class Schalter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param maxOnTime Maximale Zeit.
@@ -174,7 +174,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(disableBitIndex)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param cmdDelay Dauer Wert * Zeitbasis [ms].
@@ -185,7 +185,7 @@ class Schalter(ABusFeature):
     hbCommand.addWord(cmdDelay)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -194,7 +194,7 @@ class Schalter(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 204, "evDisabled")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param duty 0-100% Pulsverh?ltnis.
@@ -207,7 +207,7 @@ class Schalter(ABusFeature):
     hbCommand.addByte(quantity)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param duty 0-100% Pulsverh?ltnis.
@@ -220,6 +220,6 @@ class Schalter(ABusFeature):
     hbCommand.addWord(durationSeconds)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

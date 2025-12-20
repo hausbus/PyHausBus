@@ -1,9 +1,9 @@
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EFunction import EFunction
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EFunction import EFunction
 import pyhausbus.HausBusUtils as HausBusUtils
 
-class GenericResponse:
+class SendRequest:
   CLASS_ID = 45
-  FUNCTION_ID = 130
+  FUNCTION_ID = 4
 
   def __init__(self,node:int, function:EFunction, address:int, data:bytearray):
     self.node=node
@@ -14,10 +14,10 @@ class GenericResponse:
 
   @staticmethod
   def _fromBytes(dataIn:bytearray, offset):
-    return GenericResponse(HausBusUtils.bytesToInt(dataIn, offset), EFunction._fromBytes(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToBlob(dataIn, offset))
+    return SendRequest(HausBusUtils.bytesToInt(dataIn, offset), EFunction._fromBytes(dataIn, offset), HausBusUtils.bytesToWord(dataIn, offset), HausBusUtils.bytesToBlob(dataIn, offset))
 
   def __str__(self):
-    return f"GenericResponse(node={self.node}, function={self.function}, address={self.address}, data={self.data})"
+    return f"SendRequest(node={self.node}, function={self.function}, address={self.address}, data={self.data})"
 
   '''
   @param node Bus-Knoten Geraete-Adresse.

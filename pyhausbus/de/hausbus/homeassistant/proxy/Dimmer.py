@@ -29,7 +29,7 @@ class Dimmer(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param mode DIMM_CR: dieser Mode ist zu Verwenden.
@@ -48,7 +48,7 @@ class Dimmer(ABusFeature):
     hbCommand.addByte(dimmingRangeEnd)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -57,7 +57,7 @@ class Dimmer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightness Helligkeit in Prozent.
@@ -70,7 +70,7 @@ class Dimmer(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param mode DIMM_CR: Dimmer arbeitet mit Phasenabschnitt\r\nDIMM_L: Dimmer arbeitet mit Phasenanschnitt\r\nSWITCH: Dimmer schaltet nur keine Dimmfunktion\r\n\r\nACHTUNG: EIN FALSCHER MODE.
@@ -89,7 +89,7 @@ class Dimmer(ABusFeature):
     hbCommand.addByte(dimmingRangeEnd)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -98,7 +98,7 @@ class Dimmer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 200, "evOff")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param direction .
@@ -109,7 +109,7 @@ class Dimmer(ABusFeature):
     hbCommand.addByte(direction.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param direction .
@@ -120,7 +120,7 @@ class Dimmer(ABusFeature):
     hbCommand.addByte(direction.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -129,7 +129,7 @@ class Dimmer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 4, "stop")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -138,7 +138,7 @@ class Dimmer(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param brightness aktuelle Helligkeit 0-100%.
@@ -151,7 +151,7 @@ class Dimmer(ABusFeature):
     hbCommand.addWord(duration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode NO_ZERO_CROSS_DETECTED: Nulldurchgaenge koennen nicht detektiert werde.
@@ -162,6 +162,6 @@ class Dimmer(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

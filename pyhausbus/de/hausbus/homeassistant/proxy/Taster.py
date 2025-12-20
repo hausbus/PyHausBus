@@ -30,7 +30,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state .
@@ -41,7 +41,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state .
@@ -52,7 +52,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state .
@@ -63,7 +63,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -72,7 +72,7 @@ class Taster(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param holdTimeout Zeit a 10ms.
@@ -91,7 +91,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(debounceTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param holdTimeout Zeit a 10ms.
@@ -110,7 +110,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(debounceTime)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state .
@@ -121,7 +121,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state .
@@ -132,7 +132,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -143,7 +143,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param enable FALSE: Deaktiviert das Versenden von Events\r\nTRUE: Aktiviert das Versenden von Events\r\nINVERT: Invertiert das aktuelle Verhalten.
@@ -156,7 +156,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(disabledDuration)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -165,7 +165,7 @@ class Taster(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 3, "getStatus")
     ResultWorker()._setResultInfo(Status,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param state .
@@ -176,7 +176,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(state.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param enabled 0: Events wurden gerade deaktiviert\r\n1: Events wurden gerade aktiviert.
@@ -187,7 +187,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(enabled)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param enabled 0: Events sind deaktviert\r\n1: Events sind aktiviert.
@@ -198,7 +198,7 @@ class Taster(ABusFeature):
     hbCommand.addByte(enabled)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -207,7 +207,7 @@ class Taster(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 4, "getEnabled")
     ResultWorker()._setResultInfo(Enabled,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   """
@@ -216,6 +216,6 @@ class Taster(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 5, "triggerStatusEvent")
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

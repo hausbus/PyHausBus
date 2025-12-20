@@ -23,7 +23,7 @@ class DigitalPort(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param pin0 .
@@ -48,7 +48,7 @@ class DigitalPort(ABusFeature):
     hbCommand.addByte(pin7.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param pin0 .
@@ -73,7 +73,7 @@ class DigitalPort(ABusFeature):
     hbCommand.addByte(pin7.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -84,6 +84,6 @@ class DigitalPort(ABusFeature):
     hbCommand.addByte(errorCode.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

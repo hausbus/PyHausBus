@@ -2,15 +2,17 @@ from pyhausbus.HausBusCommand import HausBusCommand
 from pyhausbus.ABusFeature import *
 from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.RegisterConfiguration import RegisterConfiguration
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EType import EType
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EFunction import EFunction
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.data.Configuration import Configuration
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EBaudrate import EBaudrate
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EDataSetting import EDataSetting
-from pyhausbus.de.hausbus.homeassistant.proxy.modBusMaster.params.EErrorCode import EErrorCode
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.data.RegisterConfiguration import RegisterConfiguration
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.ERegisterType import ERegisterType
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.ESensorType import ESensorType
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.ESiPrefix import ESiPrefix
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EFunction import EFunction
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.data.Configuration import Configuration
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EBaudrate import EBaudrate
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EDataSetting import EDataSetting
+from pyhausbus.de.hausbus.homeassistant.proxy.modBusRTU.params.EErrorCode import EErrorCode
 
-class ModBusMaster(ABusFeature):
+class ModBusRTU(ABusFeature):
   CLASS_ID:int = 45
 
   def __init__ (self,objectId:int):
@@ -18,7 +20,7 @@ class ModBusMaster(ABusFeature):
 
   @staticmethod
   def create(deviceId:int, instanceId:int):
-    return ModBusMaster(HausBusUtils.getObjectId(deviceId, 45, instanceId))
+    return ModBusRTU(HausBusUtils.getObjectId(deviceId, 45, instanceId))
 
   """
   @param idx index of the configuration slot.
@@ -29,41 +31,64 @@ class ModBusMaster(ABusFeature):
     hbCommand.addByte(idx)
     ResultWorker()._setResultInfo(RegisterConfiguration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param idx index of the configuration slot.
   @param node Geraeteadresse im ModBus.
-  @param type Unterstuetzte Register Typen.
+  @param registerType Unterstuetzte Register Typen.
   @param address Register Adresse.
+  @param sensorType Sensor Typ meldet sich dann mit der entsprechenden Feature-Klasse.
+  @param siPrefix Si-Prefix f?r den Zahlenwert im ModBus-Register.
   """
-  def setRegisterConfiguration(self, idx:int, node:int, type:EType, address:int):
-    LOGGER.debug("setRegisterConfiguration"+" idx = "+str(idx)+" node = "+str(node)+" type = "+str(type)+" address = "+str(address))
+  def setRegisterConfiguration(self, idx:int, node:int, registerType:ERegisterType, address:int, sensorType:ESensorType, siPrefix:ESiPrefix):
+    LOGGER.debug("setRegisterConfiguration"+" idx = "+str(idx)+" node = "+str(node)+" registerType = "+str(registerType)+" address = "+str(address)+" sensorType = "+str(sensorType)+" siPrefix = "+str(siPrefix))
     hbCommand = HausBusCommand(self.objectId, 3, "setRegisterConfiguration")
     hbCommand.addByte(idx)
     hbCommand.addByte(node)
-    hbCommand.addByte(type.value)
+    hbCommand.addByte(registerType.value)
     hbCommand.addWord(address)
+    hbCommand.addByte(sensorType.value)
+    hbCommand.addByte(siPrefix.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
-  @param idx index of the configuration slot.
-  @param node device node on ModBus.
-  @param type Unterstuetzte Register Typen.
+  @param idx index der Konfiguration.
+  @param node Knoten Nummer im BUS.
+  @param registerType Unterstuetzte Register Typen.
   @param address Register Adresse.
+  @param sensorType Sensor Typ meldet sich dann mit der entsprechenden Feature-Klasse.
+  @param siPrefix Si-Prefix f?r den Zahlenwert im ModBus-Register.
   """
-  def RegisterConfiguration(self, idx:int, node:int, type:EType, address:int):
-    LOGGER.debug("RegisterConfiguration"+" idx = "+str(idx)+" node = "+str(node)+" type = "+str(type)+" address = "+str(address))
+  def RegisterConfiguration(self, idx:int, node:int, registerType:ERegisterType, address:int, sensorType:ESensorType, siPrefix:ESiPrefix):
+    LOGGER.debug("RegisterConfiguration"+" idx = "+str(idx)+" node = "+str(node)+" registerType = "+str(registerType)+" address = "+str(address)+" sensorType = "+str(sensorType)+" siPrefix = "+str(siPrefix))
     hbCommand = HausBusCommand(self.objectId, 129, "RegisterConfiguration")
     hbCommand.addByte(idx)
     hbCommand.addByte(node)
-    hbCommand.addByte(type.value)
+    hbCommand.addByte(registerType.value)
     hbCommand.addWord(address)
+    hbCommand.addByte(sensorType.value)
+    hbCommand.addByte(siPrefix.value)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
+
+  """
+  @param node Bus-Knoten Geraete-Adresse.
+  @param function Mod-Bus Funktion.
+  @param data Daten.
+  """
+  def Response(self, node:int, function:EFunction, data:bytearray):
+    LOGGER.debug("Response"+" node = "+str(node)+" function = "+str(function)+" data = "+str(data))
+    hbCommand = HausBusCommand(self.objectId, 130, "Response")
+    hbCommand.addByte(node)
+    hbCommand.addByte(function.value)
+    hbCommand.addBlob(data)
+    ResultWorker()._setResultInfo(None,self.getObjectId())
+    hbCommand.send()
+
 
   """
   @param node Bus-Knoten Geraete-Adresse.
@@ -71,33 +96,16 @@ class ModBusMaster(ABusFeature):
   @param address Adresse in Geraet.
   @param data Daten.
   """
-  def genericResponse(self, node:int, function:EFunction, address:int, data:bytearray):
-    LOGGER.debug("genericResponse"+" node = "+str(node)+" function = "+str(function)+" address = "+str(address)+" data = "+str(data))
-    hbCommand = HausBusCommand(self.objectId, 130, "genericResponse")
+  def sendRequest(self, node:int, function:EFunction, address:int, data:bytearray):
+    LOGGER.debug("sendRequest"+" node = "+str(node)+" function = "+str(function)+" address = "+str(address)+" data = "+str(data))
+    hbCommand = HausBusCommand(self.objectId, 4, "sendRequest")
     hbCommand.addByte(node)
     hbCommand.addByte(function.value)
     hbCommand.addWord(address)
     hbCommand.addBlob(data)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
 
-  """
-  @param node Bus-Knoten Geraete-Adresse.
-  @param function Mod-Bus Funktion.
-  @param address Adresse in Geraet.
-  @param data Daten.
-  """
-  def genericCommand(self, node:int, function:EFunction, address:int, data:bytearray):
-    LOGGER.debug("genericCommand"+" node = "+str(node)+" function = "+str(function)+" address = "+str(address)+" data = "+str(data))
-    hbCommand = HausBusCommand(self.objectId, 4, "genericCommand")
-    hbCommand.addByte(node)
-    hbCommand.addByte(function.value)
-    hbCommand.addWord(address)
-    hbCommand.addBlob(data)
-    ResultWorker()._setResultInfo(None,self.getObjectId())
-    hbCommand.send()
-    LOGGER.debug("returns")
 
   """
   """
@@ -106,7 +114,7 @@ class ModBusMaster(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 0, "getConfiguration")
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param baudrate Verbindungsgeschwindigkeit.
@@ -121,7 +129,7 @@ class ModBusMaster(ABusFeature):
     hbCommand.addWord(responseTimeout)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param baudrate Verbindungsgeschwindigkeit.
@@ -136,7 +144,7 @@ class ModBusMaster(ABusFeature):
     hbCommand.addWord(responseTimeout)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
   """
   @param errorCode .
@@ -149,6 +157,6 @@ class ModBusMaster(ABusFeature):
     hbCommand.addByte(data)
     ResultWorker()._setResultInfo(None,self.getObjectId())
     hbCommand.send()
-    LOGGER.debug("returns")
+
 
 

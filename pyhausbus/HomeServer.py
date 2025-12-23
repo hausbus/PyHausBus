@@ -39,6 +39,7 @@ class HomeServer(IBusDataListener):
 
     def __init__(self):
         LOGGER.debug("init homeserver")
+        Templates.get_instance()
         self.bushandler = BusHandler.getInstance()
         self.bushandler.addBusEventListener(ResultWorker())
         self.bushandler.addBusEventListener(self)

@@ -1,7 +1,7 @@
 
 class GenericBusData:
 
-  def __init__(self):
+  def __init__(self, objectId: int):
     pass  # Platzhalter, sonst IndentationError
     
   @staticmethod

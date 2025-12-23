@@ -7,6 +7,7 @@ import threading
 
 def load_file(path: str) -> list[str]:
     try:
+        LOGGER.debug(f"loading template = {path}")
         with open(path, "r", encoding="latin1") as file:
             return [line.strip() for line in file if line.strip()]
     except FileNotFoundError:

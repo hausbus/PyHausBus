@@ -230,6 +230,10 @@ class DeviceWorker(threading.Thread):
                 instanceObjectId.getClassId(),
                 instanceObjectId.getInstanceId(),
             )
+            
+            #ungewünschte wegfiltern
+            if name in ["LogicalButton 2", "Schalter 210"]:
+              continue;
 
             LOGGER.debug(
                 "name for firmwareId %s, fcke: %s, classId %s, instanceId %s is %s",

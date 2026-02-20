@@ -50,7 +50,7 @@ class HomeServer(IBusDataListener):
         self.remote_objects: dict[int, RemoteObjects] = {}
         self.worker = DeviceWorker(self)
         self.worker.start()
-        self.collector = DeviceCollector(self.worker, timeout=1.0)
+        self.collector = DeviceCollector(self.worker, timeout=0.5)
         self.collector.start()
         self.known_devices = set()
 
@@ -322,7 +322,7 @@ class DeviceWorker(threading.Thread):
 # --- Collector, der Geraeteantworten einsammelt ---
 class DeviceCollector(threading.Thread):
 
-    def __init__(self, worker, timeout=1.0):
+    def __init__(self, worker, timeout=0.5):
         super().__init__(daemon=True)
         self.worker = worker
         self.timeout = timeout

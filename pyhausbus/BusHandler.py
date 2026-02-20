@@ -4,7 +4,7 @@ from pyhausbus.HausBusUtils import *
 from pyhausbus.BusDataMessage import BusDataMessage
 from pyhausbus.IBusDataListener import IBusDataListener
 import time
-import importlib
+import importlib, sys
 from pyhausbus.UdpReceiveWorker import UdpReceiveWorker
 import socket
 import pyhausbus.HausBusUtils as HausBusUtils
@@ -14,12 +14,14 @@ RS485_GATEWAY = "#RS485#"
 EVENTS_START = 200
 RESULT_START = 128
 
+
 class BusHandler:
 
   _singleInstance = None
   sock:None
   broadcastIp = "192.168.178.255"
   listeners = []
+  _module_cache = {}
 
   @staticmethod
   def getInstance():
@@ -34,6 +36,14 @@ class BusHandler:
       x = UdpReceiveWorker(self.busDataReceived)
       x.startWorker()
       self._getBroadcastIp()
+
+  def fast_import(self, module_name: str):
+    if module_name in self._module_cache:
+        return self._module_cache[module_name]
+
+    module = importlib.import_module(module_name)
+    self._module_cache[module_name] = module
+    return module
 
   def _getBroadcastIp(self):
     temp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -55,14 +65,12 @@ class BusHandler:
       featureClassId = getClassId(senderObjectId)
       identifierId = senderObjectId
 
-    LOGGER.debug("classId = " + str(featureClassId) + ", functionId = " + str(functionId))
     className = ProxyFactory.getBusClassNameFor(featureClassId, functionId)
-    if (className=="de.hausbus.proxy.LogicalButton"):
-      LOGGER.debug("test")
+    LOGGER.debug("classId = " + str(featureClassId) + ", functionId = " + str(functionId) + ", className = " + str(className))
 
     try:
       module_name, class_name = className.rsplit(".", 1)
-      module = importlib.import_module(className)
+      module = self.fast_import(className)
       cls = getattr(module, class_name)
       method = getattr(cls, "_fromBytes")
       offset = [0]
@@ -81,7 +89,7 @@ class BusHandler:
         for actListener in self.listeners:
           actListener.busDataReceived(newMessage)
     except (Exception, RuntimeError, TypeError, NameError, OSError) as err:
-        LOGGER.error(err,exc_info=True,stack_info=True)
+        LOGGER.error(err, exc_info=True, stack_info=True)
 
   def sendData(self, data:bytearray, debug:str):
 
@@ -93,7 +101,7 @@ class BusHandler:
     try:
       self.sock.sendto(udpData, (self.broadcastIp, UDP_PORT))
     except socket.error as e:
-      LOGGER.error(e,exc_info=True,stack_info=True)
+      LOGGER.error(e, exc_info=True, stack_info=True)
 
   def prepareForUDP(self, data:bytearray) -> bytearray:
     result = bytearray(len(data) + 2)

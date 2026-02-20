@@ -22,6 +22,7 @@ import queue
 import time
 import logging
 import traceback
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.MGroupMask import MGroupMask
 
 _module_cache = {}
 _class_cache = {}
@@ -55,7 +56,22 @@ class HomeServer(IBusDataListener):
 
     def searchDevices(self):
         controller = Controller(0)
-        controller.getModuleId(EIndex.RUNNING)
+        groupMask = MGroupMask(0)
+        groupMask.setGruppe1(True)
+        groupMask.setGruppe2(True)
+        groupMask.setGruppe3(True)
+        controller.getModuleId(EIndex.RUNNING, groupMask)
+        time.sleep(1)
+        groupMask = MGroupMask(0)
+        groupMask.setGruppe4(True)
+        groupMask.setGruppe5(True)
+        groupMask.setGruppe6(True)
+        controller.getModuleId(EIndex.RUNNING, groupMask)
+        time.sleep(1)
+        groupMask = MGroupMask(0)
+        groupMask.setGruppe7(True)
+        groupMask.setGruppe8(True)
+        controller.getModuleId(EIndex.RUNNING, groupMask)
 
     def addBusEventListener(self, listener: IBusDataListener):
         self.bushandler.addBusEventListener(listener)

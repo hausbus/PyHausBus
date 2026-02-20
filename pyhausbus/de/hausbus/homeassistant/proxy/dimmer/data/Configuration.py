@@ -21,7 +21,7 @@ class Configuration:
     return f"Configuration(mode={self.mode}, fadingTime={self.fadingTime}, dimmingTime={self.dimmingTime}, dimmingRangeStart={self.dimmingRangeStart}, dimmingRangeEnd={self.dimmingRangeEnd})"
 
   '''
-  @param mode DIMM_CR: Dimmer arbeitet mit Phasenabschnitt\r\nDIMM_L: Dimmer arbeitet mit Phasenanschnitt\r\nSWITCH: Dimmer schaltet nur keine Dimmfunktion\r\n\r\nACHTUNG: EIN FALSCHER MODE.
+  @param mode DIMM_CR: dieser Mode ist zu Verwenden.
   '''
   def getMode(self):
     return self.mode

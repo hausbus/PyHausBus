@@ -25,11 +25,11 @@ class MOptions:
 
   def isAdditionalLogicalSwitch(self):
     return HausBusUtils.isBitSet(3, self.value)
-  def setReserved4(self, setValue:bool):
+  def setReservedForLed(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 4, self.value)
     return self;
 
-  def isReserved4(self):
+  def isReservedForLed(self):
     return HausBusUtils.isBitSet(4, self.value)
   def setReserved5(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 5, self.value)
@@ -66,7 +66,7 @@ class MOptions:
     result.append("DriveOnState")
     result.append("DriveOffState")
     result.append("AdditionalLogicalSwitch")
-    result.append("Reserved4")
+    result.append("ReservedForLed")
     result.append("Reserved5")
     result.append("Reserved6")
     result.append("Reserved7")
@@ -80,8 +80,8 @@ class MOptions:
       self.setDriveOffState(setValue)
     if (name == "AdditionalLogicalSwitch"):
       self.setAdditionalLogicalSwitch(setValue)
-    if (name == "Reserved4"):
-      self.setReserved4(setValue)
+    if (name == "ReservedForLed"):
+      self.setReservedForLed(setValue)
     if (name == "Reserved5"):
       self.setReserved5(setValue)
     if (name == "Reserved6"):
@@ -90,7 +90,7 @@ class MOptions:
       self.setReserved7(setValue)
 
   def __str__(self):
-    return f"MOptions(Invert = {self.isInvert()}, DriveOnState = {self.isDriveOnState()}, DriveOffState = {self.isDriveOffState()}, AdditionalLogicalSwitch = {self.isAdditionalLogicalSwitch()}, Reserved4 = {self.isReserved4()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()}, Reserved7 = {self.isReserved7()})"
+    return f"MOptions(Invert = {self.isInvert()}, DriveOnState = {self.isDriveOnState()}, DriveOffState = {self.isDriveOffState()}, AdditionalLogicalSwitch = {self.isAdditionalLogicalSwitch()}, ReservedForLed = {self.isReservedForLed()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()}, Reserved7 = {self.isReserved7()})"
 
 
 

@@ -32,7 +32,7 @@ class Configuration:
     return self.minBrightness
 
   '''
-  @param timeBase Zeitbasis [ms] f?  ? ? ?r Zeitabh?  ? ? ??ngige Befehle..
+  @param timeBase Zeitbasis [ms] fuer Zeitabhaengige Befehle..
   '''
   def getTimeBase(self):
     return self.timeBase

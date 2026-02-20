@@ -19,17 +19,17 @@ class MOptions:
 
   def isDriveOffState(self):
     return HausBusUtils.isBitSet(2, self.value)
-  def setReserved3(self, setValue:bool):
+  def setReservedForSchalter(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 3, self.value)
     return self;
 
-  def isReserved3(self):
+  def isReservedForSchalter(self):
     return HausBusUtils.isBitSet(3, self.value)
-  def setReserved4(self, setValue:bool):
+  def setGammaCorrectedPwm(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 4, self.value)
     return self;
 
-  def isReserved4(self):
+  def isGammaCorrectedPwm(self):
     return HausBusUtils.isBitSet(4, self.value)
   def setReserved5(self, setValue:bool):
     self.value = HausBusUtils.setBit(setValue, 5, self.value)
@@ -65,8 +65,8 @@ class MOptions:
     result.append("Invert")
     result.append("DriveOnState")
     result.append("DriveOffState")
-    result.append("Reserved3")
-    result.append("Reserved4")
+    result.append("ReservedForSchalter")
+    result.append("GammaCorrectedPwm")
     result.append("Reserved5")
     result.append("Reserved6")
     result.append("Reserved7")
@@ -78,10 +78,10 @@ class MOptions:
       self.setDriveOnState(setValue)
     if (name == "DriveOffState"):
       self.setDriveOffState(setValue)
-    if (name == "Reserved3"):
-      self.setReserved3(setValue)
-    if (name == "Reserved4"):
-      self.setReserved4(setValue)
+    if (name == "ReservedForSchalter"):
+      self.setReservedForSchalter(setValue)
+    if (name == "GammaCorrectedPwm"):
+      self.setGammaCorrectedPwm(setValue)
     if (name == "Reserved5"):
       self.setReserved5(setValue)
     if (name == "Reserved6"):
@@ -90,7 +90,7 @@ class MOptions:
       self.setReserved7(setValue)
 
   def __str__(self):
-    return f"MOptions(Invert = {self.isInvert()}, DriveOnState = {self.isDriveOnState()}, DriveOffState = {self.isDriveOffState()}, Reserved3 = {self.isReserved3()}, Reserved4 = {self.isReserved4()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()}, Reserved7 = {self.isReserved7()})"
+    return f"MOptions(Invert = {self.isInvert()}, DriveOnState = {self.isDriveOnState()}, DriveOffState = {self.isDriveOffState()}, ReservedForSchalter = {self.isReservedForSchalter()}, GammaCorrectedPwm = {self.isGammaCorrectedPwm()}, Reserved5 = {self.isReserved5()}, Reserved6 = {self.isReserved6()}, Reserved7 = {self.isReserved7()})"
 
 
 

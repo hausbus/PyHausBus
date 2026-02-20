@@ -88,7 +88,7 @@ class Led(ABusFeature):
   """
   @param dimmOffset 0-100% offset auf den im Kommando angegebenen Helligkeitswert.
   @param minBrightness Eine ausgeschaltete LED leuchtet immer noch mit dieser Helligkeit 0-100%.
-  @param timeBase Zeitbasis [ms] f?  ? ? ?r Zeitabh?  ? ? ??ngige Befehle..
+  @param timeBase Zeitbasis [ms] fuer Zeitabhaengige Befehle..
   @param options Reservierte Bits muessen immer deaktiviert sein. Das Aktivieren eines reservierten Bits fuehrt nach dem Neustart des Controllers zu den Standart-Einstellungen..
   """
   def Configuration(self, dimmOffset:int, minBrightness:int, timeBase:int, options:MOptions):

@@ -73,7 +73,7 @@ class Dimmer(ABusFeature):
 
 
   """
-  @param mode DIMM_CR: Dimmer arbeitet mit Phasenabschnitt\r\nDIMM_L: Dimmer arbeitet mit Phasenanschnitt\r\nSWITCH: Dimmer schaltet nur keine Dimmfunktion\r\n\r\nACHTUNG: EIN FALSCHER MODE.
+  @param mode DIMM_CR: dieser Mode ist zu Verwenden.
   @param fadingTime Zeit a 50ms um zwischen den unterschiedlichen Helligkeitsstufen zu schalten.
   @param dimmingTime Zeit a 50ms um zwischen den unterschiedlichen Helligkeitsstufen zu dimmen.
   @param dimmingRangeStart Startwert des Helligkeitbereiches in dem gedimmt werden soll. 0-100%.

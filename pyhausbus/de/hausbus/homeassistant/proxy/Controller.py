@@ -4,6 +4,7 @@ from pyhausbus.ResultWorker import ResultWorker
 import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.ModuleId import ModuleId
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EIndex import EIndex
+from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.MGroupMask import MGroupMask
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.data.Configuration import Configuration
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.EFirmwareId import EFirmwareId
 from pyhausbus.de.hausbus.homeassistant.proxy.controller.params.MLogicalButtonMask import MLogicalButtonMask
@@ -37,20 +38,24 @@ class Controller(ABusFeature):
 
   """
   @param index .
+  @param groupMask Selektiert 1-8 Ger?tegruppen.
   """
-  def getModuleId(self, index:EIndex):
-    LOGGER.debug("getModuleId"+" index = "+str(index))
+  def getModuleId(self, index:EIndex, groupMask: MGroupMask = MGroupMask()):
+    LOGGER.debug("getModuleId"+" index = "+str(index)+" groupMask = "+str(groupMask))
     hbCommand = HausBusCommand(self.objectId, 2, "getModuleId")
     hbCommand.addByte(index.value)
+    hbCommand.addByte(groupMask.getValue())
     ResultWorker()._setResultInfo(ModuleId,self.getObjectId())
     hbCommand.send()
 
 
   """
+  @param groupMask Selektiert 1-8 Ger?tegruppen.
   """
-  def getConfiguration(self):
-    LOGGER.debug("getConfiguration")
+  def getConfiguration(self, groupMask: MGroupMask = MGroupMask()):
+    LOGGER.debug("getConfiguration"+" groupMask = "+str(groupMask))
     hbCommand = HausBusCommand(self.objectId, 5, "getConfiguration")
+    hbCommand.addByte(groupMask.getValue())
     ResultWorker()._setResultInfo(Configuration,self.getObjectId())
     hbCommand.send()
 
@@ -116,10 +121,12 @@ class Controller(ABusFeature):
 
 
   """
+  @param groupMask Selektiert 1-8 Ger?tegruppen.
   """
-  def getRemoteObjects(self):
-    LOGGER.debug("getRemoteObjects")
+  def getRemoteObjects(self, groupMask: MGroupMask = MGroupMask()):
+    LOGGER.debug("getRemoteObjects"+" groupMask = "+str(groupMask))
     hbCommand = HausBusCommand(self.objectId, 3, "getRemoteObjects")
+    hbCommand.addByte(groupMask.getValue())
     ResultWorker()._setResultInfo(RemoteObjects,self.getObjectId())
     hbCommand.send()
 

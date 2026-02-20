@@ -5,6 +5,8 @@ class EMode(Enum):
   DIMM_CR=0
   DIMM_L=1
   SWITCH=2
+  DIMM_PWM=3
+  DIMM_PWM_GAMMA_CORRECTED=4
   SER_UNKNOWN=-1
 
   @staticmethod

@@ -40,7 +40,7 @@ class Controller(ABusFeature):
   @param index .
   @param groupMask Selektiert 1-8 Ger?tegruppen.
   """
-  def getModuleId(self, index:EIndex, groupMask: MGroupMask = MGroupMask()):
+  def getModuleId(self, index:EIndex, groupMask: MGroupMask = MGroupMask(0)):
     LOGGER.debug("getModuleId"+" index = "+str(index)+" groupMask = "+str(groupMask))
     hbCommand = HausBusCommand(self.objectId, 2, "getModuleId")
     hbCommand.addByte(index.value)
@@ -52,7 +52,7 @@ class Controller(ABusFeature):
   """
   @param groupMask Selektiert 1-8 Ger?tegruppen.
   """
-  def getConfiguration(self, groupMask: MGroupMask = MGroupMask()):
+  def getConfiguration(self, groupMask: MGroupMask = MGroupMask(0)):
     LOGGER.debug("getConfiguration"+" groupMask = "+str(groupMask))
     hbCommand = HausBusCommand(self.objectId, 5, "getConfiguration")
     hbCommand.addByte(groupMask.getValue())
@@ -123,7 +123,7 @@ class Controller(ABusFeature):
   """
   @param groupMask Selektiert 1-8 Ger?tegruppen.
   """
-  def getRemoteObjects(self, groupMask: MGroupMask = MGroupMask()):
+  def getRemoteObjects(self, groupMask: MGroupMask = MGroupMask(0)):
     LOGGER.debug("getRemoteObjects"+" groupMask = "+str(groupMask))
     hbCommand = HausBusCommand(self.objectId, 3, "getRemoteObjects")
     hbCommand.addByte(groupMask.getValue())

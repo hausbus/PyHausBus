@@ -296,7 +296,7 @@ class Controller(ABusFeature):
     hbCommand = HausBusCommand(self.objectId, 9, "writeRules")
     hbCommand.addWord(offset)
     hbCommand.addBlob(data)
-    ResultWorker()._setResultInfo(None,self.getObjectId())
+    ResultWorker()._setResultInfo(MemoryStatus,self.getObjectId())
     hbCommand.send()
 
 

@@ -16,7 +16,7 @@ class EvData:
     return f"EvData(tagID={self.tagID})"
 
   '''
-  @param tagID ID of the detected RFID tag.
+  @param tagID ID des erkannten RFID tag.
   '''
   def getTagID(self):
     return self.tagID

@@ -609,6 +609,14 @@ def getBusClassNameFor(classId, functionId):
     return "pyhausbus.de.hausbus.homeassistant.proxy.rFIDReader.data.Configuration"
   if (classId==43 and functionId==2):
     return "pyhausbus.de.hausbus.homeassistant.proxy.rFIDReader.commands.GetState"
+  if (classId==43 and functionId==4):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.rFIDReader.commands.SetTagMapping"
+  if (classId==43 and functionId==5):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.rFIDReader.commands.GetTagMapping"
+  if (classId==43 and functionId==131):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.rFIDReader.data.TagMapping"
+  if (classId==43 and functionId==202):
+    return "pyhausbus.de.hausbus.homeassistant.proxy.rFIDReader.data.EvMappedData"
   if (classId==44 and functionId==0):
     return "pyhausbus.de.hausbus.homeassistant.proxy.pIDController.commands.GetConfiguration"
   if (classId==44 and functionId==1):

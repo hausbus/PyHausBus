@@ -48,6 +48,8 @@ class BusHandler:
     return module
 
   def _getBroadcastIp(self):
+    LOGGER.debug(f"initial broadcastIp is = {self.broadcastIp}")
+    
     if self.broadcastIp != "192.168.178.255":
       LOGGER.debug(f"fixed broadcastIp = {self.broadcastIp}")
     else:

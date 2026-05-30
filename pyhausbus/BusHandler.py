@@ -47,22 +47,21 @@ class BusHandler:
     self._module_cache[module_name] = module
     return module
 
+  def setBroadcastIp(self, fixedBroadcastIp):
+    LOGGER.debug(f"new fixed broadcastIp = {fixedBroadcastIp}")
+    self.broadcastIp = fixedBroadcastIp;
+
   def _getBroadcastIp(self):
-    LOGGER.debug(f"initial broadcastIp is = {self.broadcastIp}")
-    
-    if self.broadcastIp != "192.168.178.255":
-      LOGGER.debug(f"fixed broadcastIp = {self.broadcastIp}")
-    else:
-      temp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-      try:
-          temp_socket.connect(("8.8.8.8", 80))
-          own_ip = temp_socket.getsockname()[0].split('.')
-          self.broadcastIp = own_ip[0] + "." + own_ip[1] + "." + own_ip[2] + ".255"
-          LOGGER.debug(f"broadcastIp = {self.broadcastIp}")
-      except OSError as e:
-          LOGGER.warning(f"Could not determine broadcast IP: {e}")
-      finally:
-          temp_socket.close()
+    temp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        temp_socket.connect(("8.8.8.8", 80))
+        own_ip = temp_socket.getsockname()[0].split('.')
+        self.broadcastIp = own_ip[0] + "." + own_ip[1] + "." + own_ip[2] + ".255"
+        LOGGER.debug(f"broadcastIp = {self.broadcastIp}")
+    except OSError as e:
+        LOGGER.warning(f"Could not determine broadcast IP: {e}")
+    finally:
+        temp_socket.close()
 
   def busDataReceived(self, senderObjectId, receiverObjectId, functionId, functionData, gateway, corrupted:bool):
     # Es kann entweder eine Antwort oder Event des Senders sein oder ein Aufruf auf dem Empfänger

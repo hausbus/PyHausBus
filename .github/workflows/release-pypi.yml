@@ -3,29 +3,27 @@ name: Release to PyPI
 on:
   push:
     tags:
-      - "v*"   # z. B. v1.0.0 löst ein Release aus
+      - "v*"
+
+permissions:
+  id-token: write
 
 jobs:
-  build:
+  release:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Install build dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install build
+      - name: Install build
+        run: pip install build
 
       - name: Build package
-        run: |
-          python -m build
+        run: python -m build
 
-      - name: Publish to PyPI
+      - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}

@@ -15,23 +15,54 @@ class UdpReceiveWorker:
   def __init__(self, func):
     LOGGER.debug("init UdpReceiveWorker")
     self.func = func
+    self._running = True
+    self._sock = None
+    self._thread = None
 
   def startWorker(self):
     LOGGER.debug("starting udp receive worker")
-    t = threading.Thread(target=self.runable)
-    t.start()
+    self._thread = threading.Thread(target=self.runable, daemon=True)
+    self._thread.start()
+
+  def stop(self):
+    """Stop the worker.
+
+    Just clearing _running is not enough on its own: recvfrom() below
+    blocks until a packet arrives, so the loop would only notice _running
+    went False the next time it wakes up. The socket timeout in runable()
+    bounds that wait; closing the socket here is a belt-and-suspenders
+    attempt to unblock it sooner; but on Linux, closing a socket from a
+    different thread does not reliably interrupt another thread's pending
+    blocking call on it, so the timeout is what actually guarantees this
+    returns.
+    """
+    LOGGER.debug("stopping udp receive worker")
+    self._running = False
+    if self._sock is not None:
+      try:
+        self._sock.close()
+      except OSError:
+        pass
 
   def runable(self):
-    while(True):
+    while self._running:
       try:
-        UDPServerSocket = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
-        UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        UDPServerSocket.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-        UDPServerSocket.bind((BROADCAST_RECEIVE_IP, UDP_PORT))
+        self._sock = socket.socket(family=socket.AF_INET, type=socket.SOCK_DGRAM)
+        self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        self._sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+        self._sock.bind((BROADCAST_RECEIVE_IP, UDP_PORT))
+        # Bounds how long recvfrom() blocks so this thread re-checks
+        # _running periodically instead of waiting indefinitely for the
+        # next packet (or for stop()'s close() to interrupt it, which is
+        # not reliable across threads on Linux - see stop() above).
+        self._sock.settimeout(0.5)
         LOGGER.debug("UDP server up and listening")
 
-        while(True):
-          bytesAddressPair = UDPServerSocket.recvfrom(BUFFER_SIZE)
+        while self._running:
+          try:
+            bytesAddressPair = self._sock.recvfrom(BUFFER_SIZE)
+          except TimeoutError:
+            continue
           message = bytesAddressPair[0]
           address = bytesAddressPair[1]
           LOGGER.debug("Message from Client "+format(address)+": "+bytesToDebugString(message))
@@ -69,5 +100,11 @@ class UdpReceiveWorker:
 
           self.func(senderObjectId, receiverObjectId, functionId, functionData, self.UDP_GATEWAY, False)
       except (Exception) as err:
+        if not self._running:
+          # stop() closed the socket to unblock recvfrom() - exit quietly
+          # instead of logging a spurious error and reopening a socket.
+          break
         LOGGER.error(err,exc_info=True,stack_info=True)
         time.sleep(5)
+
+    LOGGER.debug("udp receive worker stopped")

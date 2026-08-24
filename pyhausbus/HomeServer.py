@@ -36,9 +36,23 @@ class HomeServer(IBusDataListener):
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
             cls._instance = super().__new__(cls, *args, **kwargs)
+            cls._instance._initialized = False
         return cls._instance
 
     def __init__(self):
+        # __new__ always returns the same singleton, but Python calls
+        # __init__ on it unconditionally on every HomeServer() call. Without
+        # this guard, a redundant HomeServer() call while already running
+        # would start a second set of worker/collector threads and overwrite
+        # self.worker/self.collector, orphaning the first pair (they keep
+        # running, forever unreachable and unstoppable). shutdown() resets
+        # _instance to None, which makes the next HomeServer() call build a
+        # genuinely fresh object (new _initialized flag) instead of re-init
+        # in place.
+        if self._initialized:
+            return
+        self._initialized = True
+
         LOGGER.debug("init homeserver")
         Templates.get_instance()
         self.bushandler = BusHandler.getInstance()
@@ -73,6 +87,33 @@ class HomeServer(IBusDataListener):
         groupMask.setGruppe7(True)
         groupMask.setGruppe8(True)
         controller.getModuleId(EIndex.RUNNING, groupMask)
+
+    def shutdown(self):
+        """Stop all background threads and release the network resources.
+
+        Stops the DeviceWorker and DeviceCollector threads, and delegates
+        to BusHandler.shutdown() to close the send socket and stop the UDP
+        receive worker. Safe to call more than once. After shutdown, a new
+        HomeServer() call builds a fresh instance (fresh threads, fresh
+        socket) instead of reusing this one - previously, HomeServer()
+        always returned this same singleton while __init__ reran on top of
+        it, starting new threads without ever stopping the old ones.
+        """
+        LOGGER.debug("shutting down homeserver")
+
+        if self.worker is not None:
+            self.worker.stop()
+            self.worker.join(timeout=2)
+
+        if self.collector is not None:
+            self.collector.stop()
+            self.collector.join(timeout=2)
+
+        if self.bushandler is not None:
+            self.bushandler.shutdown()
+
+        self.device_listeners.clear()
+        HomeServer._instance = None
 
     def addBusEventListener(self, listener: IBusDataListener):
         self.bushandler.addBusEventListener(listener)

@@ -24,6 +24,7 @@ class BusHandler:
   broadcastIp = "192.168.178.255"
   listeners = []
   _module_cache = {}
+  _receive_worker = None
 
   @staticmethod
   def getInstance():
@@ -35,9 +36,27 @@ class BusHandler:
     if BusHandler._singleInstance is None:
       self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
       self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-      x = UdpReceiveWorker(self.busDataReceived)
-      x.startWorker()
+      self._receive_worker = UdpReceiveWorker(self.busDataReceived)
+      self._receive_worker.startWorker()
       self._getBroadcastIp()
+
+  def shutdown(self):
+    """Stop the receive worker, close the send socket, clear listeners.
+
+    Resets the singleton so a later BusHandler.getInstance() call builds
+    a fresh instance (new socket, new receive worker) instead of reusing
+    this shut-down one. Safe to call more than once.
+    """
+    LOGGER.debug("shutting down BusHandler")
+    if self._receive_worker is not None:
+      self._receive_worker.stop()
+    if self.sock is not None:
+      try:
+        self.sock.close()
+      except OSError:
+        pass
+    self.listeners.clear()
+    BusHandler._singleInstance = None
 
   def fast_import(self, module_name: str):
     if module_name in self._module_cache:

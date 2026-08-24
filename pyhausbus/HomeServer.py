@@ -55,7 +55,7 @@ class HomeServer(IBusDataListener):
         self.known_devices = set()
 
     def searchDevices(self):
-        _receivedSomething = false
+        _receivedSomething = False
         controller = Controller(0)
         groupMask = MGroupMask(0)
         groupMask.setGruppe1(True)

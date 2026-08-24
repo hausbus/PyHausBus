@@ -18,4 +18,4 @@ repository = "https://github.com/hausbus/PyHausBus"
 Documentation = "https://www.haus-bus.de/"
 
 [tool.poetry.urls]
-"Bug Tracker" = "https://github.com/hausbus/homeassistant/issues"
+"Bug Tracker" = "https://github.com/hausbus/PyHausBus/issues"

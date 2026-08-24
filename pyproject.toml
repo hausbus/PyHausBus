@@ -14,7 +14,8 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 homepage = "https://www.haus-bus.de/"
-repository = "https://github.com/hausbus/homeassistant"
+repository = "https://github.com/hausbus/PyHausBus"
+Documentation = "https://www.haus-bus.de/"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/hausbus/homeassistant/issues"

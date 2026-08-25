@@ -42,23 +42,28 @@ class HomeServer(IBusDataListener):
     def __init__(self):
         if self._initialized:
             return
-        self._initialized = True
 
-        LOGGER.debug("init homeserver")
-        Templates.get_instance()
-        self.bushandler = BusHandler.getInstance()
-        self.device_listeners: list = []
-        self.bushandler.addBusEventListener(ResultWorker())
-        self.bushandler.addBusEventListener(self)
-        self._receivedSomething = False
-        self.module_ids: dict[int, ModuleId] = {}
-        self.configurations: dict[int, Configuration] = {}
-        self.remote_objects: dict[int, RemoteObjects] = {}
-        self.worker = DeviceWorker(self)
-        self.worker.start()
-        self.collector = DeviceCollector(self.worker, timeout=0.5)
-        self.collector.start()
-        self.known_devices = set()
+        try:
+            LOGGER.debug("init homeserver")
+            Templates.get_instance()
+            self.bushandler = BusHandler.getInstance()
+            self.device_listeners: list = []
+            self.bushandler.addBusEventListener(ResultWorker())
+            self.bushandler.addBusEventListener(self)
+            self._receivedSomething = False
+            self.module_ids: dict[int, ModuleId] = {}
+            self.configurations: dict[int, Configuration] = {}
+            self.remote_objects: dict[int, RemoteObjects] = {}
+            self.worker = DeviceWorker(self)
+            self.worker.start()
+            self.collector = DeviceCollector(self.worker, timeout=0.5)
+            self.collector.start()
+            self.known_devices = set()
+        except Exception:
+            HomeServer._instance = None
+            raise
+
+        self._initialized = True
 
     def searchDevices(self):
         _receivedSomething = False

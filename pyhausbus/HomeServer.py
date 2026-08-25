@@ -301,6 +301,7 @@ class DeviceWorker(threading.Thread):
             )
 
             if name is None:
+				# fixed lookup table
                 className = ProxyFactory.getBusClassNameForClass(
                     instanceObjectId.getClassId()
                 ).rsplit(".", 1)[-1]
@@ -318,6 +319,7 @@ class DeviceWorker(threading.Thread):
         for i in range(0, len(objectList), 2):
             instanceId = objectList[i]
             classId = objectList[i + 1]
+            # fixed lookup table
             className = ProxyFactory.getBusClassNameForClass(classId)
             objectId = HausBusUtils.getObjectId(device_id, classId, instanceId)
 

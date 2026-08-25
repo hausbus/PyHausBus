@@ -93,6 +93,7 @@ class BusHandler:
       featureClassId = getClassId(senderObjectId)
       identifierId = senderObjectId
 
+    # fixed lookup table
     className = ProxyFactory.getBusClassNameFor(featureClassId, functionId)
     LOGGER.debug("classId = " + str(featureClassId) + ", functionId = " + str(functionId) + ", className = " + str(className))
 

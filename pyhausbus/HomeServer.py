@@ -30,25 +30,16 @@ _class_cache = {}
 
 class HomeServer(IBusDataListener):
     _instance = None
-    bushandler = None
-    device_listeners = []
+    _lock = threading.Lock()
 
     def __new__(cls, *args, **kwargs):
-        if not cls._instance:
-            cls._instance = super().__new__(cls, *args, **kwargs)
-            cls._instance._initialized = False
+        with cls._lock:
+            if not cls._instance:
+                cls._instance = super().__new__(cls, *args, **kwargs)
+                cls._instance._initialized = False
         return cls._instance
 
     def __init__(self):
-        # __new__ always returns the same singleton, but Python calls
-        # __init__ on it unconditionally on every HomeServer() call. Without
-        # this guard, a redundant HomeServer() call while already running
-        # would start a second set of worker/collector threads and overwrite
-        # self.worker/self.collector, orphaning the first pair (they keep
-        # running, forever unreachable and unstoppable). shutdown() resets
-        # _instance to None, which makes the next HomeServer() call build a
-        # genuinely fresh object (new _initialized flag) instead of re-init
-        # in place.
         if self._initialized:
             return
         self._initialized = True
@@ -56,6 +47,7 @@ class HomeServer(IBusDataListener):
         LOGGER.debug("init homeserver")
         Templates.get_instance()
         self.bushandler = BusHandler.getInstance()
+        self.device_listeners: list = []
         self.bushandler.addBusEventListener(ResultWorker())
         self.bushandler.addBusEventListener(self)
         self._receivedSomething = False

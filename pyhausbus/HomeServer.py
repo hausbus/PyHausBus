@@ -59,11 +59,17 @@ class HomeServer(IBusDataListener):
             self.collector = DeviceCollector(self.worker, timeout=0.5)
             self.collector.start()
             self.known_devices = set()
+            self.wait_until_ready()
+            
         except Exception:
             HomeServer._instance = None
+            self._initialized = False
             raise
 
         self._initialized = True
+
+    def wait_until_ready(self, timeout: float = 5) -> None:
+      self.bushandler.wait_until_ready(timeout)
 
     def searchDevices(self):
         _receivedSomething = False

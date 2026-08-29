@@ -40,6 +40,9 @@ class BusHandler:
       self._receive_worker.startWorker()
       self._getBroadcastIp()
 
+  def wait_until_ready(self, timeout: float = 5) -> None:
+    self._receive_worker.wait_until_ready(timeout)
+    
   def shutdown(self):
     """Stop the receive worker, close the send socket, clear listeners.
 

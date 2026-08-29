@@ -16,6 +16,8 @@ class UdpReceiveWorker:
     LOGGER.debug("init UdpReceiveWorker")
     self.func = func
     self._running = True
+    self._ready = threading.Event()
+    self._startup_exception = None
     self._sock = None
     self._thread = None
 
@@ -57,7 +59,8 @@ class UdpReceiveWorker:
         # not reliable across threads on Linux - see stop() above).
         self._sock.settimeout(0.5)
         LOGGER.debug("UDP server up and listening")
-
+        self._ready.set()
+        
         while self._running:
           try:
             bytesAddressPair = self._sock.recvfrom(BUFFER_SIZE)
@@ -96,6 +99,9 @@ class UdpReceiveWorker:
 
           self.func(senderObjectId, receiverObjectId, functionId, functionData, self.UDP_GATEWAY, False)
       except (Exception) as err:
+        self._startup_exception = err
+        self._ready.set()
+        
         if not self._running:
           # stop() closed the socket to unblock recvfrom() - exit quietly
           # instead of logging a spurious error and reopening a socket.
@@ -104,3 +110,10 @@ class UdpReceiveWorker:
         time.sleep(5)
 
     LOGGER.debug("udp receive worker stopped")
+
+  def wait_until_ready(self, timeout: float = 5) -> None:
+    if not self._ready.wait(timeout):
+        raise TimeoutError("UDP receive worker startup timed out")
+
+    if self._startup_exception:
+        raise self._startup_exception

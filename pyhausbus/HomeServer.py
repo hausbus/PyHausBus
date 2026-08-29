@@ -95,35 +95,34 @@ class HomeServer(IBusDataListener):
         controller.getModuleId(EIndex.RUNNING, groupMask)
 
     def shutdown(self):
-        """Stop all background threads and release the network resources.
+      LOGGER.debug("shutting down homeserver")
 
-        Stops the DeviceWorker and DeviceCollector threads, and delegates
-        to BusHandler.shutdown() to close the send socket and stop the UDP
-        receive worker. Safe to call more than once. After shutdown, a new
-        HomeServer() call builds a fresh instance (fresh threads, fresh
-        socket) instead of reusing this one - previously, HomeServer()
-        always returned this same singleton while __init__ reran on top of
-        it, starting new threads without ever stopping the old ones.
-        """
-        LOGGER.debug("shutting down homeserver")
-
+      try:
         if self.worker is not None:
             self.worker.stop()
             self.worker.join(timeout=4)
-            if worker.is_alive():
-              raise RuntimeError("DeviceWorker failed to stop")
+
+            if self.worker.is_alive():
+                raise RuntimeError(
+                    "DeviceWorker failed to stop"
+                )
 
         if self.collector is not None:
             self.collector.stop()
             self.collector.join(timeout=4)
-            if collector.is_alive():
-              raise RuntimeError("DeviceCollector failed to stop")
+
+            if self.collector.is_alive():
+                raise RuntimeError(
+                    "DeviceCollector failed to stop"
+                )
 
         if self.bushandler is not None:
             self.bushandler.shutdown()
 
+      finally:
         self.device_listeners.clear()
         HomeServer._instance = None
+        self._initialized = False
 
     def addBusEventListener(self, listener: IBusDataListener):
         self.bushandler.addBusEventListener(listener)

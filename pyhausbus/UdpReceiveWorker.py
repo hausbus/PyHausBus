@@ -67,17 +67,12 @@ class UdpReceiveWorker:
           address = bytesAddressPair[1]
           LOGGER.debug("Message from Client "+format(address)+": "+bytesToDebugString(message))
 
-
-          if (len(message) == 0):
-            LOGGER.debug("got empty message")
-            continue
-
-          if (message[0] != 0xef | message[1] != 0xef):
-            LOGGER.debug("invalid header")
-            continue
-
           if (len(message) < 15):
-            LOGGER.debug("message size " + len(message) + " is too short")
+            LOGGER.debug(f"message size {len(message)} is too short")
+            continue
+
+          if (message[0] != 0xef or message[1] != 0xef):
+            LOGGER.debug("invalid header")
             continue
 
           # 2 = Kontrollbyte 3 = MessageCounter
@@ -92,6 +87,7 @@ class UdpReceiveWorker:
           if (len(message) < 14 + dataLength):
             LOGGER.debug("message size " + str(len(message)) + " is too short for data length " + str(dataLength) + ": " + bytesToDebugString(message))
             dataLength = len(message) - 14
+            # support old incompatible short messages
             # continue
           functionId = bytesToInt(message, offset)
           functionData = message[15:]

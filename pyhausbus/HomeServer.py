@@ -47,6 +47,7 @@ class HomeServer(IBusDataListener):
             LOGGER.debug("init homeserver")
             Templates.get_instance()
             self.bushandler = BusHandler.getInstance()
+            self.bushandler.wait_until_ready()
             self.device_listeners: list = []
             self.bushandler.addBusEventListener(ResultWorker())
             self.bushandler.addBusEventListener(self)
@@ -59,12 +60,14 @@ class HomeServer(IBusDataListener):
             self.collector = DeviceCollector(self.worker, timeout=0.5)
             self.collector.start()
             self.known_devices = set()
-            self.wait_until_ready()
             
         except Exception:
+          try:
+            self.shutdown()
+          finally:
             HomeServer._instance = None
             self._initialized = False
-            raise
+          raise
 
         self._initialized = True
 
@@ -106,11 +109,15 @@ class HomeServer(IBusDataListener):
 
         if self.worker is not None:
             self.worker.stop()
-            self.worker.join(timeout=2)
+            self.worker.join(timeout=4)
+            if worker.is_alive():
+              raise RuntimeError("DeviceWorker failed to stop")
 
         if self.collector is not None:
             self.collector.stop()
-            self.collector.join(timeout=2)
+            self.collector.join(timeout=4)
+            if collector.is_alive():
+              raise RuntimeError("DeviceCollector failed to stop")
 
         if self.bushandler is not None:
             self.bushandler.shutdown()

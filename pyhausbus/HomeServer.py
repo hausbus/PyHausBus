@@ -76,7 +76,7 @@ class HomeServer(IBusDataListener):
 
     def searchDevices(self):
         _receivedSomething = False
-        self.bushandler.setDiscoveryActive(true)
+        self.bushandler.setDiscoveryActive(True)
         controller = Controller(0)
         groupMask = MGroupMask(0)
         groupMask.setGruppe1(True)

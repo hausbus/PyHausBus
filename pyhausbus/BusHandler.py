@@ -3,6 +3,7 @@ import socket
 import threading
 import time
 import traceback
+import netifaces
 
 from pyhausbus.BusDataMessage import BusDataMessage
 from pyhausbus.HausBusUtils import *
@@ -10,6 +11,7 @@ import pyhausbus.HausBusUtils as HausBusUtils
 from pyhausbus.IBusDataListener import IBusDataListener
 from pyhausbus.UdpReceiveWorker import UdpReceiveWorker
 from pyhausbus.de.hausbus.homeassistant.proxy import ProxyFactory
+from ipaddress import IPv4Network, IPv4Address
 
 
 RS485_GATEWAY = "#RS485#"
@@ -21,10 +23,11 @@ class BusHandler:
 
   _singleInstance = None
   sock:None
-  broadcastIp = "192.168.178.255"
   listeners = []
   _module_cache = {}
   _receive_worker = None
+  broadcastIp: str | None = None
+  _discoveryActive: bool = False
 
   @staticmethod
   def getInstance():
@@ -34,6 +37,8 @@ class BusHandler:
 
   def __init__(self):
     if BusHandler._singleInstance is None:
+      self.broadcastTargets = []
+      
       self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
       self.sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
       self._receive_worker = UdpReceiveWorker(self.busDataReceived)
@@ -69,23 +74,68 @@ class BusHandler:
     self._module_cache[module_name] = module
     return module
 
+  def setDiscoveryActive(self, active: bool):
+    self._discoveryActive = active
+    
   def setBroadcastIp(self, fixedBroadcastIp):
     LOGGER.debug(f"new fixed broadcastIp = {fixedBroadcastIp}")
     self.broadcastIp = fixedBroadcastIp;
 
   def _getBroadcastIp(self):
-    temp_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        temp_socket.connect(("8.8.8.8", 80))
-        own_ip = temp_socket.getsockname()[0].split('.')
-        self.broadcastIp = own_ip[0] + "." + own_ip[1] + "." + own_ip[2] + ".255"
-        LOGGER.debug(f"broadcastIp = {self.broadcastIp}")
-    except OSError as e:
-        LOGGER.warning(f"Could not determine broadcast IP: {e}")
-    finally:
-        temp_socket.close()
+    """Collect broadcast addresses of all local interfaces."""
 
-  def busDataReceived(self, senderObjectId, receiverObjectId, functionId, functionData, gateway, corrupted:bool):
+    self.broadcastIps = []
+    self.broadcastTargets = []
+
+    try:
+        for iface in netifaces.interfaces():
+            addresses = netifaces.ifaddresses(iface)
+
+            for address in addresses.get(netifaces.AF_INET, []):
+                ip_addr = address.get("addr")
+                netmask = address.get("netmask")
+                broadcast = address.get("broadcast")
+
+                if not ip_addr or not netmask or not broadcast:
+                    continue
+
+                network = IPv4Network(
+                    f"{ip_addr}/{netmask}",
+                    strict=False,
+                )
+
+                self.broadcastTargets.append(
+                    {
+                        "network": network,
+                        "broadcast": broadcast,
+                    }
+                )
+
+                self.broadcastIps.append(broadcast)
+
+        # Duplikate entfernen
+        self.broadcastIps = list(dict.fromkeys(self.broadcastIps))
+
+        if self.broadcastIps:
+            self.broadcastIp = self.broadcastIps[0]
+
+        LOGGER.debug(
+            "broadcastTargets = %s",
+            self.broadcastTargets,
+        )
+
+        LOGGER.debug(
+            "broadcastIps = %s",
+            self.broadcastIps,
+        )
+
+    except Exception as err:
+        LOGGER.warning(
+            "Could not determine broadcast addresses: %s",
+            err,
+        )
+
+  def busDataReceived(self, senderObjectId, receiverObjectId, functionId, functionData, gateway, corrupted:bool, sender_ip=None):
     # Es kann entweder eine Antwort oder Event des Senders sein oder ein Aufruf auf dem Empfänger
     featureClassId = 0
     identifierId = 0
@@ -95,6 +145,30 @@ class BusHandler:
     else:
       featureClassId = getClassId(senderObjectId)
       identifierId = senderObjectId
+    
+    if self._discoveryActive and sender_ip:
+      try:
+        sender_address = IPv4Address(sender_ip)
+
+        for target in self.broadcastTargets:
+            network = target["network"]
+            broadcast = target["broadcast"]
+
+            if sender_address in network:
+                self._discoveryActive = False
+
+                if broadcast != self.broadcastIp:
+                    LOGGER.debug(
+                        "broadcastIp changed from %s to %s",
+                        self.broadcastIp,
+                        broadcast,
+                    )
+                    self.broadcastIp = broadcast
+
+                break
+
+      except ValueError:
+        LOGGER.debug("Invalid sender IP: %s", sender_ip)
 
     # fixed lookup table
     className = ProxyFactory.getBusClassNameFor(featureClassId, functionId)
@@ -130,8 +204,15 @@ class BusHandler:
     LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " COMMAND OUT " + debug)
     LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " DATA OUT " + HausBusUtils.formatBytes(udpData))
 
+    targets = (
+        self.broadcastIps
+        if self._discoveryActive
+        else [self.broadcastIp]
+    )
+
     try:
-      self.sock.sendto(udpData, (self.broadcastIp, UDP_PORT))
+      for target in targets:
+        self.sock.sendto(udpData, (target, UDP_PORT))
     except socket.error as e:
       LOGGER.error(e, exc_info=True, stack_info=True)
 

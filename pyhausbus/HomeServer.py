@@ -76,6 +76,7 @@ class HomeServer(IBusDataListener):
 
     def searchDevices(self):
         _receivedSomething = False
+        self.bushandler.setDiscoveryActive(true)
         controller = Controller(0)
         groupMask = MGroupMask(0)
         groupMask.setGruppe1(True)
@@ -95,34 +96,42 @@ class HomeServer(IBusDataListener):
         controller.getModuleId(EIndex.RUNNING, groupMask)
 
     def shutdown(self):
+      """Stop all background threads and release network resources."""
+
       LOGGER.debug("shutting down homeserver")
+
+      worker_failed = False
+      collector_failed = False
 
       try:
         if self.worker is not None:
-            self.worker.stop()
-            self.worker.join(timeout=4)
+          self.worker.stop()
+          self.worker.join(timeout=10)
 
-            if self.worker.is_alive():
-                raise RuntimeError(
-                    "DeviceWorker failed to stop"
-                )
+          worker_failed = self.worker.is_alive()
 
         if self.collector is not None:
-            self.collector.stop()
-            self.collector.join(timeout=4)
+          self.collector.stop()
+          self.collector.join(timeout=10)
 
-            if self.collector.is_alive():
-                raise RuntimeError(
-                    "DeviceCollector failed to stop"
-                )
+          collector_failed = self.collector.is_alive()
 
         if self.bushandler is not None:
             self.bushandler.shutdown()
 
       finally:
         self.device_listeners.clear()
+        self.worker = None
+        self.collector = None
+        self.bushandler = None
         HomeServer._instance = None
         self._initialized = False
+
+      if worker_failed:
+        raise RuntimeError("DeviceWorker failed to stop")
+
+      if collector_failed:
+        raise RuntimeError("DeviceCollector failed to stop")
 
     def addBusEventListener(self, listener: IBusDataListener):
         self.bushandler.addBusEventListener(listener)

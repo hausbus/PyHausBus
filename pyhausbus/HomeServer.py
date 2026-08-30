@@ -70,20 +70,40 @@ class HomeServer(IBusDataListener):
             self.collector = DeviceCollector(self.worker, timeout=0.5)
             self.collector.start()
             self.known_devices = set()
-            
+
+            # Sende-/Empfangsbereitschaft aktiv verifizieren
+            self.verifyCommunication()
         except Exception:
-          try:
-            self.shutdown()
-          finally:
-            HomeServer._instance = None
-            self._initialized = False
-          raise
+            try:
+                self.shutdown()
+            finally:
+                HomeServer._instance = None
+                self._initialized = False
+            raise
 
         self._initialized = True
 
-    def wait_until_ready(self, timeout: float = 5) -> None:
-      self.bushandler.wait_until_ready(timeout)
+    def verifyCommunication(self, timeout: float = 10.0) -> None:
+        """Verify outbound and inbound network communication by sending a ping."""
+        try:
+            self._receivedSomething = False
+            if self.bushandler:
+                self.bushandler.setDiscoveryActive(True)
+            
+            controller = Controller(0)
+            controller.ping()
 
+            start_time = time.monotonic()
+            while not self._receivedSomething:
+                if time.monotonic() - start_time >= timeout:
+                    raise TimeoutError(
+                        f"No response received on Hausbus network within {timeout} seconds"
+                    )
+                time.sleep(0.05)
+        finally:
+            if self.bushandler:
+                self.bushandler.setDiscoveryActive(False)
+        
     def searchDevices(self):
         _receivedSomething = False
         self.bushandler.setDiscoveryActive(True)

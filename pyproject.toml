@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "pyhausbus"
-version = "1.0.71"
+version = "1.0.72"
 authors = ["Hermann Hoeschen <info@haus-bus.de>", "Eduard Weis <EdsAppDevelopment@gmail.com>"]
 description = "Python based library for accessing haus-bus.de modules. Inteded to be used in a Home Assistant integration."
 readme = "README.md"
@@ -16,6 +16,10 @@ classifiers = [
 homepage = "https://www.haus-bus.de/"
 repository = "https://github.com/hausbus/PyHausBus"
 Documentation = "https://www.haus-bus.de/"
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+netifaces = ">=0.11.0"
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/hausbus/PyHausBus/issues"

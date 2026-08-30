@@ -254,6 +254,11 @@ class DeviceWorker(threading.Thread):
                   for _ in range(2):
                       start_time = time.time()
                       while self.homeserver.configurations.get(device_id) is None:
+                          if not self.running:
+                              # stop() was called: return promptly instead of
+                              # riding out the remaining wait, so join() in
+                              # HomeServer.shutdown() does not time out.
+                              return
                           if time.time() - start_time > timeout:
                               LOGGER.debug(f"[DeviceWorker {device_id}] Timeout for configuration")
                               break
@@ -269,6 +274,11 @@ class DeviceWorker(threading.Thread):
                     for _ in range(2):
                         start_time = time.time()
                         while self.homeserver.remote_objects.get(device_id) is None:
+                          if not self.running:
+                            # stop() was called: return promptly instead of
+                            # riding out the remaining wait, so join() in
+                            # HomeServer.shutdown() does not time out.
+                            return
                           if time.time() - start_time > timeout:
                             LOGGER.debug(f"[DeviceWorker {device_id}] Timeout for remote objects")
                             break

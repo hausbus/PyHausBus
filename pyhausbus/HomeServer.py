@@ -43,12 +43,22 @@ class HomeServer(IBusDataListener):
         if self._initialized:
             return
 
+        # Set up front, before anything below can fail: shutdown() inspects
+        # these attributes, and it is called from the except block below on
+        # any failure - including one raised before they would otherwise be
+        # assigned (e.g. BusHandler.getInstance() or wait_until_ready()
+        # failing). Without this, shutdown() itself raises AttributeError
+        # and masks the real OSError/TimeoutError that callers handle.
+        self.bushandler = None
+        self.worker = None
+        self.collector = None
+        self.device_listeners: list = []
+
         try:
             LOGGER.debug("init homeserver")
             Templates.get_instance()
             self.bushandler = BusHandler.getInstance()
             self.bushandler.wait_until_ready()
-            self.device_listeners: list = []
             self.bushandler.addBusEventListener(ResultWorker())
             self.bushandler.addBusEventListener(self)
             self._receivedSomething = False

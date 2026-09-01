@@ -117,7 +117,12 @@ class BusHandler:
         self.broadcastIps = list(dict.fromkeys(self.broadcastIps))
 
         if self.broadcastIps:
-            self.broadcastIp = self.broadcastIps[0]
+           self.broadcastIp = self.broadcastIps[0]
+           LOGGER.debug(
+             "initital broadcastIp = %s",
+             self.broadcastIp,
+           )
+
 
         LOGGER.debug(
             "broadcastTargets = %s",

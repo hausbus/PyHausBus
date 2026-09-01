@@ -213,7 +213,7 @@ class BusHandler:
     )
 
     LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " COMMAND OUT " + debug)
-    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " DATA OUT " + HausBusUtils.formatBytes(udpData)+" // "+str(target))
+    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " DATA OUT " + HausBusUtils.formatBytes(udpData)+" // "+str(targets))
 
     try:
       for target in targets:

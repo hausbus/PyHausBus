@@ -206,14 +206,14 @@ class BusHandler:
 
     udpData:bytearray = self.prepareForUDP(data)
 
-    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " COMMAND OUT " + debug)
-    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " DATA OUT " + HausBusUtils.formatBytes(udpData))
-
     targets = (
         self.broadcastIps
         if self._discoveryActive
         else [self.broadcastIp]
     )
+
+    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " COMMAND OUT " + debug)
+    LOGGER.debug(UdpReceiveWorker.UDP_GATEWAY + " DATA OUT " + HausBusUtils.formatBytes(udpData)+" // "+str(target))
 
     try:
       for target in targets:

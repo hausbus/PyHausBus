@@ -15,6 +15,10 @@ def getObjectId(deviceId: int, classId: int, instanceId: int) -> int:
 
 
 def bytesToDWord(data: bytearray, offset) -> int:
+    if len(data) <= offset[0]:
+      LOGGER.debug(f"response to short: {len(data)} < {offset[0]}")
+      return 0
+
     try:
         result = 0
         result += data[offset[0]] & 0xFF
@@ -36,6 +40,11 @@ def bytesToDWord(data: bytearray, offset) -> int:
 
 
 def bytesToWord(data: bytearray, offset) -> int:
+    if len(data) <= offset[0]:
+      LOGGER.debug(f"response to short: {len(data)} < {offset[0]}")
+      return 0
+
+
     try:
         result = 0
         result += data[offset[0]] & 0xFF
@@ -51,6 +60,10 @@ def bytesToWord(data: bytearray, offset) -> int:
 
 
 def bytesToInt(data: bytearray, offset) -> int:
+    if len(data) <= offset[0]:
+      LOGGER.debug(f"response to short: {len(data)} < {offset[0]}")
+      return 0
+  
     try:
         if len(data) <= offset[0]:
             return 0
@@ -63,6 +76,10 @@ def bytesToInt(data: bytearray, offset) -> int:
 
 
 def bytesToString(data: bytearray, offset) -> str:
+    if len(data) <= offset[0]:
+      LOGGER.debug(f"response to short: {len(data)} < {offset[0]}")
+      return 0
+
     try:
         result = ""
         for i in range(offset[0], len(data)):
@@ -78,6 +95,7 @@ def bytesToString(data: bytearray, offset) -> str:
 
 
 def bytesToDebugString(message: bytearray) -> str:
+
     result = ""
     for byte in message:
         if result != "":
